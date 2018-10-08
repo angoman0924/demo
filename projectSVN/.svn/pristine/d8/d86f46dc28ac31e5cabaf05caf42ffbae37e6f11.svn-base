@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BCoupon;
+import com.zacx.serivce.dal.entity.BCouponExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BCouponMapper {
+    int countByExample(BCouponExample example);
+
+    int deleteByExample(BCouponExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BCoupon record);
+
+    int insertSelective(BCoupon record);
+
+    List<BCoupon> selectByExample(BCouponExample example);
+
+    BCoupon selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BCoupon record, @Param("example") BCouponExample example);
+
+    int updateByExample(@Param("record") BCoupon record, @Param("example") BCouponExample example);
+
+    int updateByPrimaryKeySelective(BCoupon record);
+
+    int updateByPrimaryKey(BCoupon record);
+}

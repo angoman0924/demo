@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OTicket;
+import com.zacx.serivce.dal.entity.OTicketExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OTicketMapper {
+    int countByExample(OTicketExample example);
+
+    int deleteByExample(OTicketExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(OTicket record);
+
+    int insertSelective(OTicket record);
+
+    List<OTicket> selectByExample(OTicketExample example);
+
+    OTicket selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") OTicket record, @Param("example") OTicketExample example);
+
+    int updateByExample(@Param("record") OTicket record, @Param("example") OTicketExample example);
+
+    int updateByPrimaryKeySelective(OTicket record);
+
+    int updateByPrimaryKey(OTicket record);
+}

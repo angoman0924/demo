@@ -1,0 +1,113 @@
+package com.zacx.serivce.user.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.zacx.core.enums.BooleanEnum;
+import com.zacx.core.enums.Code;
+import com.zacx.serivce.dal.entity.UPassenger;
+import com.zacx.serivce.dal.entity.UPassengerExample;
+import com.zacx.serivce.dal.mapper.UPassengerMapper;
+import com.zacx.serivce.user.api.PassengerServiceApi;
+import com.zacx.serivce.user.api.dto.PassengerDTO;
+import com.zacx.serivce.user.api.exceptions.UserServiceException;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * Created by liusi on 2018/9/25.
+ */
+@Service
+public class PassengerServiceImpl implements PassengerServiceApi {
+
+    @Resource
+    private UPassengerMapper uPassengerMapper;
+
+    /**
+     * 新增乘客信息
+     *
+     * @param passengerDTO 乘客对象
+     * @return
+     */
+    @Override
+    public Integer insert(PassengerDTO passengerDTO) {
+        if(StringUtils.isBlank(passengerDTO.getPhone())){
+            throw new UserServiceException(Code.ERROR_DATA_FORMAT,"手机号码不能为空");
+        }
+        if(passengerDTO.getPhone().length() != 11){
+            throw new UserServiceException(Code.ERROR_DATA_FORMAT,"手机号码格式不正确");
+        }
+        if(passengerDTO.getCardNo().length() != 18){
+            throw new UserServiceException(Code.ERROR_DATA_FORMAT,"证件号码格式不正确");
+        }
+
+        //判断是否实名认证
+        UPassenger entity = new UPassenger();
+        BeanUtils.copyProperties(passengerDTO, entity);
+        Integer result =  uPassengerMapper.insert(entity);
+        if(result == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"新增失败");
+        }
+        return result;
+    }
+
+    /**
+     * 根据用户编号查询关联乘客信息
+     *
+     * @param userId 关联用户编号
+     * @return
+     */
+    @Override
+    public List<PassengerDTO> selectUserById(Integer userId) {
+        UPassengerExample entityExample = new UPassengerExample();
+        entityExample.createCriteria().andUserIdEqualTo(userId);
+        List<UPassenger> list = uPassengerMapper.selectByExample(entityExample);
+        if(list.size() <= 0){
+            return null;
+        }
+        return JSON.parseArray(JSON.toJSONString(list), PassengerDTO.class);
+    }
+
+    /**
+     * 根据证件号码查询
+     * @param cardNumber 查询认证信息
+     * @return
+     */
+    @Override
+    public PassengerDTO selectByKey(String cardNumber) {
+        UPassengerExample entityExample = new UPassengerExample();
+        entityExample.createCriteria().andPhoneEqualTo(cardNumber);
+        List<UPassenger> list = uPassengerMapper.selectByExample(entityExample);
+        return JSON.parseObject(JSON.toJSONString(list.get(0)), PassengerDTO.class);
+    }
+
+    /**
+     * 修改乘客信息
+     * @param passengerDTO 乘客信息
+     * @return
+     */
+    @Override
+    public Integer updateByPrimaryKeySelective(PassengerDTO passengerDTO) {
+        UPassenger entity = new UPassenger();
+        BeanUtils.copyProperties(passengerDTO, entity);
+        return uPassengerMapper.updateByPrimaryKeySelective(entity);
+    }
+
+    /**
+     * 根据乘客编号删除乘客
+     *
+     * @param id 乘客编号 软删除
+     * @return
+     */
+    @Override
+    public Integer deleteByPrimaryKey(Integer id) {
+        //根据乘客编号修改乘客状态 FALSE
+        UPassenger entity = new UPassenger();
+        entity.setId(id);
+        entity.setStatus(BooleanEnum.FALSE.getValue());
+        Integer result = uPassengerMapper.updateByPrimaryKeySelective(entity);
+        return result;
+    }
+}

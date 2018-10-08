@@ -1,0 +1,8 @@
+package com.zacx.serivce.order.api.dto;
+
+import lombok.Data;
+
+@Data
+public class Demo {
+    public String name;
+}

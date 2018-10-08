@@ -1,0 +1,35 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LLine;
+import com.zacx.serivce.dal.entity.LLineExample;
+import java.util.List;
+
+import com.zacx.serivce.dal.entity.LPlan;
+import org.apache.ibatis.annotations.Param;
+
+public interface LLineMapper {
+    int countByExample(LLineExample example);
+
+    int deleteByExample(LLineExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LLine record);
+
+    int insertSelective(LLine record);
+
+    List<LLine> selectByExample(LLineExample example);
+
+    LLine selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LLine record, @Param("example") LLineExample example);
+
+    int updateByExample(@Param("record") LLine record, @Param("example") LLineExample example);
+
+    int updateByPrimaryKeySelective(LLine record);
+
+    int updateByPrimaryKey(LLine record);
+
+    //根据线路信息获取响应班次信息
+    List<LPlan> getPlanInfoByLine(LLine record);
+}

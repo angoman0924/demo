@@ -1,0 +1,36 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.CActivitydEtail;
+import com.zacx.serivce.dal.entity.CActivitydEtailExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface CActivitydEtailMapper {
+    int countByExample(CActivitydEtailExample example);
+
+    int deleteByExample(CActivitydEtailExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(CActivitydEtail record);
+
+    int insertSelective(CActivitydEtail record);
+
+    List<CActivitydEtail> selectByExampleWithBLOBs(CActivitydEtailExample example);
+
+    List<CActivitydEtail> selectByExample(CActivitydEtailExample example);
+
+    CActivitydEtail selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") CActivitydEtail record, @Param("example") CActivitydEtailExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") CActivitydEtail record, @Param("example") CActivitydEtailExample example);
+
+    int updateByExample(@Param("record") CActivitydEtail record, @Param("example") CActivitydEtailExample example);
+
+    int updateByPrimaryKeySelective(CActivitydEtail record);
+
+    int updateByPrimaryKeyWithBLOBs(CActivitydEtail record);
+
+    int updateByPrimaryKey(CActivitydEtail record);
+}

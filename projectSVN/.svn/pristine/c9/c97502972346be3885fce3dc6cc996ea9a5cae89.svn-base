@@ -1,0 +1,80 @@
+/*
+*
+* UInvoiceCompanyMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UInvoiceCompany;
+import com.zacx.serivce.dal.entity.UInvoiceCompanyExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UInvoiceCompanyMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(UInvoiceCompanyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(UInvoiceCompanyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(UInvoiceCompany record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(UInvoiceCompany record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<UInvoiceCompany> selectByExample(UInvoiceCompanyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    UInvoiceCompany selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") UInvoiceCompany record, @Param("example") UInvoiceCompanyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") UInvoiceCompany record, @Param("example") UInvoiceCompanyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(UInvoiceCompany record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(UInvoiceCompany record);
+}

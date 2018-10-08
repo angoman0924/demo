@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zacx.serivce.dal.mapper.UUserDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.UUserDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="wallet" jdbcType="DECIMAL" property="wallet" />
+    <result column="pay_pwd" jdbcType="VARCHAR" property="payPwd" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, role_ids, head_portrait, account_name, address, integral, wallet, pay_pwd, 
+    status, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from u_user_driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from u_user_driver
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from u_user_driver
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample">
+    delete from u_user_driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_driver (user_id, role_ids, head_portrait, 
+      account_name, address, integral, 
+      wallet, pay_pwd, status, 
+      remark)
+    values (#{userId,jdbcType=INTEGER}, #{roleIds,jdbcType=VARCHAR}, #{headPortrait,jdbcType=VARCHAR}, 
+      #{accountName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, 
+      #{wallet,jdbcType=DECIMAL}, #{payPwd,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_driver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleIds != null">
+        role_ids,
+      </if>
+      <if test="headPortrait != null">
+        head_portrait,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="wallet != null">
+        wallet,
+      </if>
+      <if test="payPwd != null">
+        pay_pwd,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleIds != null">
+        #{roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="wallet != null">
+        #{wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="payPwd != null">
+        #{payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample" resultType="java.lang.Integer">
+    select count(*) from u_user_driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update u_user_driver
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleIds != null">
+        role_ids = #{record.roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headPortrait != null">
+        head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountName != null">
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.integral != null">
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.wallet != null">
+        wallet = #{record.wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payPwd != null">
+        pay_pwd = #{record.payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update u_user_driver
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      role_ids = #{record.roleIds,jdbcType=VARCHAR},
+      head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      integral = #{record.integral,jdbcType=INTEGER},
+      wallet = #{record.wallet,jdbcType=DECIMAL},
+      pay_pwd = #{record.payPwd,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    update u_user_driver
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleIds != null">
+        role_ids = #{roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="wallet != null">
+        wallet = #{wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="payPwd != null">
+        pay_pwd = #{payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    update u_user_driver
+    set user_id = #{userId,jdbcType=INTEGER},
+      role_ids = #{roleIds,jdbcType=VARCHAR},
+      head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      integral = #{integral,jdbcType=INTEGER},
+      wallet = #{wallet,jdbcType=DECIMAL},
+      pay_pwd = #{payPwd,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.UUserDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="coordinate" jdbcType="VARCHAR" property="coordinate" />
+    <result column="wallet" jdbcType="DECIMAL" property="wallet" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="pay_pwd" jdbcType="VARCHAR" property="payPwd" />
+    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <result column="invite_id" jdbcType="VARCHAR" property="inviteId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, role_ids, nick_name, city_id, coordinate, wallet, integral, pay_pwd, 
+    head_portrait, invite_id, address, status, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from u_user_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from u_user_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from u_user_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample">
+    delete from u_user_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_detail (user_id, role_ids, nick_name, 
+      city_id, coordinate, wallet, 
+      integral, pay_pwd, head_portrait, 
+      invite_id, address, status, 
+      remark)
+    values (#{userId,jdbcType=INTEGER}, #{roleIds,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=INTEGER}, #{coordinate,jdbcType=VARCHAR}, #{wallet,jdbcType=DECIMAL}, 
+      #{integral,jdbcType=INTEGER}, #{payPwd,jdbcType=VARCHAR}, #{headPortrait,jdbcType=VARCHAR}, 
+      #{inviteId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleIds != null">
+        role_ids,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="coordinate != null">
+        coordinate,
+      </if>
+      <if test="wallet != null">
+        wallet,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="payPwd != null">
+        pay_pwd,
+      </if>
+      <if test="headPortrait != null">
+        head_portrait,
+      </if>
+      <if test="inviteId != null">
+        invite_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleIds != null">
+        #{roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordinate != null">
+        #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="wallet != null">
+        #{wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="payPwd != null">
+        #{payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteId != null">
+        #{inviteId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample" resultType="java.lang.Integer">
+    select count(*) from u_user_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update u_user_detail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleIds != null">
+        role_ids = #{record.roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.coordinate != null">
+        coordinate = #{record.coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wallet != null">
+        wallet = #{record.wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integral != null">
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.payPwd != null">
+        pay_pwd = #{record.payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headPortrait != null">
+        head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inviteId != null">
+        invite_id = #{record.inviteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update u_user_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      role_ids = #{record.roleIds,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      coordinate = #{record.coordinate,jdbcType=VARCHAR},
+      wallet = #{record.wallet,jdbcType=DECIMAL},
+      integral = #{record.integral,jdbcType=INTEGER},
+      pay_pwd = #{record.payPwd,jdbcType=VARCHAR},
+      head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
+      invite_id = #{record.inviteId,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    update u_user_detail
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleIds != null">
+        role_ids = #{roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordinate != null">
+        coordinate = #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="wallet != null">
+        wallet = #{wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="payPwd != null">
+        pay_pwd = #{payPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteId != null">
+        invite_id = #{inviteId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    update u_user_detail
+    set user_id = #{userId,jdbcType=INTEGER},
+      role_ids = #{roleIds,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      coordinate = #{coordinate,jdbcType=VARCHAR},
+      wallet = #{wallet,jdbcType=DECIMAL},
+      integral = #{integral,jdbcType=INTEGER},
+      pay_pwd = #{payPwd,jdbcType=VARCHAR},
+      head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      invite_id = #{inviteId,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.UUserDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="coordinate" jdbcType="VARCHAR" property="coordinate" />
+    <result column="wallet" jdbcType="DECIMAL" property="wallet" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <result column="invite_id" jdbcType="VARCHAR" property="inviteId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, nick_name, user_type, gender, birthday, city_id, coordinate, wallet, 
+    integral, head_portrait, invite_id, address
+  </sql>
+  <select id="selectByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from u_user_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from u_user_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from u_user_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample">
+    delete from u_user_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_detail (user_id, nick_name, user_type, 
+      gender, birthday, city_id, 
+      coordinate, wallet, integral, 
+      head_portrait, invite_id, address
+      )
+    values (#{userId,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
+      #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{cityId,jdbcType=INTEGER}, 
+      #{coordinate,jdbcType=VARCHAR}, #{wallet,jdbcType=DECIMAL}, #{integral,jdbcType=INTEGER}, 
+      #{headPortrait,jdbcType=VARCHAR}, #{inviteId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="coordinate != null">
+        coordinate,
+      </if>
+      <if test="wallet != null">
+        wallet,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="headPortrait != null">
+        head_portrait,
+      </if>
+      <if test="inviteId != null">
+        invite_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordinate != null">
+        #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="wallet != null">
+        #{wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="headPortrait != null">
+        #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteId != null">
+        #{inviteId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.UUserDetailExample" resultType="java.lang.Integer">
+    select count(*) from u_user_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update u_user_detail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.coordinate != null">
+        coordinate = #{record.coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wallet != null">
+        wallet = #{record.wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integral != null">
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.headPortrait != null">
+        head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inviteId != null">
+        invite_id = #{record.inviteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update u_user_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      coordinate = #{record.coordinate,jdbcType=VARCHAR},
+      wallet = #{record.wallet,jdbcType=DECIMAL},
+      integral = #{record.integral,jdbcType=INTEGER},
+      head_portrait = #{record.headPortrait,jdbcType=VARCHAR},
+      invite_id = #{record.inviteId,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    update u_user_detail
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordinate != null">
+        coordinate = #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="wallet != null">
+        wallet = #{wallet,jdbcType=DECIMAL},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="headPortrait != null">
+        head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteId != null">
+        invite_id = #{inviteId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.UUserDetail">
+    update u_user_detail
+    set user_id = #{userId,jdbcType=INTEGER},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      city_id = #{cityId,jdbcType=INTEGER},
+      coordinate = #{coordinate,jdbcType=VARCHAR},
+      wallet = #{wallet,jdbcType=DECIMAL},
+      integral = #{integral,jdbcType=INTEGER},
+      head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      invite_id = #{inviteId,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

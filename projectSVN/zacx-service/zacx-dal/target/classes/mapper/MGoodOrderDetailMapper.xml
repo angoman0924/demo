@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.MGoodOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.MGoodOrderDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="good_id" property="goodId" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="price_integral" property="priceIntegral" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, good_id, `number`, price_integral, order_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from m_good_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from m_good_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from m_good_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetailExample" >
+    delete from m_good_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into m_good_order_detail (good_id, `number`, price_integral, 
+      order_id)
+    values (#{goodId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{priceIntegral,jdbcType=INTEGER}, 
+      #{orderId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into m_good_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="number != null" >
+        `number`,
+      </if>
+      <if test="priceIntegral != null" >
+        price_integral,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodId != null" >
+        #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="priceIntegral != null" >
+        #{priceIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetailExample" resultType="java.lang.Integer" >
+    select count(*) from m_good_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update m_good_order_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodId != null" >
+        good_id = #{record.goodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.number != null" >
+        `number` = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceIntegral != null" >
+        price_integral = #{record.priceIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update m_good_order_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      good_id = #{record.goodId,jdbcType=INTEGER},
+      `number` = #{record.number,jdbcType=INTEGER},
+      price_integral = #{record.priceIntegral,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetail" >
+    update m_good_order_detail
+    <set >
+      <if test="goodId != null" >
+        good_id = #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="priceIntegral != null" >
+        price_integral = #{priceIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.MGoodOrderDetail" >
+    update m_good_order_detail
+    set good_id = #{goodId,jdbcType=INTEGER},
+      `number` = #{number,jdbcType=INTEGER},
+      price_integral = #{priceIntegral,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

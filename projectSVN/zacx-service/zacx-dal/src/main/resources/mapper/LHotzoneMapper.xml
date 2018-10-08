@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.LHotzoneMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.LHotzone" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="site_id" property="siteId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="DECIMAL" />
+    <result column="longitude" property="longitude" jdbcType="DECIMAL" />
+    <result column="radius_one" property="radiusOne" jdbcType="INTEGER" />
+    <result column="price_one" property="priceOne" jdbcType="DECIMAL" />
+    <result column="radius_two" property="radiusTwo" jdbcType="INTEGER" />
+    <result column="price_two" property="priceTwo" jdbcType="DECIMAL" />
+    <result column="radius_three" property="radiusThree" jdbcType="INTEGER" />
+    <result column="price_three" property="priceThree" jdbcType="DECIMAL" />
+    <result column="is_template" property="isTemplate" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, line_id, site_id, group_id, address, latitude, longitude, radius_one, price_one, 
+    radius_two, price_two, radius_three, price_three, is_template, `status`, create_at, 
+    create_by, modify_at, modify_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.LHotzoneExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from l_hotzone
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_hotzone
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_hotzone
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.LHotzoneExample" >
+    delete from l_hotzone
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.LHotzone" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into l_hotzone (line_id, site_id, group_id, 
+      address, latitude, longitude, 
+      radius_one, price_one, radius_two, 
+      price_two, radius_three, price_three, 
+      is_template, `status`, create_at, 
+      create_by, modify_at, modify_by
+      )
+    values (#{lineId,jdbcType=INTEGER}, #{siteId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL}, 
+      #{radiusOne,jdbcType=INTEGER}, #{priceOne,jdbcType=DECIMAL}, #{radiusTwo,jdbcType=INTEGER}, 
+      #{priceTwo,jdbcType=DECIMAL}, #{radiusThree,jdbcType=INTEGER}, #{priceThree,jdbcType=DECIMAL}, 
+      #{isTemplate,jdbcType=BIT}, #{status,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.LHotzone" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into l_hotzone
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="radiusOne != null" >
+        radius_one,
+      </if>
+      <if test="priceOne != null" >
+        price_one,
+      </if>
+      <if test="radiusTwo != null" >
+        radius_two,
+      </if>
+      <if test="priceTwo != null" >
+        price_two,
+      </if>
+      <if test="radiusThree != null" >
+        radius_three,
+      </if>
+      <if test="priceThree != null" >
+        price_three,
+      </if>
+      <if test="isTemplate != null" >
+        is_template,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="radiusOne != null" >
+        #{radiusOne,jdbcType=INTEGER},
+      </if>
+      <if test="priceOne != null" >
+        #{priceOne,jdbcType=DECIMAL},
+      </if>
+      <if test="radiusTwo != null" >
+        #{radiusTwo,jdbcType=INTEGER},
+      </if>
+      <if test="priceTwo != null" >
+        #{priceTwo,jdbcType=DECIMAL},
+      </if>
+      <if test="radiusThree != null" >
+        #{radiusThree,jdbcType=INTEGER},
+      </if>
+      <if test="priceThree != null" >
+        #{priceThree,jdbcType=DECIMAL},
+      </if>
+      <if test="isTemplate != null" >
+        #{isTemplate,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.LHotzoneExample" resultType="java.lang.Integer" >
+    select count(*) from l_hotzone
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update l_hotzone
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineId != null" >
+        line_id = #{record.lineId,jdbcType=INTEGER},
+      </if>
+      <if test="record.siteId != null" >
+        site_id = #{record.siteId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.radiusOne != null" >
+        radius_one = #{record.radiusOne,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceOne != null" >
+        price_one = #{record.priceOne,jdbcType=DECIMAL},
+      </if>
+      <if test="record.radiusTwo != null" >
+        radius_two = #{record.radiusTwo,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceTwo != null" >
+        price_two = #{record.priceTwo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.radiusThree != null" >
+        radius_three = #{record.radiusThree,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceThree != null" >
+        price_three = #{record.priceThree,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isTemplate != null" >
+        is_template = #{record.isTemplate,jdbcType=BIT},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null" >
+        modify_by = #{record.modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update l_hotzone
+    set id = #{record.id,jdbcType=INTEGER},
+      line_id = #{record.lineId,jdbcType=INTEGER},
+      site_id = #{record.siteId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=DECIMAL},
+      longitude = #{record.longitude,jdbcType=DECIMAL},
+      radius_one = #{record.radiusOne,jdbcType=INTEGER},
+      price_one = #{record.priceOne,jdbcType=DECIMAL},
+      radius_two = #{record.radiusTwo,jdbcType=INTEGER},
+      price_two = #{record.priceTwo,jdbcType=DECIMAL},
+      radius_three = #{record.radiusThree,jdbcType=INTEGER},
+      price_three = #{record.priceThree,jdbcType=DECIMAL},
+      is_template = #{record.isTemplate,jdbcType=BIT},
+      `status` = #{record.status,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{record.modifyBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.LHotzone" >
+    update l_hotzone
+    <set >
+      <if test="lineId != null" >
+        line_id = #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="radiusOne != null" >
+        radius_one = #{radiusOne,jdbcType=INTEGER},
+      </if>
+      <if test="priceOne != null" >
+        price_one = #{priceOne,jdbcType=DECIMAL},
+      </if>
+      <if test="radiusTwo != null" >
+        radius_two = #{radiusTwo,jdbcType=INTEGER},
+      </if>
+      <if test="priceTwo != null" >
+        price_two = #{priceTwo,jdbcType=DECIMAL},
+      </if>
+      <if test="radiusThree != null" >
+        radius_three = #{radiusThree,jdbcType=INTEGER},
+      </if>
+      <if test="priceThree != null" >
+        price_three = #{priceThree,jdbcType=DECIMAL},
+      </if>
+      <if test="isTemplate != null" >
+        is_template = #{isTemplate,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.LHotzone" >
+    update l_hotzone
+    set line_id = #{lineId,jdbcType=INTEGER},
+      site_id = #{siteId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=DECIMAL},
+      longitude = #{longitude,jdbcType=DECIMAL},
+      radius_one = #{radiusOne,jdbcType=INTEGER},
+      price_one = #{priceOne,jdbcType=DECIMAL},
+      radius_two = #{radiusTwo,jdbcType=INTEGER},
+      price_two = #{priceTwo,jdbcType=DECIMAL},
+      radius_three = #{radiusThree,jdbcType=INTEGER},
+      price_three = #{priceThree,jdbcType=DECIMAL},
+      is_template = #{isTemplate,jdbcType=BIT},
+      `status` = #{status,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

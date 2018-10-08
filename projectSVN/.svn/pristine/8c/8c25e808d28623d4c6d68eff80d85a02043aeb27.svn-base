@@ -1,0 +1,115 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class UUserBankAccount {
+    private Integer id;
+
+    private Integer userId;
+
+    private Integer type;
+
+    private String code;
+
+    private Integer bankId;
+
+    private String bankName;
+
+    private String userName;
+
+    private String userPhone;
+
+    private String userCardNo;
+
+    private Integer withdrawCashMax;
+
+    private Date createAt;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public String getUserCardNo() {
+        return userCardNo;
+    }
+
+    public void setUserCardNo(String userCardNo) {
+        this.userCardNo = userCardNo;
+    }
+
+    public Integer getWithdrawCashMax() {
+        return withdrawCashMax;
+    }
+
+    public void setWithdrawCashMax(Integer withdrawCashMax) {
+        this.withdrawCashMax = withdrawCashMax;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+}

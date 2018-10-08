@@ -1,0 +1,54 @@
+package com.zacx.serivce.order.api.dto;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+@Data
+public class TicketDTO implements Serializable {
+    private Integer id;
+
+    private String code;
+
+    private Integer userId;
+
+    private BigDecimal ticketPrice;
+
+    private BigDecimal insurancePrice;
+
+    private Date signDate;
+
+    private BigDecimal takeCost;
+
+    private BigDecimal giveCost;
+
+    private String verificationCode;
+
+    private String carModel;
+
+    private String plateNumber;
+
+    private String seatNumber;
+
+    private Boolean isPickUp;
+
+    private String passengerName;
+
+    private Integer cardType;
+
+    private String passengerCardno;
+
+    private String insuranceCode;
+
+    private Integer status;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+}

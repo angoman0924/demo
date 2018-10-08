@@ -1,0 +1,113 @@
+package com.zacx.gateway.passenger.controller;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.annotation.MethodFlag;
+import com.zacx.core.enums.Code;
+import com.zacx.gateway.base.base.Result;
+import com.zacx.gateway.passenger.constants.PassengerApiUrl;
+import com.zacx.gateway.passenger.dto.basic.CityResult;
+import com.zacx.serivce.basic.api.CityServiceApi;
+import com.zacx.serivce.basic.api.MapServiceApi;
+import com.zacx.serivce.basic.api.dto.CityDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+* @author gulx
+* @Description 功能接口
+* @Date  2018/9/27 19:37
+* @Param
+* @copyright 上海拜米网络科技有限公司
+* @return
+**/
+@Api(description = "城市")
+@RestController
+@RequestMapping(PassengerApiUrl.CITY)
+public class CityController {
+    @Resource
+    private MapServiceApi mapServiceApi;
+
+    @Resource
+    private CityServiceApi cityServiceApi;
+
+    @MethodFlag
+    @ApiOperation(value = "根据经纬度获取城市")
+    @GetMapping(PassengerApiUrl.COORDINATE)
+    public Result<CityResult> city(
+            @ApiParam("经度") @RequestParam("longitude") String longitude,
+            @ApiParam("纬度") @RequestParam("latitude") String latitude
+    ){
+        CityDTO cityDTO = mapServiceApi.getCityByCoordinate(longitude, latitude);
+        CityResult cityResult=new CityResult();
+        cityResult.setId(cityDTO.getId());
+        cityResult.setName(cityDTO.getName());
+        return Result.success(cityResult);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "获取所有的城市")
+    @GetMapping(PassengerApiUrl.SEARCHCITY)
+    public Result<List<CityResult>> cities(
+            @ApiParam("城市名称或城市名称的拼音") String cityName
+    ){
+        //缺少代码
+        CityDTO bCity = new CityDTO();
+        bCity.setName(cityName);
+        bCity.setPinyinCode(cityName);
+//        bCity.setPageIndex(pageIndex);
+//        bCity.setPageSize(pageSize);
+        PageInfo<CityDTO> pageInfo = cityServiceApi.getCityPageInfo(bCity);
+        PageInfo<CityResult> page = new PageInfo<>();
+        if (null != pageInfo && null != pageInfo.getList() && !pageInfo.getList().isEmpty()) {
+            List<CityResult> list = new ArrayList<CityResult>();
+            pageInfo.getList().forEach(e -> {
+                CityResult temp = new CityResult();
+                BeanUtils.copyProperties(e, temp);
+                list.add(temp);
+            });
+            page.setList(list);
+        }
+        return Result.success(page.getList());
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "热门城市")
+    @GetMapping(PassengerApiUrl.POPULARITY)
+    public Result<List<CityResult>> hotCities(){
+        //缺少代码
+        //查询热门城市
+        String configKey = "hot_city";
+        List<CityResult> cities = new ArrayList<CityResult>();
+        List<CityDTO> list = cityServiceApi.getHotCityPageInfo(configKey);
+        if(list == null){
+            return  Result.error(Code.ERROR_DATA_NOT_FOUND,"等待添加热门城市");
+        }
+        for (CityDTO c: list){
+            CityResult cityResult1 = new CityResult();
+            cityResult1.setId(c.getId());
+            cityResult1.setName(c.getName());
+            cityResult1.setParentCode(c.getCode());
+            cities.add(cityResult1);
+            for (CityDTO c2: c.getRelationCity()){
+                CityResult cityResult2 = new CityResult();
+                cityResult2.setId(c2.getId());
+                cityResult2.setName(c2.getName());
+                cityResult2.setParentCode(c2.getCode());
+                cities.add(cityResult2);
+            }
+        }
+        return Result.success(cities);
+    }
+
+}

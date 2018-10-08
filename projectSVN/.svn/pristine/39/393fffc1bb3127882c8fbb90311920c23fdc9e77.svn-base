@@ -1,0 +1,100 @@
+package com.zacx.serivce.line.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.core.util.StringUtils;
+import com.zacx.serivce.dal.entity.LPlan;
+import com.zacx.serivce.dal.entity.LPlanExample;
+import com.zacx.serivce.dal.mapper.LPlanMapper;
+import com.zacx.serivce.line.api.dto.PlanDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.PlanService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * 班次内部服务
+ * Created by song on 2018/10/3.
+ */
+@Service
+public class PlanServiceImpl implements PlanService {
+    @Autowired
+    private LPlanMapper planMapper;
+    @Override
+    public int insert(LPlan record) throws LineServiceException {
+        return planMapper.insertSelective(record);
+    }
+
+    @Override
+    public int update(LPlan record) throws LineServiceException {
+        return planMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException {
+        LPlanExample example=new LPlanExample();
+        example.createCriteria().andIdIn(ids);
+        return planMapper.deleteByExample(example);
+    }
+
+    @Override
+    public PageInfo<LPlan> getPlanPageInfo(PlanDTO dto) {
+        PageHelper.startPage(dto.getPageIndex(),dto.getPageSize());
+        List<LPlan> list = planMapper.selectByExample(this.params2example(dto));
+        PageInfo<LPlan> page=new PageInfo<>(list);
+        return page;
+    }
+
+    @Override
+    public List<LPlan> getPlanList(LPlanExample example) {
+        return planMapper.selectByExample(example);
+    }
+
+    //region params2example 部分入参
+    @Override
+    public LPlanExample params2example(PlanDTO dto){
+        LPlanExample example=new LPlanExample();
+        LPlanExample.Criteria criteria = example.createCriteria();
+
+        if(!ObjectUtils.isNull(dto.getCarTypeId())){
+            criteria.andCarTypeIdEqualTo(dto.getCarTypeId());
+        }
+        if(!ObjectUtils.isNull(dto.getCreateBy())&&StringUtils.isNotBlank(dto.getCreateBy().trim())){
+            criteria.andCreateByLike("%"+dto.getCreateBy().trim()+"%");
+        }
+        if(!ObjectUtils.isNull(dto.getId())){
+            criteria.andIdEqualTo(dto.getId());
+        }
+        if(!ObjectUtils.isNull(dto.getIsRelay())){
+            criteria.andIsRelayEqualTo(dto.getIsRelay());
+        }
+        if(!ObjectUtils.isNull(dto.getLineId())){
+            criteria.andLineIdEqualTo(dto.getLineId());
+        }
+        if(!ObjectUtils.isNull(dto.getModifyBy())&&StringUtils.isNotBlank(dto.getModifyBy().trim())){
+            criteria.andModifyByLike("%"+dto.getModifyBy().trim()+"%");
+        }
+        if(!ObjectUtils.isNull(dto.getSaleStatus())){
+            criteria.andSaleStatusEqualTo(dto.getSaleStatus());
+        }
+        if(!ObjectUtils.isNull(dto.getSchedulingStatus())){
+            criteria.andSchedulingStatusEqualTo(dto.getSchedulingStatus());
+        }
+        if(!ObjectUtils.isNull(dto.getShiftType())){
+            criteria.andShiftTypeEqualTo(dto.getShiftType());
+        }
+        if(!ObjectUtils.isNull(dto.getSaleNumber())){
+            criteria.andSaleNumberEqualTo(dto.getSaleNumber());
+        }
+
+
+        if(!ObjectUtils.isNull(dto.getSortCase())&& StringUtils.isNotBlank(dto.getSortCase().trim())){
+            example.setOrderByClause(dto.getSortCase());
+        }
+        return example;
+    }
+    //endregion
+}

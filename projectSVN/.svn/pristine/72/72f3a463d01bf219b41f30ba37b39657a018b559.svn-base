@@ -1,0 +1,82 @@
+package com.zacx.serivce.line.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.dal.entity.LPlanTemplate;
+import com.zacx.serivce.line.api.PlanTemplateServiceApi;
+import com.zacx.serivce.line.api.dto.PlanTemplateDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.PlanTemplateSerivce;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 班次调度服务api
+ * Created by song on 2018/10/3.
+ */
+public class PlanTemplateServiceApiImpl implements PlanTemplateServiceApi {
+    Logger logger= LoggerFactory.getLogger(PlanTemplateServiceApiImpl.class);
+    @Autowired
+    private PlanTemplateSerivce planTemplateSerivce;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(PlanTemplateDTO dto) throws LineServiceException {
+        logger.info("PlanTemplateServiceApi.insert,params:{}", JSON.toJSONString(dto));
+        LPlanTemplate record=new LPlanTemplate();
+        BeanUtils.copyProperties(dto,record);
+        int r = planTemplateSerivce.insert(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(PlanTemplateDTO dto) throws LineServiceException {
+        logger.info("PlanTemplateServiceApi.update,params:{}", JSON.toJSONString(dto));
+        LPlanTemplate record=new LPlanTemplate();
+        BeanUtils.copyProperties(dto,record);
+        int r = planTemplateSerivce.update(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException {
+        logger.info("PlanTemplateServiceApi.removeListByIds,params:{}", JSON.toJSONString(ids));
+        int r = planTemplateSerivce.removeListByIds(ids,userCode);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    public PageInfo<PlanTemplateDTO> getPlanTemplatePageInfo(PlanTemplateDTO dto) {
+        logger.info("PlanTemplateServiceApi.getPlanTemplatePageInfo,params:{}",JSON.toJSONString(dto));
+
+        PageInfo<LPlanTemplate> pageInfo = planTemplateSerivce.getPlanTemplatePageInfo(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<PlanTemplateDTO> page=new PageInfo<>();
+        if(null!=pageInfo&&null!=pageInfo.getList()&&!pageInfo.getList().isEmpty()){
+            BeanUtils.copyProperties(pageInfo,page);
+            List<PlanTemplateDTO> list=new ArrayList<>();
+            pageInfo.getList().forEach(e->{
+                PlanTemplateDTO temp=new PlanTemplateDTO();
+                BeanUtils.copyProperties(e,temp);
+                list.add(temp);
+            });
+            page.setList(list);
+        }
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+
+        return page;
+    }
+}

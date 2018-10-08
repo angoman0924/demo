@@ -1,0 +1,97 @@
+package com.zacx.serivce.mall.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.dal.entity.MGoods;
+import com.zacx.serivce.mall.api.GoodsSerivceApi;
+import com.zacx.serivce.mall.api.dto.GoodsDTO;
+import com.zacx.serivce.mall.api.exceptions.MallServiceException;
+import com.zacx.serivce.mall.service.GoodsSerivce;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by song on 2018/10/6.
+ */
+@Service
+public class GoodsSerivceApiImpl implements GoodsSerivceApi {
+    Logger logger= LoggerFactory.getLogger(GoodsSerivceApiImpl.class);
+
+    @Autowired
+    private GoodsSerivce goodsSerivce;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(GoodsDTO dto) throws MallServiceException {
+        logger.info("GoodsSerivceApi.insert,params:{}", JSON.toJSONString(dto));
+        MGoods record=new MGoods();
+        BeanUtils.copyProperties(dto,record);
+        int r = goodsSerivce.insert(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(GoodsDTO dto) throws MallServiceException {
+        logger.info("GoodsSerivceApi.update,params:{}", JSON.toJSONString(dto));
+        MGoods record=new MGoods();
+        BeanUtils.copyProperties(dto,record);
+        int r = goodsSerivce.update(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int removeListByIds(List<Integer> ids) throws MallServiceException {
+        logger.info("GoodsSerivceApi.removeListByIds,params:{}", JSON.toJSONString(ids));
+        int r = goodsSerivce.removeByIds(ids);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int changeStatusByIds(List<Integer> ids, Integer status) throws MallServiceException {
+        logger.info("GoodsSerivceApi.changeStatusByIds,ids:{},status:{}", JSON.toJSONString(ids),status);
+
+        MGoods record=new MGoods();
+        record.setStatus(status);
+        int r = goodsSerivce.updateByIds(ids,record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    public PageInfo<GoodsDTO> getGoodsPageInfo(GoodsDTO dto) {
+        logger.info("GoodsSerivceApi.getGoodsPageInfo,params:{}",JSON.toJSONString(dto));
+
+        PageInfo<MGoods> pageInfo = goodsSerivce.getMGoodsPageInfo(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<GoodsDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,GoodsDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+        return page;
+    }
+
+    @Override
+    public GoodsDTO findByPrimaryKey(Integer id) {
+        logger.info("GoodsSerivceApi.findByPrimaryKey,params:{}",id);
+        MGoods byPrimaryKey = goodsSerivce.findByPrimaryKey(id);
+        if(null!=byPrimaryKey){
+            GoodsDTO dto=new GoodsDTO();
+            BeanUtils.copyProperties(byPrimaryKey,dto);
+            logger.info("bean:{}",JSON.toJSONString(dto));
+            return dto;
+        }
+        return null;
+    }
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OEvaluate;
+import com.zacx.serivce.dal.entity.OEvaluateExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OEvaluateMapper {
+    int countByExample(OEvaluateExample example);
+
+    int deleteByExample(OEvaluateExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(OEvaluate record);
+
+    int insertSelective(OEvaluate record);
+
+    List<OEvaluate> selectByExample(OEvaluateExample example);
+
+    OEvaluate selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") OEvaluate record, @Param("example") OEvaluateExample example);
+
+    int updateByExample(@Param("record") OEvaluate record, @Param("example") OEvaluateExample example);
+
+    int updateByPrimaryKeySelective(OEvaluate record);
+
+    int updateByPrimaryKey(OEvaluate record);
+}

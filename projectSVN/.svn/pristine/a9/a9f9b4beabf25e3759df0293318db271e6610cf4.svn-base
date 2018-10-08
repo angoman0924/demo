@@ -1,0 +1,80 @@
+/*
+*
+* SConfigMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.SConfig;
+import com.zacx.serivce.dal.entity.SConfigExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface SConfigMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(SConfigExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(SConfigExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(SConfig record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(SConfig record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<SConfig> selectByExample(SConfigExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    SConfig selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") SConfig record, @Param("example") SConfigExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") SConfig record, @Param("example") SConfigExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(SConfig record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(SConfig record);
+}

@@ -1,0 +1,28 @@
+package com.zacx.serivce.basic.api.impl;
+
+
+import com.zacx.core.util.BeanUtils;
+import com.zacx.serivce.basic.api.InsuranceServiceApi;
+import com.zacx.serivce.basic.api.dto.InsuranceDTO;
+import com.zacx.serivce.basic.service.InsuranceService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+* @desc    保险
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月04日 20:20:35
+**/
+@Service
+public class InsuranceServiceApiImpl implements InsuranceServiceApi {
+    @Resource
+    private InsuranceService insuranceService;
+
+    @Override
+    public List<InsuranceDTO> getInsuranceList(InsuranceDTO insuranceDTO) {
+        return BeanUtils.ListEntity2ListDTO(insuranceService.getInsuranceList(insuranceDTO), InsuranceDTO.class);
+    }
+}

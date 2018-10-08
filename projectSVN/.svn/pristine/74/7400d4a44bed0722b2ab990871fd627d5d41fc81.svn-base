@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.CActivitydEtailMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.CActivitydEtail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="titile" property="titile" jdbcType="VARCHAR" />
+    <result column="desc1" property="desc1" jdbcType="VARCHAR" />
+    <result column="desc2" property="desc2" jdbcType="VARCHAR" />
+    <result column="image1" property="image1" jdbcType="VARCHAR" />
+    <result column="image2" property="image2" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="date_start" property="dateStart" jdbcType="TIMESTAMP" />
+    <result column="date_end" property="dateEnd" jdbcType="TIMESTAMP" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="url1" property="url1" jdbcType="VARCHAR" />
+    <result column="url2" property="url2" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zacx.serivce.dal.entity.CActivitydEtail" extends="BaseResultMap" >
+    <result column="body" property="body" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type_id, titile, desc1, desc2, image1, image2, sort, `status`, date_start, date_end, 
+    create_at, create_by, activity_id, url1, url2
+  </sql>
+  <sql id="Blob_Column_List" >
+    body
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zacx.serivce.dal.entity.CActivitydEtailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from c_activityd_etail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.CActivitydEtailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from c_activityd_etail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from c_activityd_etail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from c_activityd_etail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.CActivitydEtailExample" >
+    delete from c_activityd_etail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.CActivitydEtail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into c_activityd_etail (type_id, titile, desc1, 
+      desc2, image1, image2, 
+      sort, `status`, date_start, 
+      date_end, create_at, create_by, 
+      activity_id, url1, url2, 
+      body)
+    values (#{typeId,jdbcType=INTEGER}, #{titile,jdbcType=VARCHAR}, #{desc1,jdbcType=VARCHAR}, 
+      #{desc2,jdbcType=VARCHAR}, #{image1,jdbcType=VARCHAR}, #{image2,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{dateStart,jdbcType=TIMESTAMP}, 
+      #{dateEnd,jdbcType=TIMESTAMP}, #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{activityId,jdbcType=INTEGER}, #{url1,jdbcType=VARCHAR}, #{url2,jdbcType=VARCHAR}, 
+      #{body,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.CActivitydEtail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into c_activityd_etail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="titile != null" >
+        titile,
+      </if>
+      <if test="desc1 != null" >
+        desc1,
+      </if>
+      <if test="desc2 != null" >
+        desc2,
+      </if>
+      <if test="image1 != null" >
+        image1,
+      </if>
+      <if test="image2 != null" >
+        image2,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="dateStart != null" >
+        date_start,
+      </if>
+      <if test="dateEnd != null" >
+        date_end,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="url1 != null" >
+        url1,
+      </if>
+      <if test="url2 != null" >
+        url2,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="titile != null" >
+        #{titile,jdbcType=VARCHAR},
+      </if>
+      <if test="desc1 != null" >
+        #{desc1,jdbcType=VARCHAR},
+      </if>
+      <if test="desc2 != null" >
+        #{desc2,jdbcType=VARCHAR},
+      </if>
+      <if test="image1 != null" >
+        #{image1,jdbcType=VARCHAR},
+      </if>
+      <if test="image2 != null" >
+        #{image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="dateStart != null" >
+        #{dateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateEnd != null" >
+        #{dateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="url1 != null" >
+        #{url1,jdbcType=VARCHAR},
+      </if>
+      <if test="url2 != null" >
+        #{url2,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.CActivitydEtailExample" resultType="java.lang.Integer" >
+    select count(*) from c_activityd_etail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update c_activityd_etail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null" >
+        type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.titile != null" >
+        titile = #{record.titile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desc1 != null" >
+        desc1 = #{record.desc1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desc2 != null" >
+        desc2 = #{record.desc2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image1 != null" >
+        image1 = #{record.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image2 != null" >
+        image2 = #{record.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateStart != null" >
+        date_start = #{record.dateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dateEnd != null" >
+        date_end = #{record.dateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.url1 != null" >
+        url1 = #{record.url1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url2 != null" >
+        url2 = #{record.url2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.body != null" >
+        body = #{record.body,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update c_activityd_etail
+    set id = #{record.id,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      titile = #{record.titile,jdbcType=VARCHAR},
+      desc1 = #{record.desc1,jdbcType=VARCHAR},
+      desc2 = #{record.desc2,jdbcType=VARCHAR},
+      image1 = #{record.image1,jdbcType=VARCHAR},
+      image2 = #{record.image2,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
+      date_start = #{record.dateStart,jdbcType=TIMESTAMP},
+      date_end = #{record.dateEnd,jdbcType=TIMESTAMP},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      activity_id = #{record.activityId,jdbcType=INTEGER},
+      url1 = #{record.url1,jdbcType=VARCHAR},
+      url2 = #{record.url2,jdbcType=VARCHAR},
+      body = #{record.body,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update c_activityd_etail
+    set id = #{record.id,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      titile = #{record.titile,jdbcType=VARCHAR},
+      desc1 = #{record.desc1,jdbcType=VARCHAR},
+      desc2 = #{record.desc2,jdbcType=VARCHAR},
+      image1 = #{record.image1,jdbcType=VARCHAR},
+      image2 = #{record.image2,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
+      date_start = #{record.dateStart,jdbcType=TIMESTAMP},
+      date_end = #{record.dateEnd,jdbcType=TIMESTAMP},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      activity_id = #{record.activityId,jdbcType=INTEGER},
+      url1 = #{record.url1,jdbcType=VARCHAR},
+      url2 = #{record.url2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.CActivitydEtail" >
+    update c_activityd_etail
+    <set >
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="titile != null" >
+        titile = #{titile,jdbcType=VARCHAR},
+      </if>
+      <if test="desc1 != null" >
+        desc1 = #{desc1,jdbcType=VARCHAR},
+      </if>
+      <if test="desc2 != null" >
+        desc2 = #{desc2,jdbcType=VARCHAR},
+      </if>
+      <if test="image1 != null" >
+        image1 = #{image1,jdbcType=VARCHAR},
+      </if>
+      <if test="image2 != null" >
+        image2 = #{image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="dateStart != null" >
+        date_start = #{dateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateEnd != null" >
+        date_end = #{dateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="url1 != null" >
+        url1 = #{url1,jdbcType=VARCHAR},
+      </if>
+      <if test="url2 != null" >
+        url2 = #{url2,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zacx.serivce.dal.entity.CActivitydEtail" >
+    update c_activityd_etail
+    set type_id = #{typeId,jdbcType=INTEGER},
+      titile = #{titile,jdbcType=VARCHAR},
+      desc1 = #{desc1,jdbcType=VARCHAR},
+      desc2 = #{desc2,jdbcType=VARCHAR},
+      image1 = #{image1,jdbcType=VARCHAR},
+      image2 = #{image2,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      date_start = #{dateStart,jdbcType=TIMESTAMP},
+      date_end = #{dateEnd,jdbcType=TIMESTAMP},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      activity_id = #{activityId,jdbcType=INTEGER},
+      url1 = #{url1,jdbcType=VARCHAR},
+      url2 = #{url2,jdbcType=VARCHAR},
+      body = #{body,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.CActivitydEtail" >
+    update c_activityd_etail
+    set type_id = #{typeId,jdbcType=INTEGER},
+      titile = #{titile,jdbcType=VARCHAR},
+      desc1 = #{desc1,jdbcType=VARCHAR},
+      desc2 = #{desc2,jdbcType=VARCHAR},
+      image1 = #{image1,jdbcType=VARCHAR},
+      image2 = #{image2,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      date_start = #{dateStart,jdbcType=TIMESTAMP},
+      date_end = #{dateEnd,jdbcType=TIMESTAMP},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      activity_id = #{activityId,jdbcType=INTEGER},
+      url1 = #{url1,jdbcType=VARCHAR},
+      url2 = #{url2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,116 @@
+package com.zacx.gateway.passenger.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.annotation.MethodFlag;
+import com.zacx.core.enums.Code;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.gateway.base.base.PageResult;
+import com.zacx.gateway.base.base.Result;
+import com.zacx.gateway.base.util.WebUtils;
+import com.zacx.gateway.passenger.constants.PassengerApiUrl;
+import com.zacx.gateway.passenger.dto.LinesResult;
+import com.zacx.gateway.passenger.dto.lines.*;
+import com.zacx.serivce.line.api.HotzoneServiceApi;
+import com.zacx.serivce.line.api.LineServiceApi;
+import com.zacx.serivce.line.api.SiteServiceApi;
+import com.zacx.serivce.line.api.dto.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+
+/**
+ * @author gulx
+ * @Description 功能接口
+ * @Date 2018/9/27 19:37
+ * @Param
+ * @copyright 上海拜米网络科技有限公司
+ * @return
+ **/
+@Api(description = "路线模块")
+@RestController
+@RequestMapping(PassengerApiUrl.V1)
+public class LineController {
+
+    @Autowired
+    private SiteServiceApi siteServiceApi;
+    @Autowired
+    private LineServiceApi lineServiceApi;
+    @Autowired
+    private HotzoneServiceApi hotzoneServiceApi;
+
+
+    //region 获取相关城市的站点信息
+    @MethodFlag
+    @ApiOperation(value = "获取相关城市的站点信息")
+    @PostMapping(value = PassengerApiUrl.LINE_SITE_INFO_BY_CITY_CODE)
+    public Result<Map<String, List<SiteResult>>> getSiteInfosByCityCode(
+            @ApiParam(value = "城市列表", required = true) @RequestBody List<QuerySiteInfoByCityCodeCondition> params
+    ) {
+        if (null == params || params.isEmpty()) {
+            return Result.error(Code.getByCode(Code.ERROR_ARGUMENT.getDescription()), Code.ERROR_ARGUMENT.getDescription());
+        }
+
+        QuerySiteInfoByCityCodeConditionDTO dto = new QuerySiteInfoByCityCodeConditionDTO();
+        Map<String, Integer> map = new HashMap<>();
+        params.forEach(c -> {
+            map.put(c.getCityCode(), c.getLevel());
+        });
+        dto.setCodeLeverMap(map);
+
+        Map<String, List<SiteResult>> resultData = new HashMap<>();
+        Map<String, List<SiteDTO>> cityMap = siteServiceApi.getSiteInfosByCityCode(dto);
+        if (null != cityMap && !cityMap.isEmpty()) {
+            String rs = JSON.toJSONString(cityMap);
+            resultData = JSON.parseObject(rs, new TypeReference<HashMap<String, List<SiteResult>>>() {
+            });
+        }
+
+        return Result.success(resultData);
+    }
+    //endregion
+
+    //region 113 查询起始地与目的地（班次列表）
+    @MethodFlag
+    @ApiOperation(value = "根据线路id查班次")
+    @PostMapping(value = PassengerApiUrl.LINE_PLAN_INFO_BY_LINE)
+    public Result<PageResult<PlanResult>> getPlanInfoByLineId(@RequestBody QueryPlanByLineCondition condition) {
+        if (ObjectUtils.isNull(condition)||ObjectUtils.isNull(condition.getLineId())) {
+            return Result.error(Code.getByCode(Code.ERROR_ARGUMENT.getDescription()), Code.ERROR_ARGUMENT.getDescription());
+        }
+
+        LineDTO dto = new LineDTO();
+        dto.setId(condition.getLineId());
+        dto.setPageSize(condition.getPageSize());
+        dto.setPageIndex(condition.getPageIndex());
+        PageInfo<PlanDTO> pageInfo = lineServiceApi.getPlanInfoByLine(dto);
+
+        return WebUtils.pageDTOConvert2PageResult(pageInfo,PlanResult.class);
+    }
+    //endregion
+
+    @MethodFlag
+    @ApiOperation(value = "通过起始点或终点获取热区信息")
+    @PostMapping(value = PassengerApiUrl.LINE_GET_HOTZONE_INFO_BY_SITEID)
+    public Result<PageResult<HotzoneResult>> getHotzoneInfoBySiteId(@RequestBody QueryPlanBySiteCondition condition
+    ) {
+        if (ObjectUtils.isNull(condition)||ObjectUtils.isNull(condition.getSiteId())) {
+            return Result.error(Code.getByCode(Code.ERROR_ARGUMENT.getDescription()), Code.ERROR_ARGUMENT.getDescription());
+        }
+
+        HotzoneDTO dto=new HotzoneDTO();
+        dto.setSiteId(condition.getSiteId());
+        dto.setIsTemplate(false);
+        dto.setPageIndex(condition.getPageIndex());
+        dto.setPageSize(condition.getPageSize());
+        PageInfo<HotzoneDTO> pageInfo = hotzoneServiceApi.getHotzonePageInfo(dto);
+
+        return WebUtils.pageDTOConvert2PageResult(pageInfo,HotzoneResult.class);
+    }
+}

@@ -1,0 +1,43 @@
+package com.zacx.serivce.dal.entity;
+
+public class OEvaluateCategory {
+    private Integer id;
+
+    private String categoryName;
+
+    private Integer soft;
+
+    private Integer type;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Integer getSoft() {
+        return soft;
+    }
+
+    public void setSoft(Integer soft) {
+        this.soft = soft;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+}

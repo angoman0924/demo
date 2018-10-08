@@ -1,0 +1,82 @@
+package com.zacx.serivce.user.api.impl;
+
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.dal.entity.UMessage;
+import com.zacx.serivce.user.api.UserMessageApi;
+import com.zacx.serivce.user.api.dto.UserMessageDTO;
+import com.zacx.serivce.user.service.UserMessageService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * API实现：用户站内消息
+ *
+ * @author lwg
+ * @version 1.0
+ * @create 2018-10-07 12:01
+ **/
+
+@Service
+public class UserMessageApiImpl implements UserMessageApi {
+
+    @Resource
+    private UserMessageService userMessageService;
+
+    /**
+     * 站内消息-新增
+     * @return
+     */
+    @Override
+    public Integer insertSelective(UserMessageDTO dto) {
+        return userMessageService.insertSelective(dto);
+    }
+
+    /**
+     * 站内消息-修改
+     * @return
+     */
+    @Override
+    public Integer updateByPrimaryKeySelective(UserMessageDTO dto) {
+        return userMessageService.updateByPrimaryKeySelective(dto);
+    }
+
+    /**
+     * 站内消息-删除
+     * @return
+     */
+    @Override
+    public Integer deleteByPrimaryKey(Integer id) {
+        return userMessageService.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 站内消息-批量删除
+     * */
+    public Integer deleteByIds(List<Integer> ids){
+        return userMessageService.deleteByIds(ids);
+    }
+
+    /**
+     * 站内消息-根据Key查询
+     * */
+    @Override
+    public UserMessageDTO selectByKey(int id) {
+        UserMessageDTO dto = new UserMessageDTO();
+        UMessage uMessage = userMessageService.selectByKey(id);
+        BeanUtils.copyProperties(uMessage, dto);
+        return dto;
+    }
+
+    /**
+     * 站内消息-列表查询
+     * */
+    @Override
+    public List<UserMessageDTO> getMessageList(UserMessageDTO dto) {
+        List<UMessage> uMessageList = userMessageService.getUserMessageList(dto);
+        return ObjectUtils.ListEntity2ListDTO(uMessageList, UserMessageDTO.class);
+    }
+}

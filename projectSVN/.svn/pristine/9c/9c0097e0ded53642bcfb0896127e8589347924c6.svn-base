@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.SymFunctionpointMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.SymFunctionpoint" >
+    <id column="FunctionPointId" property="functionpointid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="FunctionKey" property="functionkey" jdbcType="VARCHAR" />
+    <result column="SiteMapId" property="sitemapid" jdbcType="INTEGER" />
+    <result column="Sort" property="sort" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FunctionPointId, `Name`, FunctionKey, SiteMapId, Sort
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.SymFunctionpointExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sym_functionpoint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sym_functionpoint
+    where FunctionPointId = #{functionpointid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sym_functionpoint
+    where FunctionPointId = #{functionpointid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.SymFunctionpointExample" >
+    delete from sym_functionpoint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.SymFunctionpoint" >
+    insert into sym_functionpoint (FunctionPointId, `Name`, FunctionKey, 
+      SiteMapId, Sort)
+    values (#{functionpointid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{functionkey,jdbcType=VARCHAR}, 
+      #{sitemapid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.SymFunctionpoint" >
+    insert into sym_functionpoint
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionpointid != null" >
+        FunctionPointId,
+      </if>
+      <if test="name != null" >
+        `Name`,
+      </if>
+      <if test="functionkey != null" >
+        FunctionKey,
+      </if>
+      <if test="sitemapid != null" >
+        SiteMapId,
+      </if>
+      <if test="sort != null" >
+        Sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionpointid != null" >
+        #{functionpointid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="functionkey != null" >
+        #{functionkey,jdbcType=VARCHAR},
+      </if>
+      <if test="sitemapid != null" >
+        #{sitemapid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.SymFunctionpointExample" resultType="java.lang.Integer" >
+    select count(*) from sym_functionpoint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sym_functionpoint
+    <set >
+      <if test="record.functionpointid != null" >
+        FunctionPointId = #{record.functionpointid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        `Name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.functionkey != null" >
+        FunctionKey = #{record.functionkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sitemapid != null" >
+        SiteMapId = #{record.sitemapid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sort != null" >
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sym_functionpoint
+    set FunctionPointId = #{record.functionpointid,jdbcType=VARCHAR},
+      `Name` = #{record.name,jdbcType=VARCHAR},
+      FunctionKey = #{record.functionkey,jdbcType=VARCHAR},
+      SiteMapId = #{record.sitemapid,jdbcType=INTEGER},
+      Sort = #{record.sort,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.SymFunctionpoint" >
+    update sym_functionpoint
+    <set >
+      <if test="name != null" >
+        `Name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="functionkey != null" >
+        FunctionKey = #{functionkey,jdbcType=VARCHAR},
+      </if>
+      <if test="sitemapid != null" >
+        SiteMapId = #{sitemapid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where FunctionPointId = #{functionpointid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.SymFunctionpoint" >
+    update sym_functionpoint
+    set `Name` = #{name,jdbcType=VARCHAR},
+      FunctionKey = #{functionkey,jdbcType=VARCHAR},
+      SiteMapId = #{sitemapid,jdbcType=INTEGER},
+      Sort = #{sort,jdbcType=INTEGER}
+    where FunctionPointId = #{functionpointid,jdbcType=VARCHAR}
+  </update>
+</mapper>

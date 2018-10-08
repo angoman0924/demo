@@ -1,0 +1,85 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LPlanTemplate {
+    private Integer id;
+
+    private String name;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private Integer lineId;
+
+    private Integer ticketNumber;
+
+    private Boolean isRelay;
+
+    private Integer carType;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(Integer lineId) {
+        this.lineId = lineId;
+    }
+
+    public Integer getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(Integer ticketNumber) {
+        this.ticketNumber = ticketNumber;
+    }
+
+    public Boolean getIsRelay() {
+        return isRelay;
+    }
+
+    public void setIsRelay(Boolean isRelay) {
+        this.isRelay = isRelay;
+    }
+
+    public Integer getCarType() {
+        return carType;
+    }
+
+    public void setCarType(Integer carType) {
+        this.carType = carType;
+    }
+}

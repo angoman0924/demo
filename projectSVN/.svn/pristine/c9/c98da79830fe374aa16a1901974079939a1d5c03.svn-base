@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UMessage;
+import com.zacx.serivce.dal.entity.UMessageExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UMessageMapper {
+    int countByExample(UMessageExample example);
+
+    int deleteByExample(UMessageExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UMessage record);
+
+    int insertSelective(UMessage record);
+
+    List<UMessage> selectByExample(UMessageExample example);
+
+    UMessage selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UMessage record, @Param("example") UMessageExample example);
+
+    int updateByExample(@Param("record") UMessage record, @Param("example") UMessageExample example);
+
+    int updateByPrimaryKeySelective(UMessage record);
+
+    int updateByPrimaryKey(UMessage record);
+}

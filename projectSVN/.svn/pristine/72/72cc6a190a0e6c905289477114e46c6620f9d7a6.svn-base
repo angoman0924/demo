@@ -1,0 +1,49 @@
+package com.zacx.core.model.base;
+
+
+
+//import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @classDesc: 功能描述:(实体类基类)
+ * @author: 顾理想
+ * @createTime: 2017年05月09日 18:25
+ * @version: v1.0
+ *
+ */
+public abstract class BaseEntity<ID> implements Serializable {
+   // @NotNull(message = "id不能为空", groups = {IdGroup.class})
+    protected ID id;//主键ID
+    protected Date createdAt;//创建时间
+    protected Date updatedAt;//更新时间
+
+
+
+
+    public ID getId() {
+        return id;
+    }
+
+    public void setId(ID id) {
+        this.id = id;
+    }
+
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}

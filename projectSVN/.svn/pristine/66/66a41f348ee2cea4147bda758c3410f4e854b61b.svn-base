@@ -1,0 +1,33 @@
+package com.zacx.serivce.basic.api.dto;
+
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+/**
+ * @author Liang Jun
+ * @version 1.0
+ * @desc 包车型号
+ * @date 2018年10月05日 21:22:41
+ **/
+@Data
+public class CharteredCarModelDTO {
+    private Integer id;
+    //车辆类型id
+    private Integer carTypeId;
+    //流水号
+    private String code;
+    //名称
+    private String name;
+    //车辆品牌
+    private String carBrand;
+    //车辆类型
+    private String carModel;
+    //座位数
+    private Integer seatNumber;
+    //单价（每公里）
+    private BigDecimal unitPrice;
+    //备注
+    private String remark;
+}

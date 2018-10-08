@@ -1,0 +1,80 @@
+/*
+*
+* BBankMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BBank;
+import com.zacx.serivce.dal.entity.BBankExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BBankMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(BBankExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(BBankExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(BBank record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(BBank record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<BBank> selectByExample(BBankExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    BBank selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") BBank record, @Param("example") BBankExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") BBank record, @Param("example") BBankExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(BBank record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(BBank record);
+}

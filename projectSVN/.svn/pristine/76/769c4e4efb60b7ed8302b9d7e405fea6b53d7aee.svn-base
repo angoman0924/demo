@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.UFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.UFeedback" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="imagepath" property="imagepath" jdbcType="VARCHAR" />
+    <result column="dispose_results" property="disposeResults" jdbcType="VARCHAR" />
+    <result column="dispose_time" property="disposeTime" jdbcType="TIMESTAMP" />
+    <result column="is_dispose" property="isDispose" jdbcType="BIT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, user_id, content, imagepath, dispose_results, dispose_time, is_dispose, 
+    `type`, remark, create_at, create_by, modify_at, modify_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.UFeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from u_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_feedback
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_feedback
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.UFeedbackExample" >
+    delete from u_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.UFeedback" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_feedback (code, user_id, content, 
+      imagepath, dispose_results, dispose_time, 
+      is_dispose, `type`, remark, 
+      create_at, create_by, modify_at, 
+      modify_by)
+    values (#{code,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{imagepath,jdbcType=VARCHAR}, #{disposeResults,jdbcType=VARCHAR}, #{disposeTime,jdbcType=TIMESTAMP}, 
+      #{isDispose,jdbcType=BIT}, #{type,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, 
+      #{modifyBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.UFeedback" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="imagepath != null" >
+        imagepath,
+      </if>
+      <if test="disposeResults != null" >
+        dispose_results,
+      </if>
+      <if test="disposeTime != null" >
+        dispose_time,
+      </if>
+      <if test="isDispose != null" >
+        is_dispose,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imagepath != null" >
+        #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="disposeResults != null" >
+        #{disposeResults,jdbcType=VARCHAR},
+      </if>
+      <if test="disposeTime != null" >
+        #{disposeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDispose != null" >
+        #{isDispose,jdbcType=BIT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.UFeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from u_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update u_feedback
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagepath != null" >
+        imagepath = #{record.imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disposeResults != null" >
+        dispose_results = #{record.disposeResults,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disposeTime != null" >
+        dispose_time = #{record.disposeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDispose != null" >
+        is_dispose = #{record.isDispose,jdbcType=BIT},
+      </if>
+      <if test="record.type != null" >
+        `type` = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null" >
+        modify_by = #{record.modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update u_feedback
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      imagepath = #{record.imagepath,jdbcType=VARCHAR},
+      dispose_results = #{record.disposeResults,jdbcType=VARCHAR},
+      dispose_time = #{record.disposeTime,jdbcType=TIMESTAMP},
+      is_dispose = #{record.isDispose,jdbcType=BIT},
+      `type` = #{record.type,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{record.modifyBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.UFeedback" >
+    update u_feedback
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imagepath != null" >
+        imagepath = #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="disposeResults != null" >
+        dispose_results = #{disposeResults,jdbcType=VARCHAR},
+      </if>
+      <if test="disposeTime != null" >
+        dispose_time = #{disposeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDispose != null" >
+        is_dispose = #{isDispose,jdbcType=BIT},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.UFeedback" >
+    update u_feedback
+    set code = #{code,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      imagepath = #{imagepath,jdbcType=VARCHAR},
+      dispose_results = #{disposeResults,jdbcType=VARCHAR},
+      dispose_time = #{disposeTime,jdbcType=TIMESTAMP},
+      is_dispose = #{isDispose,jdbcType=BIT},
+      `type` = #{type,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

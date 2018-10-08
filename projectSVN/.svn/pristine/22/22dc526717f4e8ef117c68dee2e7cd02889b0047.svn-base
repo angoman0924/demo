@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UEmergencyContact;
+import com.zacx.serivce.dal.entity.UEmergencyContactExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UEmergencyContactMapper {
+    int countByExample(UEmergencyContactExample example);
+
+    int deleteByExample(UEmergencyContactExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UEmergencyContact record);
+
+    int insertSelective(UEmergencyContact record);
+
+    List<UEmergencyContact> selectByExample(UEmergencyContactExample example);
+
+    UEmergencyContact selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UEmergencyContact record, @Param("example") UEmergencyContactExample example);
+
+    int updateByExample(@Param("record") UEmergencyContact record, @Param("example") UEmergencyContactExample example);
+
+    int updateByPrimaryKeySelective(UEmergencyContact record);
+
+    int updateByPrimaryKey(UEmergencyContact record);
+}

@@ -1,0 +1,87 @@
+package com.zacx.gateway.passenger.controller;
+
+import com.zacx.core.annotation.MethodFlag;
+import com.zacx.core.enums.Code;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.gateway.base.base.Result;
+import com.zacx.gateway.passenger.constants.PassengerApiUrl;
+import com.zacx.gateway.passenger.dto.user.BankAccountEnter;
+import com.zacx.gateway.passenger.dto.user.BankAccountResult;
+import com.zacx.serivce.user.api.BankAccountServiceApi;
+import com.zacx.serivce.user.api.dto.BankAccountDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * 用户绑定银行卡
+ * Created by Wu Peng on 2018/10/7.
+ */
+@Api(description = "用户绑定银行卡模块")
+@RestController
+@RequestMapping(PassengerApiUrl.BANK)
+public class BankAccountController {
+
+    @Resource
+    private BankAccountServiceApi bankAccountServiceApi;
+
+    @MethodFlag
+    @ApiOperation(value = "新增银行卡信息")
+    @PostMapping(PassengerApiUrl.BANKACCOUNT)
+    public Result<BankAccountResult> insertBankAccount(@RequestBody BankAccountEnter bankAccountEnter) {
+        //是否是根据用户输入的账号，查询该账号所属银行，找到该银行再bank表中的id,获取用户的身份证？
+        //用户的手机号码绑定，是绑定银行的手机号码，还是平台用户的手机号码
+
+        bankAccountEnter.setType(1);//类型为银行卡
+        BankAccountDTO bankAccountDTO = new BankAccountDTO();
+        BeanUtils.copyProperties(bankAccountEnter,bankAccountDTO);
+        Integer result = bankAccountServiceApi.insert(bankAccountDTO);
+        BankAccountResult bankAccountResult = new BankAccountResult();
+        BeanUtils.copyProperties(bankAccountDTO,bankAccountResult);
+        if(result > 0){
+            return Result.success(bankAccountResult);
+        }else{
+            return Result.error(Code.ERROR_DB_OPERATE,"新增个人银行卡失败");
+        }
+    }
+
+    @MethodFlag//跳过注解
+    @ApiOperation(value = "删除个人银行卡信息")
+    @PostMapping("deleteBankAccount")
+    public Result<String> deleteBankAccount(@RequestBody Integer bankAccountId){
+        if( null == bankAccountId){
+            return  Result.error(Code.ERROR_ARGUMENT,"ID不能为空");
+        }
+        Integer result = bankAccountServiceApi.deleteByPrimaryKey(bankAccountId);
+        if(result == 0){
+            return Result.error(Code.ERROR_DB_OPERATE,"删除失败");
+        }
+        return Result.success("删除成功");
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "查询个人银行卡列表信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", paramType = "query", required = true)
+    })
+    @GetMapping(PassengerApiUrl.ID)
+    public Result<List<BankAccountResult>> selectByUserBankAccount( Integer id){
+        if( null == id){
+            return  Result.error(Code.ERROR_ARGUMENT,"用户编号不能为空");
+        }
+        BankAccountDTO bankAccountDTO = new BankAccountDTO();
+        bankAccountDTO.setId(id);
+        List<BankAccountDTO> bankAccountDTOList = bankAccountServiceApi.selectByExample(bankAccountDTO);
+        List<BankAccountResult> bankAccountResults = ObjectUtils.ListEntity2ListDTO(bankAccountDTOList, BankAccountResult.class);
+        if(0 == bankAccountResults.size()){
+            return  Result.error(Code.ERROR_DATA_NOT_FOUND,"查询无结果");
+        }
+        return Result.success(bankAccountResults);
+    }
+}

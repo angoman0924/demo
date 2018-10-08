@@ -1,0 +1,146 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class ORefund {
+    private Integer id;
+
+    private String code;
+
+    private Integer orderId;
+
+    private Integer uesrId;
+
+    private BigDecimal serviceCharge;
+
+    private Integer refundType;
+
+    private Integer oldPlanId;
+
+    private Integer newPlanId;
+
+    private Integer status;
+
+    private String remark;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getUesrId() {
+        return uesrId;
+    }
+
+    public void setUesrId(Integer uesrId) {
+        this.uesrId = uesrId;
+    }
+
+    public BigDecimal getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(BigDecimal serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public Integer getRefundType() {
+        return refundType;
+    }
+
+    public void setRefundType(Integer refundType) {
+        this.refundType = refundType;
+    }
+
+    public Integer getOldPlanId() {
+        return oldPlanId;
+    }
+
+    public void setOldPlanId(Integer oldPlanId) {
+        this.oldPlanId = oldPlanId;
+    }
+
+    public Integer getNewPlanId() {
+        return newPlanId;
+    }
+
+    public void setNewPlanId(Integer newPlanId) {
+        this.newPlanId = newPlanId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

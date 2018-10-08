@@ -1,0 +1,65 @@
+package com.zacx.serivce.order.api.dto;
+
+import com.zacx.core.enums.SourceEnum;
+import com.zacx.serivce.order.api.enums.BusinessTypeEnum;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @description: 班线预算
+ * 1.下单时的总金额 = 车票数量 * 票价 - 优惠券金额 + 保险费 + 接车费用 + 送人费用
+ * 2.未付款金额
+ *
+ * @author: kiting
+ * @date: 2018年10月3日 19:25
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class CreateOrderDTO {
+    //数据来源
+    SourceEnum sourceType;
+    //业务类型
+    BusinessTypeEnum businessTypeEnum;
+
+    //用户ID
+    private Integer userId;
+
+    //排班可已查到线路（包车排班是支付后自动生成，没有线路数据lineID关联；schedulingId是排班后统一更新）
+    //排班ID
+    private Integer planId;
+
+    //乘客ID列表
+    private List<Integer> passengerIds;
+
+    //保险ID列表和份数
+    private List<Integer> insuranceIds;
+    private Integer insuranceCount;
+
+
+    //包车业务：接车时间
+    private Date startTime;
+    //包车业务：乘坐人数
+    private Integer ticketNumber;
+    //包车业务：车的品牌（定义计价规则，临时1公里3元）
+    private Integer charteredCarBrand;
+
+
+    //接送信息，接送类型可定义为3，计算距离（价格相关）；数据库存经纬度（经度,纬度）
+    //接车坐标经度
+    private BigDecimal takeLng;
+    //接车坐标纬度
+    private BigDecimal takeLat;
+    //接车详细地址
+    private String takeAddress;
+    //送人坐标经度
+    private BigDecimal giveLng;
+    //送人坐标纬度
+    private BigDecimal giveLat;
+    //'送人详细地址
+    private String giveAddress;
+
+}

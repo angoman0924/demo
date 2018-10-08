@@ -1,0 +1,80 @@
+/*
+*
+* LCar2LineMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LCar2Line;
+import com.zacx.serivce.dal.entity.LCar2LineExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LCar2LineMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(LCar2LineExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(LCar2LineExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(LCar2Line record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(LCar2Line record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<LCar2Line> selectByExample(LCar2LineExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    LCar2Line selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") LCar2Line record, @Param("example") LCar2LineExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") LCar2Line record, @Param("example") LCar2LineExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(LCar2Line record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(LCar2Line record);
+}

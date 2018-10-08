@@ -1,0 +1,322 @@
+package com.zacx.serivce.line.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.enums.SchedulingStatus;
+import com.zacx.core.util.DateUtils;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.core.util.StringUtils;
+import com.zacx.serivce.basic.api.SConfigServiceApi;
+import com.zacx.serivce.basic.api.dto.SConfigDTO;
+import com.zacx.serivce.cache.key.RedisKeys;
+import com.zacx.serivce.cache.key.enums.SerialCodeRuleEnum;
+import com.zacx.serivce.dal.entity.*;
+import com.zacx.serivce.dal.entity.ext.LSchedulingExt;
+import com.zacx.serivce.line.api.SchedulingServiceApi;
+import com.zacx.serivce.line.api.dto.*;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.*;
+import com.zacx.serivce.order.api.OrderManagerServiceApi;
+import com.zacx.serivce.order.api.dto.OrderTicketDTO;
+import com.zacx.serivce.order.api.dto.TicketDTO;
+import com.zacx.serivce.service.SerialService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+/**
+ * 班次调度api服务
+ * Created by song on 2018/10/5.
+ */
+@Service
+public class SchedulingServiceApiImpl implements SchedulingServiceApi {
+    Logger logger= LoggerFactory.getLogger(SchedulingServiceApiImpl.class);
+    @Autowired
+    private SchedulingService schedulingService;
+    @Autowired
+    private SchedulingMoveApplySerivce schedulingMoveApplySerivce;
+    @Autowired
+    private SerialService serialService;
+    @Autowired
+    private CarService carService;
+    @Autowired
+    private SiteService siteService;
+    @Autowired
+    private HotzoneService hotzoneService;
+    @Autowired
+    private SConfigServiceApi configServiceApi;
+    @Autowired(required = false)
+    private OrderManagerServiceApi orderManagerServiceApi;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer insert(SchedulingDTO dto) throws LineServiceException {
+        logger.info("SchedulingServiceApi.insert,params:{}", JSON.toJSONString(dto));
+        LScheduling record=new LScheduling();
+        BeanUtils.copyProperties(dto,record);
+
+        String code = serialService.generateCode(SerialCodeRuleEnum.SCHEDULING);
+        if (StringUtils.isBlank(code)) {
+            throw new LineServiceException("编号获取失败");
+        }
+        record.setCode(code);
+        record.setModifyAt(new Date());
+        record.setCreateAt(new Date());
+
+        Integer id = schedulingService.insert(record);
+        logger.info("id={}",id);
+        return id;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(SchedulingDTO dto) throws LineServiceException {
+        logger.info("SchedulingServiceApi.update,params:{}", JSON.toJSONString(dto));
+        LScheduling record=new LScheduling();
+        BeanUtils.copyProperties(dto,record);
+        int r = schedulingService.update(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException {
+        logger.info("SchedulingServiceApi.removeListByIds,params:{}", JSON.toJSONString(ids));
+        int r = schedulingService.removeListByIds(ids,userCode);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    public PageInfo<SchedulingDTO> getSchedulingPageInfo(SchedulingDTO dto) {
+        logger.info("SchedulingServiceApi.getSchedulingPageInfo,params:{}",JSON.toJSONString(dto));
+
+        PageInfo<LScheduling> pageInfo = schedulingService.getSchedulingPageInfo(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<SchedulingDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,SchedulingDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+
+        return page;
+    }
+
+    //我的排班
+    @Override
+    public PageInfo<SchedulingExtDTO> getSchedulingPageInfoByDriver(QuerySchedulingByDriverConditionDTO dto) {
+        logger.info("SchedulingServiceApi.getSchedulingPageInfoByDriver,params:{}",JSON.toJSONString(dto));
+        //1.查询安排给我的车辆
+        LCar2UserExample cExample=new LCar2UserExample();
+        cExample.createCriteria().andUserIdEqualTo(dto.getDriverId());
+        Set<Integer> carIds=new HashSet<>();
+        List<LCar2User> car2UserList = carService.getCar2UserList(cExample);
+        if(null!=car2UserList&&!car2UserList.isEmpty()){
+            for(int i=0;i<car2UserList.size();i++){
+                carIds.add(car2UserList.get(i).getCarId());
+            }
+        }
+        //2.查询我的排班
+        PageInfo<LSchedulingExt> pageInfo = schedulingService.getSchedulingPageInfoByDriver(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<SchedulingExtDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,SchedulingExtDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+
+        return page;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int schedulingMoveApply(List<SchedulingMoveApplyDTO> dtos) throws LineServiceException {
+        logger.info("SchedulingServiceApi.schedulingMoveApply,params:{}", JSON.toJSONString(dtos));
+        for(SchedulingMoveApplyDTO dto:dtos) {
+            LSchedulingMoveApply record = new LSchedulingMoveApply();
+            BeanUtils.copyProperties(dto, record);
+
+            String code = serialService.generateCode(SerialCodeRuleEnum.SCHEDULING_MOVE_APPLY);
+            if (StringUtils.isBlank(code)) {
+                throw new LineServiceException("编号获取失败");
+            }
+            record.setCode(code);
+            record.setModifyAt(new Date());
+            record.setCreateAt(new Date());
+
+            int r = schedulingMoveApplySerivce.insert(record);
+            if (r == 1) {
+                LScheduling byPrimaryKey = schedulingService.findByPrimaryKey(dto.getSchedulingId());
+                if (null != byPrimaryKey||byPrimaryKey.getStatus()!=SchedulingStatus.WAITING.getValue()) {
+                    LScheduling lScheduling = new LScheduling();
+                    lScheduling.setId(dto.getSchedulingId());
+                    lScheduling.setStatus(SchedulingStatus.MOVE_APPLYING.getValue());
+                    lScheduling.setModifyAt(new Date());
+                    lScheduling.setModifyBy(dto.getCreateBy());
+
+                    schedulingService.update(lScheduling);
+                } else {
+                    throw new LineServiceException("原排班信息不存在或者状态不支持调班");
+                }
+            } else {
+                throw new LineServiceException("调班申请写入失败");
+            }
+        }
+        return 1;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int driverSign(SchedulingDTO dto) throws LineServiceException {
+        logger.info("SchedulingServiceApi.driverSign,params:{}",JSON.toJSONString(dto));
+        //1.判断是否存在有未完成的班次(当前用户记已签到状态)
+        LSchedulingExample example= new LSchedulingExample();
+        example.createCriteria().andDriverIdEqualTo(dto.getDriverId()).andStatusEqualTo(SchedulingStatus.SIGNED.getValue());
+        List<LScheduling> schedulingListByExample = schedulingService.getSchedulingListByExample(example);
+        if(null!=schedulingListByExample&&schedulingListByExample.size()>0){
+            throw new LineServiceException("存在已签到未结束的班次");
+        }
+        //2.获取当前班次的信息
+        LScheduling byPrimaryKey = schedulingService.findByPrimaryKey(dto.getId());
+        if(ObjectUtils.isNull(byPrimaryKey)){
+            throw new LineServiceException("当前排班信息不存在");
+        }
+        //3.判断当前状态是否是待签到
+        if(byPrimaryKey.getStatus()!=SchedulingStatus.WAITING.getValue()){
+            throw new LineServiceException("当前状态不支持签到");
+        }
+        //4.检验当前班次开车时间是否在签到前规定时间外 默认半小时
+        SConfigDTO config = configServiceApi.findByConfigKey(RedisKeys.SCHEDULING_START_SURPLUS_MINUTES);
+        if(byPrimaryKey.getStartTime().compareTo(new Date())>0
+                && DateUtils.getMinutes(new Date(),byPrimaryKey.getStartTime())<=Long.valueOf(config.getConfigValue())){
+            dto.setModifyAt(new Date());
+            return this.update(dto);
+        }else{
+            throw new LineServiceException("签到时间已超过，不能签到");
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int schedulingCompleteByDriver(SchedulingDTO dto) throws LineServiceException {
+        logger.info("SchedulingServiceApi.schedulingCompleteByDriver,params:{}",JSON.toJSONString(dto));
+        //1.获取当前班次的信息
+        LScheduling byPrimaryKey = schedulingService.findByPrimaryKey(dto.getId());
+        if(ObjectUtils.isNull(byPrimaryKey)){
+            throw new LineServiceException("当前排班信息不存在");
+        }
+        if(byPrimaryKey.getDriverId()!=dto.getDriverId()){
+            throw new LineServiceException("非本人班次不能结束");
+        }
+        //2.判断当前状态是否可以结束 已签到的可以
+        if(byPrimaryKey.getStatus()!=SchedulingStatus.SIGNED.getValue()){
+            throw new LineServiceException("当前状态不能结束");
+        }
+        //3.更改班次状态
+        dto.setModifyAt(new Date());
+        this.update(dto);
+
+        //3.更改订单及车票状态
+        orderManagerServiceApi.finishScheduling(dto.getId());
+
+        return 1;
+    }
+
+    @Override
+    public SchedulingDTO findByPrimaryKey(Integer id) {
+        logger.info("SchedulingServiceApi.findByPrimaryKey,params:{}",id);
+        LScheduling byPrimaryKey = schedulingService.findByPrimaryKey(id);
+        if(byPrimaryKey!=null){
+            SchedulingDTO dto=new SchedulingDTO();
+            BeanUtils.copyProperties(byPrimaryKey,dto);
+            logger.info("dto:{}",JSON.toJSONString(dto));
+            return dto;
+        }
+        return null;
+    }
+
+    @Override
+    public PageInfo<SchedulingExtDTO> getSchedulingHistory(QuerySchedulingHistoryConditionDTO dto) {
+        logger.info("SchedulingServiceApi.getSchedulingHistory,params:{}",JSON.toJSONString(dto));
+
+        PageInfo<LSchedulingExt> pageInfo = schedulingService.getSchedulingHistory(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<SchedulingExtDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,SchedulingExtDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+        return page;
+    }
+
+    @Override
+    public SchedulingSiteHotzonePassengerDTO getSchedulingSiteHotzonePassengerInfo(QuerySchedulingSiteHotzonePassengerConditionDTO condition) {
+        logger.info("SchedulingServiceApi.getSchedulingSiteHotzonePassengerInfo,params:{}",JSON.toJSONString(condition));
+        SchedulingSiteHotzonePassengerDTO resultDTO=new SchedulingSiteHotzonePassengerDTO();
+        //1.排班信息 并判断状态
+        LScheduling scheduling = schedulingService.findByPrimaryKey(condition.getSchedulingId());
+        if(null==scheduling){
+            throw new LineServiceException("排班信息不存在");
+        }
+
+        SchedulingDTO schedulingDTO=new SchedulingDTO();
+        BeanUtils.copyProperties(scheduling,schedulingDTO);
+        resultDTO.setScheduling(schedulingDTO);
+
+        //2.站点信息
+        SiteHotzonePassengerDTO siteHotzonePassengerDTO=new SiteHotzonePassengerDTO();
+        LSite site = siteService.findByPrimaryKey(condition.getSiteId());
+        SiteDTO siteDTO=new SiteDTO();
+        if(null!=site) {
+            BeanUtils.copyProperties(site, siteDTO);
+        }
+        siteHotzonePassengerDTO.setSite(siteDTO);
+
+        //3.热区信息
+        List<HotzoneDTO> hotzoneDTOList=new ArrayList<>();
+        LHotzoneExample example=new LHotzoneExample();
+        example.createCriteria().andSiteIdEqualTo(condition.getSiteId());
+        List<LHotzone> lHotzoneList = hotzoneService.getLHotzoneList(example);
+        if(null!=lHotzoneList&&!lHotzoneList.isEmpty()){
+            hotzoneDTOList=ObjectUtils.listEntityConvert2ListDTO(lHotzoneList,HotzoneDTO.class);
+        }
+        siteHotzonePassengerDTO.setHotzones(hotzoneDTOList);
+
+        //4.乘客信息
+        TicketInfoListDTO ticketInfoListBy = this.getTicketInfoListBy(condition.getSchedulingId());
+        if(null!=ticketInfoListBy&&null!=ticketInfoListBy.getList()){
+            siteHotzonePassengerDTO.setPassengers(ticketInfoListBy.getList());
+        }
+
+        //最后组装数据
+        resultDTO.setSiteInfo(siteHotzonePassengerDTO);
+        logger.info("result:{}",JSON.toJSONString(resultDTO));
+
+        return resultDTO;
+    }
+
+    @Override
+    public TicketInfoListDTO getTicketInfoListBy(Integer scheduingId) {
+        logger.info("SchedulingServiceApi.getTicketInfoListBy,params:{}",scheduingId);
+        List<OrderTicketDTO> orderTickets = orderManagerServiceApi.getOrderTicketBy(scheduingId);
+
+        List<TicketInfoDTO> list=new ArrayList<>();
+        if(null!=orderTickets&&!orderTickets.isEmpty()){
+            for (OrderTicketDTO item:orderTickets){
+                List<TicketDTO> ticketList = item.getTicketList();
+                ticketList.forEach(i->{
+                    TicketInfoDTO dto=new TicketInfoDTO();
+                    BeanUtils.copyProperties(i,dto);
+                    list.add(dto);
+                });
+            }
+        }
+
+        TicketInfoListDTO rs=new TicketInfoListDTO();
+        rs.setList(list);
+        logger.info("===========result:{}",rs);
+        return rs;
+    }
+}

@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.OOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.OOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="plan_id" property="planId" jdbcType="INTEGER" />
+    <result column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="site_start_name" property="siteStartName" jdbcType="VARCHAR" />
+    <result column="site_end_name" property="siteEndName" jdbcType="VARCHAR" />
+    <result column="scheduling_id" property="schedulingId" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="ticket_number" property="ticketNumber" jdbcType="INTEGER" />
+    <result column="ticket_cost" property="ticketCost" jdbcType="DECIMAL" />
+    <result column="insurance_cost" property="insuranceCost" jdbcType="DECIMAL" />
+    <result column="coupon_cost" property="couponCost" jdbcType="DECIMAL" />
+    <result column="take_cost" property="takeCost" jdbcType="DECIMAL" />
+    <result column="take_coordinate" property="takeCoordinate" jdbcType="VARCHAR" />
+    <result column="take_address" property="takeAddress" jdbcType="VARCHAR" />
+    <result column="give_cost" property="giveCost" jdbcType="DECIMAL" />
+    <result column="give_coordinate" property="giveCoordinate" jdbcType="VARCHAR" />
+    <result column="give_address" property="giveAddress" jdbcType="VARCHAR" />
+    <result column="total_cost" property="totalCost" jdbcType="DECIMAL" />
+    <result column="unpaid_cost" property="unpaidCost" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="travel_time" property="travelTime" jdbcType="INTEGER" />
+    <result column="travel_distance" property="travelDistance" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="relay_type" property="relayType" jdbcType="INTEGER" />
+    <result column="is_self" property="isSelf" jdbcType="BIT" />
+    <result column="is_changed" property="isChanged" jdbcType="BIT" />
+    <result column="is_evaluated" property="isEvaluated" jdbcType="BIT" />
+    <result column="chartered_car_brand" property="charteredCarBrand" jdbcType="INTEGER" />
+    <result column="chartered_car_model" property="charteredCarModel" jdbcType="VARCHAR" />
+    <result column="business_type" property="businessType" jdbcType="INTEGER" />
+    <result column="other_platform_plan_code" property="otherPlatformPlanCode" jdbcType="VARCHAR" />
+    <result column="other_platform_id" property="otherPlatformId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_invoice" property="isInvoice" jdbcType="INTEGER" />
+    <result column="tax_voucher" property="taxVoucher" jdbcType="VARCHAR" />
+    <result column="tax_time" property="taxTime" jdbcType="TIMESTAMP" />
+    <result column="source_type" property="sourceType" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, user_id, plan_id, line_id, site_start_name, site_end_name, scheduling_id, 
+    car_id, start_time, ticket_number, ticket_cost, insurance_cost, coupon_cost, take_cost, 
+    take_coordinate, take_address, give_cost, give_coordinate, give_address, total_cost, 
+    unpaid_cost, pay_type, user_phone, travel_time, travel_distance, `status`, relay_type, 
+    is_self, is_changed, is_evaluated, chartered_car_brand, chartered_car_model, business_type, 
+    other_platform_plan_code, other_platform_id, remark, is_invoice, tax_voucher, tax_time, 
+    source_type, create_at, create_by, modify_at, modify_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.OOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from o_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from o_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from o_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.OOrderExample" >
+    delete from o_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.OOrder" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into o_order (code, user_id, plan_id, 
+      line_id, site_start_name, site_end_name, 
+      scheduling_id, car_id, start_time, 
+      ticket_number, ticket_cost, insurance_cost, 
+      coupon_cost, take_cost, take_coordinate, 
+      take_address, give_cost, give_coordinate, 
+      give_address, total_cost, unpaid_cost, 
+      pay_type, user_phone, travel_time, 
+      travel_distance, `status`, relay_type, 
+      is_self, is_changed, is_evaluated, 
+      chartered_car_brand, chartered_car_model, business_type, 
+      other_platform_plan_code, other_platform_id, 
+      remark, is_invoice, tax_voucher, 
+      tax_time, source_type, create_at, 
+      create_by, modify_at, modify_by
+      )
+    values (#{code,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{planId,jdbcType=INTEGER}, 
+      #{lineId,jdbcType=INTEGER}, #{siteStartName,jdbcType=VARCHAR}, #{siteEndName,jdbcType=VARCHAR}, 
+      #{schedulingId,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{ticketNumber,jdbcType=INTEGER}, #{ticketCost,jdbcType=DECIMAL}, #{insuranceCost,jdbcType=DECIMAL}, 
+      #{couponCost,jdbcType=DECIMAL}, #{takeCost,jdbcType=DECIMAL}, #{takeCoordinate,jdbcType=VARCHAR}, 
+      #{takeAddress,jdbcType=VARCHAR}, #{giveCost,jdbcType=DECIMAL}, #{giveCoordinate,jdbcType=VARCHAR}, 
+      #{giveAddress,jdbcType=VARCHAR}, #{totalCost,jdbcType=DECIMAL}, #{unpaidCost,jdbcType=DECIMAL}, 
+      #{payType,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR}, #{travelTime,jdbcType=INTEGER}, 
+      #{travelDistance,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{relayType,jdbcType=INTEGER}, 
+      #{isSelf,jdbcType=BIT}, #{isChanged,jdbcType=BIT}, #{isEvaluated,jdbcType=BIT}, 
+      #{charteredCarBrand,jdbcType=INTEGER}, #{charteredCarModel,jdbcType=VARCHAR}, #{businessType,jdbcType=INTEGER}, 
+      #{otherPlatformPlanCode,jdbcType=VARCHAR}, #{otherPlatformId,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{isInvoice,jdbcType=INTEGER}, #{taxVoucher,jdbcType=VARCHAR}, 
+      #{taxTime,jdbcType=TIMESTAMP}, #{sourceType,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.OOrder" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into o_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="siteStartName != null" >
+        site_start_name,
+      </if>
+      <if test="siteEndName != null" >
+        site_end_name,
+      </if>
+      <if test="schedulingId != null" >
+        scheduling_id,
+      </if>
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="ticketNumber != null" >
+        ticket_number,
+      </if>
+      <if test="ticketCost != null" >
+        ticket_cost,
+      </if>
+      <if test="insuranceCost != null" >
+        insurance_cost,
+      </if>
+      <if test="couponCost != null" >
+        coupon_cost,
+      </if>
+      <if test="takeCost != null" >
+        take_cost,
+      </if>
+      <if test="takeCoordinate != null" >
+        take_coordinate,
+      </if>
+      <if test="takeAddress != null" >
+        take_address,
+      </if>
+      <if test="giveCost != null" >
+        give_cost,
+      </if>
+      <if test="giveCoordinate != null" >
+        give_coordinate,
+      </if>
+      <if test="giveAddress != null" >
+        give_address,
+      </if>
+      <if test="totalCost != null" >
+        total_cost,
+      </if>
+      <if test="unpaidCost != null" >
+        unpaid_cost,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="travelTime != null" >
+        travel_time,
+      </if>
+      <if test="travelDistance != null" >
+        travel_distance,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="relayType != null" >
+        relay_type,
+      </if>
+      <if test="isSelf != null" >
+        is_self,
+      </if>
+      <if test="isChanged != null" >
+        is_changed,
+      </if>
+      <if test="isEvaluated != null" >
+        is_evaluated,
+      </if>
+      <if test="charteredCarBrand != null" >
+        chartered_car_brand,
+      </if>
+      <if test="charteredCarModel != null" >
+        chartered_car_model,
+      </if>
+      <if test="businessType != null" >
+        business_type,
+      </if>
+      <if test="otherPlatformPlanCode != null" >
+        other_platform_plan_code,
+      </if>
+      <if test="otherPlatformId != null" >
+        other_platform_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isInvoice != null" >
+        is_invoice,
+      </if>
+      <if test="taxVoucher != null" >
+        tax_voucher,
+      </if>
+      <if test="taxTime != null" >
+        tax_time,
+      </if>
+      <if test="sourceType != null" >
+        source_type,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="siteStartName != null" >
+        #{siteStartName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteEndName != null" >
+        #{siteEndName,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingId != null" >
+        #{schedulingId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketNumber != null" >
+        #{ticketNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ticketCost != null" >
+        #{ticketCost,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceCost != null" >
+        #{insuranceCost,jdbcType=DECIMAL},
+      </if>
+      <if test="couponCost != null" >
+        #{couponCost,jdbcType=DECIMAL},
+      </if>
+      <if test="takeCost != null" >
+        #{takeCost,jdbcType=DECIMAL},
+      </if>
+      <if test="takeCoordinate != null" >
+        #{takeCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="takeAddress != null" >
+        #{takeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="giveCost != null" >
+        #{giveCost,jdbcType=DECIMAL},
+      </if>
+      <if test="giveCoordinate != null" >
+        #{giveCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="giveAddress != null" >
+        #{giveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCost != null" >
+        #{totalCost,jdbcType=DECIMAL},
+      </if>
+      <if test="unpaidCost != null" >
+        #{unpaidCost,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="travelTime != null" >
+        #{travelTime,jdbcType=INTEGER},
+      </if>
+      <if test="travelDistance != null" >
+        #{travelDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="relayType != null" >
+        #{relayType,jdbcType=INTEGER},
+      </if>
+      <if test="isSelf != null" >
+        #{isSelf,jdbcType=BIT},
+      </if>
+      <if test="isChanged != null" >
+        #{isChanged,jdbcType=BIT},
+      </if>
+      <if test="isEvaluated != null" >
+        #{isEvaluated,jdbcType=BIT},
+      </if>
+      <if test="charteredCarBrand != null" >
+        #{charteredCarBrand,jdbcType=INTEGER},
+      </if>
+      <if test="charteredCarModel != null" >
+        #{charteredCarModel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="otherPlatformPlanCode != null" >
+        #{otherPlatformPlanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherPlatformId != null" >
+        #{otherPlatformId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isInvoice != null" >
+        #{isInvoice,jdbcType=INTEGER},
+      </if>
+      <if test="taxVoucher != null" >
+        #{taxVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTime != null" >
+        #{taxTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.OOrderExample" resultType="java.lang.Integer" >
+    select count(*) from o_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update o_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.planId != null" >
+        plan_id = #{record.planId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineId != null" >
+        line_id = #{record.lineId,jdbcType=INTEGER},
+      </if>
+      <if test="record.siteStartName != null" >
+        site_start_name = #{record.siteStartName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteEndName != null" >
+        site_end_name = #{record.siteEndName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schedulingId != null" >
+        scheduling_id = #{record.schedulingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.carId != null" >
+        car_id = #{record.carId,jdbcType=INTEGER},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ticketNumber != null" >
+        ticket_number = #{record.ticketNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.ticketCost != null" >
+        ticket_cost = #{record.ticketCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.insuranceCost != null" >
+        insurance_cost = #{record.insuranceCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponCost != null" >
+        coupon_cost = #{record.couponCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.takeCost != null" >
+        take_cost = #{record.takeCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.takeCoordinate != null" >
+        take_coordinate = #{record.takeCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.takeAddress != null" >
+        take_address = #{record.takeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveCost != null" >
+        give_cost = #{record.giveCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.giveCoordinate != null" >
+        give_coordinate = #{record.giveCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveAddress != null" >
+        give_address = #{record.giveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalCost != null" >
+        total_cost = #{record.totalCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.unpaidCost != null" >
+        unpaid_cost = #{record.unpaidCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.userPhone != null" >
+        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.travelTime != null" >
+        travel_time = #{record.travelTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.travelDistance != null" >
+        travel_distance = #{record.travelDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.relayType != null" >
+        relay_type = #{record.relayType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isSelf != null" >
+        is_self = #{record.isSelf,jdbcType=BIT},
+      </if>
+      <if test="record.isChanged != null" >
+        is_changed = #{record.isChanged,jdbcType=BIT},
+      </if>
+      <if test="record.isEvaluated != null" >
+        is_evaluated = #{record.isEvaluated,jdbcType=BIT},
+      </if>
+      <if test="record.charteredCarBrand != null" >
+        chartered_car_brand = #{record.charteredCarBrand,jdbcType=INTEGER},
+      </if>
+      <if test="record.charteredCarModel != null" >
+        chartered_car_model = #{record.charteredCarModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessType != null" >
+        business_type = #{record.businessType,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherPlatformPlanCode != null" >
+        other_platform_plan_code = #{record.otherPlatformPlanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherPlatformId != null" >
+        other_platform_id = #{record.otherPlatformId,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isInvoice != null" >
+        is_invoice = #{record.isInvoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.taxVoucher != null" >
+        tax_voucher = #{record.taxVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxTime != null" >
+        tax_time = #{record.taxTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sourceType != null" >
+        source_type = #{record.sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null" >
+        modify_by = #{record.modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update o_order
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      plan_id = #{record.planId,jdbcType=INTEGER},
+      line_id = #{record.lineId,jdbcType=INTEGER},
+      site_start_name = #{record.siteStartName,jdbcType=VARCHAR},
+      site_end_name = #{record.siteEndName,jdbcType=VARCHAR},
+      scheduling_id = #{record.schedulingId,jdbcType=INTEGER},
+      car_id = #{record.carId,jdbcType=INTEGER},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      ticket_number = #{record.ticketNumber,jdbcType=INTEGER},
+      ticket_cost = #{record.ticketCost,jdbcType=DECIMAL},
+      insurance_cost = #{record.insuranceCost,jdbcType=DECIMAL},
+      coupon_cost = #{record.couponCost,jdbcType=DECIMAL},
+      take_cost = #{record.takeCost,jdbcType=DECIMAL},
+      take_coordinate = #{record.takeCoordinate,jdbcType=VARCHAR},
+      take_address = #{record.takeAddress,jdbcType=VARCHAR},
+      give_cost = #{record.giveCost,jdbcType=DECIMAL},
+      give_coordinate = #{record.giveCoordinate,jdbcType=VARCHAR},
+      give_address = #{record.giveAddress,jdbcType=VARCHAR},
+      total_cost = #{record.totalCost,jdbcType=DECIMAL},
+      unpaid_cost = #{record.unpaidCost,jdbcType=DECIMAL},
+      pay_type = #{record.payType,jdbcType=INTEGER},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      travel_time = #{record.travelTime,jdbcType=INTEGER},
+      travel_distance = #{record.travelDistance,jdbcType=DECIMAL},
+      `status` = #{record.status,jdbcType=INTEGER},
+      relay_type = #{record.relayType,jdbcType=INTEGER},
+      is_self = #{record.isSelf,jdbcType=BIT},
+      is_changed = #{record.isChanged,jdbcType=BIT},
+      is_evaluated = #{record.isEvaluated,jdbcType=BIT},
+      chartered_car_brand = #{record.charteredCarBrand,jdbcType=INTEGER},
+      chartered_car_model = #{record.charteredCarModel,jdbcType=VARCHAR},
+      business_type = #{record.businessType,jdbcType=INTEGER},
+      other_platform_plan_code = #{record.otherPlatformPlanCode,jdbcType=VARCHAR},
+      other_platform_id = #{record.otherPlatformId,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_invoice = #{record.isInvoice,jdbcType=INTEGER},
+      tax_voucher = #{record.taxVoucher,jdbcType=VARCHAR},
+      tax_time = #{record.taxTime,jdbcType=TIMESTAMP},
+      source_type = #{record.sourceType,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{record.modifyBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.OOrder" >
+    update o_order
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="lineId != null" >
+        line_id = #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="siteStartName != null" >
+        site_start_name = #{siteStartName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteEndName != null" >
+        site_end_name = #{siteEndName,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingId != null" >
+        scheduling_id = #{schedulingId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketNumber != null" >
+        ticket_number = #{ticketNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ticketCost != null" >
+        ticket_cost = #{ticketCost,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceCost != null" >
+        insurance_cost = #{insuranceCost,jdbcType=DECIMAL},
+      </if>
+      <if test="couponCost != null" >
+        coupon_cost = #{couponCost,jdbcType=DECIMAL},
+      </if>
+      <if test="takeCost != null" >
+        take_cost = #{takeCost,jdbcType=DECIMAL},
+      </if>
+      <if test="takeCoordinate != null" >
+        take_coordinate = #{takeCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="takeAddress != null" >
+        take_address = #{takeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="giveCost != null" >
+        give_cost = #{giveCost,jdbcType=DECIMAL},
+      </if>
+      <if test="giveCoordinate != null" >
+        give_coordinate = #{giveCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="giveAddress != null" >
+        give_address = #{giveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCost != null" >
+        total_cost = #{totalCost,jdbcType=DECIMAL},
+      </if>
+      <if test="unpaidCost != null" >
+        unpaid_cost = #{unpaidCost,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="travelTime != null" >
+        travel_time = #{travelTime,jdbcType=INTEGER},
+      </if>
+      <if test="travelDistance != null" >
+        travel_distance = #{travelDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="relayType != null" >
+        relay_type = #{relayType,jdbcType=INTEGER},
+      </if>
+      <if test="isSelf != null" >
+        is_self = #{isSelf,jdbcType=BIT},
+      </if>
+      <if test="isChanged != null" >
+        is_changed = #{isChanged,jdbcType=BIT},
+      </if>
+      <if test="isEvaluated != null" >
+        is_evaluated = #{isEvaluated,jdbcType=BIT},
+      </if>
+      <if test="charteredCarBrand != null" >
+        chartered_car_brand = #{charteredCarBrand,jdbcType=INTEGER},
+      </if>
+      <if test="charteredCarModel != null" >
+        chartered_car_model = #{charteredCarModel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        business_type = #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="otherPlatformPlanCode != null" >
+        other_platform_plan_code = #{otherPlatformPlanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherPlatformId != null" >
+        other_platform_id = #{otherPlatformId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isInvoice != null" >
+        is_invoice = #{isInvoice,jdbcType=INTEGER},
+      </if>
+      <if test="taxVoucher != null" >
+        tax_voucher = #{taxVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTime != null" >
+        tax_time = #{taxTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sourceType != null" >
+        source_type = #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.OOrder" >
+    update o_order
+    set code = #{code,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      plan_id = #{planId,jdbcType=INTEGER},
+      line_id = #{lineId,jdbcType=INTEGER},
+      site_start_name = #{siteStartName,jdbcType=VARCHAR},
+      site_end_name = #{siteEndName,jdbcType=VARCHAR},
+      scheduling_id = #{schedulingId,jdbcType=INTEGER},
+      car_id = #{carId,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      ticket_number = #{ticketNumber,jdbcType=INTEGER},
+      ticket_cost = #{ticketCost,jdbcType=DECIMAL},
+      insurance_cost = #{insuranceCost,jdbcType=DECIMAL},
+      coupon_cost = #{couponCost,jdbcType=DECIMAL},
+      take_cost = #{takeCost,jdbcType=DECIMAL},
+      take_coordinate = #{takeCoordinate,jdbcType=VARCHAR},
+      take_address = #{takeAddress,jdbcType=VARCHAR},
+      give_cost = #{giveCost,jdbcType=DECIMAL},
+      give_coordinate = #{giveCoordinate,jdbcType=VARCHAR},
+      give_address = #{giveAddress,jdbcType=VARCHAR},
+      total_cost = #{totalCost,jdbcType=DECIMAL},
+      unpaid_cost = #{unpaidCost,jdbcType=DECIMAL},
+      pay_type = #{payType,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      travel_time = #{travelTime,jdbcType=INTEGER},
+      travel_distance = #{travelDistance,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=INTEGER},
+      relay_type = #{relayType,jdbcType=INTEGER},
+      is_self = #{isSelf,jdbcType=BIT},
+      is_changed = #{isChanged,jdbcType=BIT},
+      is_evaluated = #{isEvaluated,jdbcType=BIT},
+      chartered_car_brand = #{charteredCarBrand,jdbcType=INTEGER},
+      chartered_car_model = #{charteredCarModel,jdbcType=VARCHAR},
+      business_type = #{businessType,jdbcType=INTEGER},
+      other_platform_plan_code = #{otherPlatformPlanCode,jdbcType=VARCHAR},
+      other_platform_id = #{otherPlatformId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_invoice = #{isInvoice,jdbcType=INTEGER},
+      tax_voucher = #{taxVoucher,jdbcType=VARCHAR},
+      tax_time = #{taxTime,jdbcType=TIMESTAMP},
+      source_type = #{sourceType,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

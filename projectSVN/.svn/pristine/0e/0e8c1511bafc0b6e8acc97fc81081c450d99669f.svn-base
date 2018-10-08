@@ -1,0 +1,10 @@
+package com.zacx.serivce.basic.api.exceptions;
+
+import com.zacx.core.enums.Code;
+import com.zacx.core.exceptions.BaseRTException;
+
+public class BasicServiceException extends BaseRTException {
+    public BasicServiceException(String msg){
+        super(Code.ERROR_UNKNOWN, msg);
+    }
+}

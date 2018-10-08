@@ -1,0 +1,83 @@
+package com.zacx.serivce.dal.entity;
+
+public class SConfig {
+    private Integer id;
+
+    private String group;
+
+    private String groupName;
+
+    private String configKey;
+
+    private String configValue;
+
+    private String extendInfo;
+
+    private String describe;
+
+    private Integer status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getConfigKey() {
+        return configKey;
+    }
+
+    public void setConfigKey(String configKey) {
+        this.configKey = configKey;
+    }
+
+    public String getConfigValue() {
+        return configValue;
+    }
+
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
+    }
+
+    public String getExtendInfo() {
+        return extendInfo;
+    }
+
+    public void setExtendInfo(String extendInfo) {
+        this.extendInfo = extendInfo;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+}

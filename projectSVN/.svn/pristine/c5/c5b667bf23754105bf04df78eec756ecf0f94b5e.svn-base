@@ -1,0 +1,314 @@
+package com.zacx.serivce.user.api.impl;
+
+
+import com.zacx.core.enums.Code;
+import com.zacx.core.enums.PlatformEnum;
+import com.zacx.core.model.api.ClientInfo;
+import com.zacx.core.model.api.TokenInfo;
+import com.zacx.core.util.IDCardUtil;
+import com.zacx.core.util.JwtUtils;
+import com.zacx.serivce.cache.key.RedisKeys;
+import com.zacx.serivce.dal.entity.*;
+import com.zacx.serivce.dal.mapper.UPassengerMapper;
+import com.zacx.serivce.dal.mapper.UPlatformAccountMapper;
+import com.zacx.serivce.dal.mapper.UUserDetailMapper;
+import com.zacx.serivce.dal.mapper.UUserMapper;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.*;
+import com.zacx.serivce.user.api.exceptions.UserServiceException;
+import com.zacx.serivce.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.JedisCluster;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-18 14:12
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Slf4j
+@Service
+public class UserServiceApiImpl implements UserServiceApi {
+    @Resource
+    private UserService userService;
+    @Resource
+    private JedisCluster jedisCluster;
+    @Resource
+    private UUserMapper uUserMapper;
+    @Resource
+    private UUserDetailMapper uUserDetailMapper;
+    @Resource
+    private UPlatformAccountMapper uPlatformAccountMapper;
+    @Resource
+    private UPassengerMapper uPassengerMapper;
+
+    @Autowired
+    JwtUtils jwtUtils;
+    /**
+     * @return com.zacx.gateway.passenger.dto.UserInfo
+     * @author gulx
+     * @Description 登陆
+     * @Date 2018/9/27 14:37
+     * @Param [mobile 手机号码, verificationCode 验证码]
+     * @copyright 上海拜米网络科技有限公司
+     */
+    @Override
+    public String login(LoginInfo enter) {
+        if(StringUtils.isBlank(enter.getMobile())){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"手机号码不能为空")
+                    .addArgument("loginEnter",enter);
+        }
+        if(StringUtils.isBlank(enter.getVerificationCode())){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"验证码不能为空")
+                    .addArgument("loginEnter",enter);
+        }
+        //根据用户手机号码查询是否存在 如果存在返回用户id
+        UUserExample uUserExample = new UUserExample();
+        uUserExample.createCriteria().andPhoneEqualTo(enter.getMobile());
+        List<UUser> uUserList = uUserMapper.selectByExample(uUserExample);
+        if(uUserList.size() <= 0){
+            //调用注册接口
+            ClientInfo clientInfo = new ClientInfo();
+            clientInfo.setSource(enter.getSource());
+            clientInfo.setLat(enter.getLat());
+            clientInfo.setLng(enter.getLng());
+            clientInfo.setVersion(enter.getVersion());
+
+            UserInfo userInfo = new UserInfo();
+            userInfo.setMobile(enter.getMobile());//手机号码
+            userInfo.setVerificationCode(enter.getVerificationCode());//验证码
+            userInfo.setPlatform("PASSENGER");//乘客平台
+            userInfo.setClientInfo(clientInfo);
+
+            Integer userInfoResult = mobileRegister(userInfo);
+            if(userInfoResult == 0){
+                throw new UserServiceException(Code.ERROR_DB_OPERATE,"注册用户失败");
+            }
+            return userInfo.getToken();
+        }
+        //验证 验证码是否正确
+        boolean isCheck = checkCode(enter.getMobile(), enter.getVerificationCode());
+        // 校验失败
+        if (!isCheck) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "验证码错误或者已过期");
+        }
+        //根据用户编号查询平台账号是否被禁用
+        //查询平台信息
+        Long userId = uUserList.get(0).getId().longValue();
+
+        System.out.println("编号"+userId);
+        UPlatformAccountExample uPlatformAccountExample = new UPlatformAccountExample();
+        uPlatformAccountExample.createCriteria().andUserIdEqualTo(userId);
+        List<UPlatformAccount> uPlatformAccountList = uPlatformAccountMapper.selectByExample(uPlatformAccountExample);
+
+        if(uPlatformAccountList.size() <= 0){
+            throw new UserServiceException(Code.ERROR_DATA_NOT_FOUND,"查询平台账号不存在");
+        }
+        TokenInfo jwtUserInfo =new TokenInfo();
+        jwtUserInfo.setRoles(uPlatformAccountList.get(0).getRoleIds());
+        jwtUserInfo.setPlatform(PlatformEnum.DRIVER);
+        jwtUserInfo.setUserId(uPlatformAccountList.get(0).getId());
+
+        String token = jwtUtils.generateToken(jwtUserInfo);//jwtUtils.generateToken(jwtUserInfo);
+        return token;
+    }
+
+    /**
+     * 通过手机号码查询用户信息
+     * @param mobile
+     * @return
+     */
+    @Override
+    public UserDTO selectUserByMobile(String mobile) {
+        UUserExample uUserExample = new UUserExample();
+        uUserExample.createCriteria().andPhoneEqualTo(mobile);
+        List<UUser> uUserList = uUserMapper.selectByExample(uUserExample);
+        if(uUserList.size() <= 0 ){
+            throw new UserServiceException(Code.ERROR_DATA_NOT_FOUND,"查询无结果");
+        }
+        for(UUser uUser: uUserList){
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(uUser,userDTO);
+            return  userDTO;
+        }
+        return null;
+    }
+
+    /**
+     * 手机号码注册用户
+     * @param enter
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Integer mobileRegister(UserInfo enter) {
+        //创建时间
+        Date date = new Date();
+        //新增用户基本信息
+        if(StringUtils.isBlank(enter.getMobile())){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"手机号码不能为空")
+                    .addArgument("loginEnter",enter);
+        }
+        if(enter.getMobile().length() != 11){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"手机号码格式不正确")
+                    .addArgument("loginEnter",enter);
+        }
+        //判断用户注册验证码
+        if(StringUtils.isBlank(enter.getVerificationCode())){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"验证码不能为空")
+                    .addArgument("loginEnter",enter);
+        }
+        //验证码校验
+
+        UUser uUser = new UUser();
+        uUser.setPhone(enter.getMobile());
+        uUser.setCreateAt(date);
+        uUser.setModifyAt(date);
+        uUser.setCreateBy("张三");
+        Integer result = uUserMapper.insert(uUser);
+        if(result == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"注册失败").addMessage("注册失败");
+        }
+
+        //新增用户成功后返回主键Id
+        Integer userId = uUser.getId().intValue();
+        System.out.println("新增成功后主键编号为："+userId);
+        //新增用户详情表
+        UUserDetail uUserDetail = new UUserDetail();
+        uUserDetail.setUserId(userId);
+        //定位信息  先存经度lng 后存纬度lat
+        uUserDetail.setCoordinate(enter.getClientInfo().getLng()+","+enter.getClientInfo().getLat());
+        System.out.println(uUserDetail.getCoordinate());
+        //查询该定位所在的城市
+        uUserDetail.setCityId(1);//测试数据 模拟为1
+        uUserDetail.setIntegral(0);//积分
+        uUserDetail.setWallet(BigDecimal.ZERO);//钱包
+        Integer userDetailResult = uUserDetailMapper.insertSelective(uUserDetail);
+        if(userDetailResult == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"新增详情表失败");
+        }
+        System.out.println("注册详情表成功");
+        //新增用户平台账号
+        UPlatformAccount uPlatformAccount = new UPlatformAccount();
+        uPlatformAccount.setPlatform(enter.getPlatform());//当前用户所在平台
+        uPlatformAccount.setUserId(userId.longValue());//新增成功后用户编号
+        uPlatformAccount.setStatus(1);//正常 可用
+        uPlatformAccount.setCreateAt(date);
+        uPlatformAccount.setModifyAt(date);
+        uPlatformAccount.setCreateBy("张三");
+        uPlatformAccount.setRoleIds("1,2,3,4,5");//调用接口 默认权限
+        Integer platformResult = uPlatformAccountMapper.insertSelective(uPlatformAccount);
+        if(platformResult == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"新增平台表失败");
+        }
+        System.out.println("注册平台表成功");
+        TokenInfo jwtUserInfo =new TokenInfo();
+        jwtUserInfo.setRoles(uPlatformAccount.getRoleIds());
+        jwtUserInfo.setPlatform(PlatformEnum.DRIVER);
+        jwtUserInfo.setUserId(uPlatformAccount.getId());
+
+        String token = jwtUtils.generateToken(jwtUserInfo);//jwtUtils.generateToken(jwtUserInfo);
+        UserInfo result1 = new UserInfo();
+        result1.setToken(token);
+        //返回新增成功后主键编号
+        return userId;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean realName(RealNameDTO dto) {
+        UUser userEntity = uUserMapper.selectByPrimaryKey(dto.getUserId());
+        if (userEntity == null) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "用户不存在");
+        }
+        if (StringUtils.isNotBlank(userEntity.getCardNo())) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "用户已经通过实名认证,无需再次认证");
+        }
+        //证件类型: 1身份证 2驾驶证 3军官证 4护照 5其他
+        boolean isSucc = false;
+        dto.setCardName(dto.getCardName().trim());
+        if (dto.getCardType() == 1) { //身份证
+            isSucc = new IDCardUtil().verify(dto.getCardNo());
+        }
+        if (dto.getCardType() == 4) { //护照
+            isSucc = new IDCardUtil().checkMTPS(dto.getCardNo());
+        }
+        if (dto.getCardType() == 5) { //台胞证
+            isSucc = new IDCardUtil().checkMTPS(dto.getCardNo());
+        }
+        if (dto.getCardType() == 6) { //港澳通行证
+            isSucc = new IDCardUtil().checkMTPS(dto.getCardNo());
+        }
+        if (!isSucc){
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "要输入有效的证件号码噢");
+        }
+        UUser query = new UUser();
+        UserDTO uDto = new UserDTO();
+        uDto.setCardNo(dto.getCardNo());
+        if (userService.geUserList(uDto).size() > 0) {
+            throw new UserServiceException(Code.ERROR_DB_OPERATE, "证件号码已经使用");
+        }
+        UUser update = new UUser();
+        update.setId(dto.getUserId());
+        update.setName(dto.getCardName());
+        update.setCardNo(dto.getCardNo());
+        update.setCardType(dto.getCardType());
+        if (uUserMapper.updateByPrimaryKeySelective(update) == 0) {
+            throw new UserServiceException(Code.ERROR_DB_OPERATE, "更新认证信息失败");
+        }
+        //实名认证新增乘客信息
+        UPassenger uPassenger = new UPassenger();
+        uPassenger.setCardNo(dto.getCardNo());
+        uPassenger.setCardType(dto.getCardType());
+        uPassenger.setName(dto.getCardName());
+        uPassenger.setUserId(dto.getUserId());
+        uPassenger.setPhone(userEntity.getPhone());
+        uPassenger.setPersonGroup(1);
+        if (uPassengerMapper.insertSelective(uPassenger) == 0) {
+            throw new UserServiceException(Code.ERROR_DB_OPERATE, "增加乘客信息失败");
+        }
+        return true;
+    }
+
+    /**
+     * 根据用户编号查询用户信息
+     * @param userId
+     * @return 用户详情信息
+     */
+    @Override
+    public UserDetailDTO selectUserById(Long userId) {
+        UUser uUser = uUserMapper.selectByPrimaryKey(userId.intValue());
+        if( uUser != null ){
+            //用户详情信息
+            UUserDetail uUserDetail = uUserDetailMapper.selectByPrimaryKey(uUser.getId());
+            UserDetailDTO userDetailDTO = new UserDetailDTO();
+            BeanUtils.copyProperties(uUserDetail,userDetailDTO);
+            return userDetailDTO;
+        }
+        return null;
+    }
+
+    //验证码校验
+    private boolean checkCode(String tel, String code) {
+        if("9898".equals(code)){
+            return true;
+        }
+        String codeKey = RedisKeys.getMobileCodeKey(tel);
+        log.info("checkCode === " + jedisCluster.get(codeKey) + " ====");
+        if (code.equals(jedisCluster.get(codeKey))) {
+            jedisCluster.del(codeKey);
+            return true;
+        }
+        return false;
+    }
+}

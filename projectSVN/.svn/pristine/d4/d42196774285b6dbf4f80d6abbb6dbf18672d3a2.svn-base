@@ -1,0 +1,317 @@
+package com.zacx.serivce.cache.key;
+
+
+/**
+ * @desc Redis缓存
+ * @version 1.0
+ * @author Liang Jun
+ * @date 2018年10月02日 16:59:18
+ **/
+public class RedisKeys {
+
+    // SESSIONKEY
+    private final static String  SESSION_KEY_CODE = "S_SESSION_KEY_";
+    // Code
+    private final static String MOBILE_CODE_KEY = "S_MOBILE_CODE_KEY_";
+    // Count
+    private final static String MOBILE_COUNT_CODE_KEY = "S_MOBILE_COUNT_CODE_KEY_";
+    private final static String IP_COUNT_CODE_KEY = "S_IP_COUNT_CODE_KEY_";
+    private final static String WECHAT_IP_COUNT_CODE_KEY = "S_WECHAT_IP_COUNT_CODE_KEY_";
+    private final static String WECHAT_MOBILE_COUNT_CODE_KEY = "S_WECHAT_MOBILE_COUNT_CODE_KEY_";
+    private final static String DEVICE_NUMBER = "S_DEVICE_NUMBER_";
+    public final static String SYSTEM_CONFIG_KEY = "M_SYSTEM_CONFIG_KEY";
+    public final static String SITES_KEY = "ALL_SITES_KEY";
+    public final static String ALL_SITES_DEVNUM_KEY = "ALL_SITES_DEVNUM_KEY";
+    public final static String AREA_SITES_KEY = "ALL_AREA_SITES_KEY";
+
+    public final static String DEVICES_KEY = "L_DEVICES_KEY";
+    public final static String ALL_DEVICES_KEY = "L_ALL_DEVICES_KEY";
+    public final static String UPTIME_DEVICES_KEY = "L_UPTIME_DEVICES_KEY";
+    public final static String GEO_HASH_SITES_KEY = "M_GEO_HASH_SITES_KEY";
+    public final static String WX_ACCESS_TOKEN_SEQ_KEY = "WX_ACCESS_TOKEN_SEQ_KEY";
+    public final static String WX_TICKET_SEQ_KEY = "WX_TICKET_SEQ_KEY";
+    public final static String ORDER_RESULT = "S_ORDER_RESULT_";
+    public final static String DEVICE_SEND_FROM = "S_DEVICE_SEND_FROM_";
+    public final static String DEVICE_TRIP_KEY = "S_DEVICE_TRIP_KEY_";
+    public final static String USER_TRIP_KEY = "S_USER_TRIP_KEY_";
+    public final static String BIND_DEVICE_ORDER_KEY = "S_BIND_DEVICE_KEY_";
+    public final static String BIND_USER_ORDER_KEY = "S_BIND_USER_KEY_";
+    public final static String DEVICE_UPLOAD_INFORMATION_KEY = "S_DEVICE_UPLOAD_INFORMATION_KEY_";
+    public final static String DEVICE_REALTIME_GPS_KEY = "DEVICE_REALTIME_GPS_KEY";
+    public final static String SMS_TOKEN = "SMS_TOKEN";
+    public final static String TEL_CODE_LIMIT = "TEL_CODE_LIMIT";
+    public final static String SMS_SEND_KEY = "SMS_SEND_KEY";
+    private final static String RENTAL_LIMIT_KEY = "RENTAL_LIMIT_KEY";
+    private final static String BACK_LIMIT_KEY = "BACK_LIMIT_KEY";
+    private final static String SCAN_CODE_LIMIT_KEY = "SCAN_CODE_LIMIT_KEY";
+    private final static String GIFT_CARD_LIMIT_KEY = "GIFT_CARD_LIMIT_KEY";
+    private final static String REDEEM_COUPON_LIMIT_KEY = "REDEEM_COUPON_LIMIT_KEY";
+    private final static String REDEEM_COUPON_LIMIT_DAY_KEY = "REDEEM_COUPON_LIMIT_DAY_KEY";
+
+    public final static String RETURN_DEVICE = "RD:";
+    // ---------------redis seq code-----------------
+    // user seq
+    public final static String USER_ID_SEQ_KEY = "SEQ_USER_ID_SEQ_KEY";
+    // pay seq
+    public final static String PAY_DETAIL_ID_SEQ_KEY = "SEQ_PAY_DETAIL_ID_SEQ_KEY";
+    public final static String PAY_PREVENT_REPEAT = "PAY_PREVENT_REPEAT_";
+
+    // account seq
+    public final static String USER_ACCOUNT_ID_SEQ_KEY = "SEQ_USER_ACCOUNT_ID_SEQ_KEY";
+    // apply site id seq
+    public final static String SITEAPPLY_ID_SEQ_KEY = "SEQ_SITEAPPLY_ID_SEQ_KEY";
+    //  site id seq
+    public final static String SITE_ID_SEQ_KEY = "SEQ_SITE_ID_SEQ_KEY";
+
+    //  abnomal id seq
+    public final static String ABNOMAL_ID_SEQ_KEY = "SEQ_ABNOMAL_ID_SEQ_KEY";
+
+    //  device id seq
+    public final static String DEVICE_ID_SEQ_KEY = "SEQ_DEVICE_ID_SEQ_KEY";
+    //user admin id seq
+    public final static String USERADMIN_ID_SEQ_KEY = "SEQ_USERADMIN_ID_SEQ_KEY";
+    // trip seq
+    public final static String TRIP_ID_SEQ_KEY = "SEQ_TRIP_ID_SEQ_KEY";
+    // gps seq
+    public final static String GPS_ID_SEQ_KEY = "SEQ_GPS_ID_SEQ_KEY";
+    //
+    public final static String SITE_PROFIT_SEQ_KEY = "SEQ_SITE_PROFIT_SEQ_KEY";
+    // account detail id
+    public final static String ACCOUNT_DETAIL_ID_SEQ_KEY = "SEQ_ACCOUNT_DETAIL_ID_SEQ_KEY";
+
+    //remark id
+    public final static String REMARK_ID_SEQ_KEY = "SEQ_REMARK__ID_SEQ_KEY";
+    //Refund detail id
+    public final static String REFUND_DETAIL_ID_SEQ_KEY = "REFUND_DETAIL_ID_SEQ_KEY";
+
+
+    // pay out order id
+    public final static String PAY_OUT_ORDER_ID_SEQ_KEY = "SEQ_PAY_OUT_ORDER_ID_SEQ_KEY";
+    //feed back id seq
+    public final static String HITCHFEEDBACK_ID_SEQ_KEY = "SEQ_HITCHFEEDBACK_ID_SEQ_KEY";
+    //opinion back id seq
+    public final static String OPINION_ID_SEQ_KEY = "SEQ_OPINION_ID_SEQ_KEY";
+    //banner id seq
+    public final static String BANNER_ID_SEQ_KEY = "SEQ_BANNER_ID_SEQ_KEY";
+    //deposite id seq
+    public final static String SITEDEPOSITE_ID_SEQ_KEY = "SEQ_SITEDEPOSITE_ID_SEQ_KEY";
+    //deposite depositId seq
+    public final static String SITEDEPOSITE_DEPOSITEID_SEQ_KEY = "SEQ_SITEDEPOSITE_DEPOSITEID_SEQ_KEY";
+    //MerchantJoin
+    public final static String MERCHANTJOIN_ID_SEQ_KEY = "SEQ_MERCHANTJOIN_ID_SEQ_KEY";
+    // invite id
+    public final static String INVITE_RELATION_ID_SEQ_KEY = "SEQ_INVITE_RELATION_ID_SEQ_KEY";
+    // trip trace id
+    public final static String TRIP_TRACE_ID_SEQ_KEY = "SEQ_TRIP_TRACE_ID_SEQ_KEY";
+    // order business id seq
+    public final static String TRIP_BUSINESS_ID_SEQ_KEY = "SEQ_TRIP_BUSINESS_ID_SEQ_KEY";
+    // account business id seq
+    public final static String ACCOUNT_BUSINESS_ID_SEQ_KEY = "SEQ_ACCOUNT_BUSINESS_ID_SEQ_KEY";
+    //refund apply id seq
+    public final static String REFUND_APPLY_ID_SEQ_KEY = "REFUND_APPLY_ID_SEQ_KEY";
+
+    //refund  id seq
+    public final static String REFUND_ID_SEQ_KEY = "REFUND_ID_SEQ_KEY";
+    //refund RefundOurTradeNo seq
+    public final static String REFUND_OUTTRADENO_SEQ_KEY = "REFUND_OUTTRADENO_SEQ_KEY";
+
+    //refund RefundOurTradeNo seq
+    public final static String SYSTEM_MESSAGE_ID_KEY = "SYSTEM_MESSAGE_ID_KEY";
+
+    // activity count
+    public final static String ACTIVITY_COUNT = "ACTIVITY_COUNT";
+
+    //消息用户key
+    public final static String SYSTEM_RESOURCE_KEY = "SYSTEM_RESOURCE_KEY_";
+
+    //已读消息用户key
+    public final static String SYSTEM_RESOURCE_VISITED_KEY = "SYSTEM_RESOURCE_VISITED_KEY_";
+
+    //活动用户key
+    public final static String SYSTEM_ACTIVITY_KEY= "SYSTEM_ACTIVITY_KEY_";
+
+    //统计城市区域设备数
+    public final static String COUNT_CITY_AREA_SITE= "COUNT_CITY_AREA_SITE_KEY_";
+
+    //获取车辆的操作权
+    public final static String DEVICE_OPT_LOCK= "DEVICE_OPT_LOCK_";
+
+    // 支付订单锁
+    public final static String PAY_ORDER_LOCK= "PAY_ORDER_LOCK";
+
+    public final static String ACTIVITY_ALL_RANK= "ACTIVITY_ALL_RANK_";
+    //活动使用骑行次数
+    public final static String ACTIVITY_USED_TRIP_TIMES = "ACTIVITY_SURPLUS_TRIP_TIMES_";
+    //活动使用骑行次数
+    public final static String ACTIVITY_INFO = "ACTIVITY_INFO_";
+    //活动token
+    public final static String ACTIVITY_TOKEN = "ACTIVITY_TOKEN_";
+    //活动抽奖次数
+    public final static String ACTIVITY_TAKE_GIFT_TIMES = "ACTIVITY_TAKE_GIFT_TIMES_";
+    //活动骑行抽奖
+    public final static String ACTIVITY_TRIP_TAKE_GIFT = "ACTIVITY_TRIP_TAKE_GIFT_";
+
+    // 用户登录次数
+    public final static String USER_LOGIN_COUNT= "USER_LOGIN_COUNT_";
+
+    //系统消息
+    public final static String SYSTEM_MESSAGE_KEY = "SYSTEM_MESSAGE_KEY";
+    //活动消息
+    public final static String ACTIVITY_MESSAGE_KEY = "ACTIVITY_MESSAGE_KEY";
+    //系统消息前缀
+    public final static String SYSTEM_MESSAGE_PREFIX_KEY = "SYSTEM_MESSAGE_PREFIX_KEY_";
+    //活动消息前缀
+    public final static String ACTIVITY_MESSAGE_PREFIX_KEY = "ACTIVITY_MESSAGE_PREFIX_KEY_";
+    //消息前缀
+    public final static String MESSAGE_PREFIX_KEY = "MESSAGE_PREFIX_KEY_";
+
+    //行程分享key
+    public final static String TRIP_ORDER_SHARE_KEY = "TRIP_ORDER_SHARE_KEY";
+
+    //启动页广告缓存
+    public final static String START_PAGE_CACHE_KEY = "START_PAGE_CACHE_KEY";
+
+    // user_report id seq
+    public final static String SEQ_USER_REPORT_ID_SEQ_KEY = "SEQ_USER_REPORT_ID_SEQ_KEY";
+
+    // user_report_appeal_img id seq
+    public final static String SEQ_USER_REPORT_APPEAL_IMG_ID_SEQ_KEY = "SEQ_USER_REPORT_APPEAL_IMG_ID_SEQ_KEY";
+    // user_appeal id seq
+    public final static String SEQ_USER_APPEAL_ID_SEQ_KEY = "SEQ_USER_APPEAL_ID_SEQ_KEY";
+    // user_appeal id seq
+    public final static String SEQ_USER_CREDIT_RECORD_ID_SEQ_KEY = "SEQ_USER_CREDIT_RECORD_ID_SEQ_KEY";
+    // 用户订单分享技术（每自然周）
+    public final static String USER_ORDER_SHARED_KEY = "USER_ORDER_SHARED_KEY";
+    // user_tavel_card_mapping
+    public final static String USER_TAVEL_CARD_MAPPING_ID_SEQ_KEY = "USER_TAVEL_CARD_MAPPING_ID_SEQ_KEY";
+    // coupon_user
+    public final static String COUPON_USER_ID_SEQ_KEY = "COUPON_USER_ID_SEQ_KEY";
+    //通过车架号获取设备号
+    public static final String FRAME_TO_SN_PREFIX="FS";
+    //通过设备号获取车架号
+    public static final String SN_TO_FRAME_PREFIX="SF";
+    //车辆操作异常次数记录KEY
+    public static final String DEVICE_ORDER_EXCEPTION_KEY="DEVICE_ORDER_EXCEPTION_KEY";
+
+    /**
+     * 根据手机号获取sessionKey的redis key
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getSessionKey(String mobile) {
+        return SESSION_KEY_CODE + mobile;
+    }
+    /**
+     * 手机验证码计数
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getMobileLimitKey(String mobile) {
+        return TEL_CODE_LIMIT + mobile;
+    }
+
+
+    /**
+     * 手机动码 key
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getMobileCodeKey(String mobile) {
+        return MOBILE_CODE_KEY + mobile;
+    }
+
+    /**
+     * 短信ip计数
+     *
+     * @param ip
+     * @return
+     */
+    public static String getIpCountCodeKey(String ip) {
+        return IP_COUNT_CODE_KEY + ip;
+    }
+
+    public static String getWecharIpCountCodeKey(String ip) {
+        return WECHAT_IP_COUNT_CODE_KEY + ip;
+    }
+
+    /**
+     * 短信手机计数
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getMobileCountCodeKey(String mobile) {
+        return MOBILE_COUNT_CODE_KEY + mobile;
+    }
+
+    public static String getWecharMobileCountCodeKey(String mobile) {
+        return WECHAT_MOBILE_COUNT_CODE_KEY + mobile;
+    }
+
+    /**
+     * 借车限制
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getRentalLimitKey(String mobile) {
+        return RENTAL_LIMIT_KEY + mobile;
+    }
+
+    /**
+     * 优惠券兑换限制
+     * @param mobile
+     * @return
+     */
+    public static String getRedeemCouponLimitKey(String mobile) {
+        return REDEEM_COUPON_LIMIT_KEY + mobile;
+    }
+
+    /**
+     * 优惠券兑换限制
+     * @param mobile
+     * @return
+     */
+    public static String getRedeemCouponLimitDayKey(String mobile) {
+        return REDEEM_COUPON_LIMIT_DAY_KEY + mobile;
+    }
+
+    /**
+     * 扫码限制
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getScanCodeLimitKey(String mobile) {
+        return SCAN_CODE_LIMIT_KEY + mobile;
+    }
+
+    public static String getGiftCardLimitKey(String mobile) {
+        return GIFT_CARD_LIMIT_KEY + mobile;
+    }
+
+    /**
+     * 还车限制
+     *
+     * @param mobile
+     * @return
+     */
+    public static String getBackLimitKey(String mobile) {
+        return BACK_LIMIT_KEY + mobile;
+    }
+
+    /**
+     * 设备key
+     *
+     * @param siteId
+     * @return
+     */
+    public static String getDeviceNumberKey(String siteId) {
+        return DEVICE_NUMBER + siteId;
+    }
+
+
+}

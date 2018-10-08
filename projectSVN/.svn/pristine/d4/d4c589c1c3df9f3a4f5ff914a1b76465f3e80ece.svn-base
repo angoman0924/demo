@@ -1,0 +1,80 @@
+/*
+*
+* UPermissionMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UPermission;
+import com.zacx.serivce.dal.entity.UPermissionExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UPermissionMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(UPermissionExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(UPermissionExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(UPermission record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(UPermission record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<UPermission> selectByExample(UPermissionExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    UPermission selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") UPermission record, @Param("example") UPermissionExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") UPermission record, @Param("example") UPermissionExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(UPermission record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(UPermission record);
+}

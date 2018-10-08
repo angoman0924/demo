@@ -1,0 +1,22 @@
+package com.zacx.serivce.order.api.impl;
+
+import com.zacx.serivce.order.api.OrderServiceApi;
+import com.zacx.serivce.order.api.dto.OrderCreateDTO;
+import com.zacx.serivce.order.service.LocOrderCreateService;
+import com.zacx.serivce.order.service.LocOrderQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OrderServiceImpl implements OrderServiceApi {
+    @Autowired
+    LocOrderCreateService locOrderCreateService;
+    @Autowired
+    LocOrderQueryService locOrderQueryService;
+
+    @Override
+    public boolean create(OrderCreateDTO orderCreateDTO) {
+        return locOrderCreateService.test(orderCreateDTO);
+    }
+
+}

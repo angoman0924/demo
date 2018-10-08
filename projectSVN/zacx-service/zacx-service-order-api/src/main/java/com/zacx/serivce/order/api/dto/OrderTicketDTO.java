@@ -1,0 +1,249 @@
+package com.zacx.serivce.order.api.dto;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @description: 订单信息（列表，简单）
+ * @author: kiting
+ * @date: 2018年10月04日 17:30
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class OrderTicketDTO implements Serializable {
+    /**
+     *
+     */
+    private Integer id;
+
+    /**
+     * 流水号: LDD1801010000001(L订单+年<2位>月日+7位流水号)
+     */
+    private String code;
+
+    /**
+     *
+     */
+    private Integer userId;
+
+    /**
+     * 包车业务无此表关联
+     */
+    private Integer planId;
+
+    /**
+     *
+     */
+    private Integer lineId;
+
+    /**
+     *
+     */
+    private String siteStartName;
+
+    /**
+     *
+     */
+    private String siteEndName;
+
+    /**
+     * 调度：车次Id
+     */
+    private Integer schedulingId;
+
+    /**
+     * 调度：车辆id
+     */
+    private Integer carId;
+
+    /**
+     * 预计开车时间
+     */
+    private Date startTime;
+
+    /**
+     * 车票数量
+     */
+    private Integer ticketNumber;
+
+    /**
+     * 单张票价
+     */
+    private BigDecimal ticketCost;
+
+    /**
+     * 保险费总额
+     */
+    private BigDecimal insuranceCost;
+
+    /**
+     * 优惠券总金额
+     */
+    private BigDecimal couponCost;
+
+    /**
+     * 接车总费用
+     */
+    private BigDecimal takeCost;
+
+    /**
+     * 接车坐标
+     */
+    private String takeCoordinate;
+
+    /**
+     * 接车详细地址
+     */
+    private String takeAddress;
+
+    /**
+     * 送人总费用
+     */
+    private BigDecimal giveCost;
+
+    /**
+     * 送人坐标
+     */
+    private String giveCoordinate;
+
+    /**
+     * 送人详细地址
+     */
+    private String giveAddress;
+
+    /**
+     * 订单总金额
+     */
+    private BigDecimal totalCost;
+
+    /**
+     * 未付款金额
+     */
+    private BigDecimal unpaidCost;
+
+    /**
+     * 付款方式：1钱包 2支付宝 3微信 4钱包+支付宝 5钱包+微信
+     */
+    private Integer payType;
+
+    /**
+     *
+     */
+    private String userPhone;
+
+    /**
+     * 行程时长（单位：分钟）
+     */
+    private Integer travelTime;
+
+    /**
+     * 行程距离
+     */
+    private Long travelDistance;
+
+    /**
+     * 状态: 10-待付款；20-已付款 21-待补款 22-退票中(针对包车业务，暂时不使用)；60-已完成 61-已过期(行程结束但用户未乘坐，不能评论)；90-已取消（用户触发） 91-已作废(到时未付款)
+     */
+    private Integer status;
+
+    /**
+     * 接送类型 0无接送 1接 2送 3接送
+     */
+    private Integer relayType;
+
+    /**
+     * 自营标记
+     */
+    private Boolean isSelf;
+
+    /**
+     * 改签标记（改签后，可能会限制一些业务）
+     */
+    private Boolean isChanged;
+
+    /**
+     * 评价标记
+     */
+    private Boolean isEvaluated;
+
+    /**
+     * 包车车品牌
+     */
+    private Integer charteredCarBrand;
+
+    /**
+     * 车辆类型
+     */
+    private String charteredCarModel;
+
+    /**
+     * 业务类型：1班线 2包车
+     */
+    private Integer businessType;
+
+    /**
+     * 第三方平台班次编码
+     */
+    private String otherPlatformPlanCode;
+
+    /**
+     * 第三方平台Id，对应b_other_platform表
+     */
+    private Integer otherPlatformId;
+
+    /**
+     *
+     */
+    private String remark;
+
+    /**
+     * 是否开票: 0无 1申请中 2已开票
+     */
+    private Integer isInvoice;
+
+    /**
+     * 税务凭证
+     */
+    private String taxVoucher;
+
+    /**
+     * 开票时间
+     */
+    private Date taxTime;
+
+    /**
+     * 订单来源: 0-其它平台 1-IOS 2-安卓 3-小程序 4-PC
+     */
+    private Integer sourceType;
+
+    /**
+     *
+     */
+    private Date createAt;
+
+    /**
+     *
+     */
+    private String createBy;
+
+    /**
+     *
+     */
+    private Date modifyAt;
+
+    /**
+     *
+     */
+    private String modifyBy;
+
+    /**
+     * 乘客票信息
+     */
+    List<TicketDTO> ticketList;
+
+}

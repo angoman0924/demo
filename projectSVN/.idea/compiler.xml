@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="zacx-core" />
+        <module name="zacx-dal" />
+        <module name="zacx-gateway-base" />
+        <module name="zacx-gateway-driver" />
+        <module name="zacx-gateway-passenger" />
+        <module name="zacx-service-basic" />
+        <module name="zacx-service-basic-api" />
+        <module name="zacx-service-line" />
+        <module name="zacx-service-line-api" />
+        <module name="zacx-service-mall" />
+        <module name="zacx-service-mall-api" />
+        <module name="zacx-service-order" />
+        <module name="zacx-service-order-api" />
+        <module name="zacx-service-user" />
+        <module name="zacx-service-user-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="zacx-core" target="1.8" />
+      <module name="zacx-dal" target="1.8" />
+      <module name="zacx-gateway" target="1.8" />
+      <module name="zacx-gateway-base" target="1.8" />
+      <module name="zacx-gateway-driver" target="1.8" />
+      <module name="zacx-gateway-passenger" target="1.8" />
+      <module name="zacx-parent" target="1.8" />
+      <module name="zacx-service" target="1.8" />
+      <module name="zacx-service-basic" target="1.8" />
+      <module name="zacx-service-basic-api" target="1.8" />
+      <module name="zacx-service-line" target="1.8" />
+      <module name="zacx-service-line-api" target="1.8" />
+      <module name="zacx-service-mall" target="1.8" />
+      <module name="zacx-service-mall-api" target="1.8" />
+      <module name="zacx-service-order" target="1.8" />
+      <module name="zacx-service-order-api" target="1.8" />
+      <module name="zacx-service-user" target="1.8" />
+      <module name="zacx-service-user-api" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

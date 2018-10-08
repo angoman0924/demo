@@ -1,0 +1,125 @@
+package com.zacx.serivce.user.api.dto;
+
+import java.util.Date;
+
+public class UserDetailDTO {
+    private Integer id;
+
+    private String nickName;
+
+    private Integer userType;
+
+    private String gender;
+
+    private Date birthday;
+
+    private Integer cityId;
+
+    private String coordinate;
+
+    private Long wallet;
+
+    private Integer integral;
+
+    private String headPortrait;
+
+    private String inviteId;
+
+    private String address;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(String coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    public Long getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Long wallet) {
+        this.wallet = wallet;
+    }
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
+    public String getInviteId() {
+        return inviteId;
+    }
+
+    public void setInviteId(String inviteId) {
+        this.inviteId = inviteId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+}

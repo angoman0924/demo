@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BInsurance;
+import com.zacx.serivce.dal.entity.BInsuranceExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BInsuranceMapper {
+    int countByExample(BInsuranceExample example);
+
+    int deleteByExample(BInsuranceExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BInsurance record);
+
+    int insertSelective(BInsurance record);
+
+    List<BInsurance> selectByExample(BInsuranceExample example);
+
+    BInsurance selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BInsurance record, @Param("example") BInsuranceExample example);
+
+    int updateByExample(@Param("record") BInsurance record, @Param("example") BInsuranceExample example);
+
+    int updateByPrimaryKeySelective(BInsurance record);
+
+    int updateByPrimaryKey(BInsurance record);
+}

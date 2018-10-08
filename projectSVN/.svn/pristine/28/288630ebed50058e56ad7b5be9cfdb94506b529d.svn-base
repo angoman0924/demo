@@ -1,0 +1,39 @@
+package com.zacx.serivce.basic.service.impl;
+
+
+import com.zacx.serivce.basic.api.dto.InsuranceDTO;
+import com.zacx.serivce.basic.service.InsuranceService;
+import com.zacx.serivce.dal.entity.BInsurance;
+import com.zacx.serivce.dal.entity.BInsuranceExample;
+import com.zacx.serivce.dal.mapper.BInsuranceMapper;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+* @desc    保险
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月04日 20:29:37
+**/
+@Service
+public class InsuranceServiceImpl implements InsuranceService {
+    @Resource
+    private BInsuranceMapper bInsuranceMapper;
+
+    @Override
+    public List<BInsurance> getInsuranceList(InsuranceDTO insuranceDTO) {
+        return bInsuranceMapper.selectByExample(params2example(insuranceDTO));
+    }
+
+    private BInsuranceExample params2example(InsuranceDTO dto){
+        BInsuranceExample example = new BInsuranceExample();
+        BInsuranceExample.Criteria criteria = example.createCriteria();
+
+        if (null != dto.getId()) {
+            criteria.andIdEqualTo(dto.getId());
+        }
+        return example;
+    }
+}

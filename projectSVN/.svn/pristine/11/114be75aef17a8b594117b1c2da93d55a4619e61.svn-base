@@ -1,0 +1,142 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.zacx.serivce.dal.entity.OOrder;
+import com.zacx.serivce.dal.mapper.OOrderMapper;
+import com.zacx.serivce.line.api.CarServiceApi;
+import com.zacx.serivce.line.api.LineServiceApi;
+import com.zacx.serivce.line.api.SchedulingServiceApi;
+import com.zacx.serivce.line.api.SiteServiceApi;
+import com.zacx.serivce.line.api.dto.CarDTO;
+import com.zacx.serivce.line.api.dto.LineDTO;
+import com.zacx.serivce.line.api.dto.SiteDTO;
+import com.zacx.serivce.order.api.dto.*;
+import com.zacx.serivce.order.api.enums.BusinessTypeEnum;
+import com.zacx.serivce.order.service.OrderLocService;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.UserDetailDTO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+public class OrderLocServiceImpl implements OrderLocService {
+    @Autowired
+    private UserServiceApi userServiceApi;
+    @Autowired
+    private LineServiceApi lineServiceApi;
+    @Autowired
+    private CarServiceApi carServiceApi;
+    @Autowired
+    private SiteServiceApi siteServiceApi;
+    @Autowired
+    private SchedulingServiceApi schedulingServiceApi;
+
+    @Autowired
+    OOrderMapper oOrderMapper;
+
+    @Override
+    public PayPriceDTO payDetail(Integer orderId) {
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(orderId);
+        if(orderEntity != null){
+            PayPriceDTO priceDTO = new PayPriceDTO();
+            priceDTO.setOrderCode(orderEntity.getCode());
+            priceDTO.setPlanId(orderEntity.getPlanId());
+
+            //班车使用排版地点；包车使用接送地点
+            if(BusinessTypeEnum.PLAN.equals(orderEntity.getBusinessType())){
+                LineDTO lineInfo = lineServiceApi.findLineById(orderEntity.getLineId());
+                List<SiteDTO> siteList = siteServiceApi.getSiteListByIds(Arrays.asList(lineInfo.getSiteStartId(), lineInfo.getSiteEndId()));
+                for (SiteDTO site : siteList) {
+                    if (site.getId().equals(lineInfo.getSiteStartId())) {
+                        priceDTO.setStartPlace(site.getName());
+                    } else if (site.getId().equals(lineInfo.getSiteEndId())) {
+                        priceDTO.setEndPlace(site.getName());
+                    }
+                }
+            } else{
+                priceDTO.setStartPlace(orderEntity.getSiteStartName());
+                priceDTO.setEndPlace(orderEntity.getSiteEndName());
+            }
+
+            //司机信息
+            if(orderEntity.getCarId() != null && orderEntity.getCarId() > 0){
+                CarDTO carDTO = carServiceApi.findByPrimaryKey(orderEntity.getCarId());
+                OrderCarDTO orderCarDTO = new OrderCarDTO();
+                BeanUtils.copyProperties(carDTO, orderCarDTO);
+                orderCarDTO.setCarId(carDTO.getId());
+            }
+            //TODO ... 关联获取车和司机信息
+            if(orderEntity.getSchedulingId() != null && orderEntity.getSchedulingId() > 0){
+                priceDTO.setDriverDesc("朕师傅");
+            }
+
+            priceDTO.setStartTime(orderEntity.getStartTime());
+            priceDTO.setCreateAt(orderEntity.getCreateAt());
+            //支付倒计时计算，待支付状态的订单需要
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(orderEntity.getCreateAt());
+            calendar.add(java.util.Calendar.HOUR_OF_DAY,1);
+            long difference=calendar.getTime().getTime() - System.currentTimeMillis();
+            priceDTO.setExpiryTime(difference > 0?calendar.getTime():null);
+
+            priceDTO.setTotalCost(orderEntity.getTotalCost());
+            priceDTO.setUnpaidCost(orderEntity.getUnpaidCost());
+            //已付公式：paidCost = totalCost - unpaidCost
+            priceDTO.setPaidCost(orderEntity.getTotalCost().subtract(orderEntity.getUnpaidCost()));
+            //服务手续费用：接和送总费用
+            priceDTO.setServiceCost(orderEntity.getTakeCost().add(orderEntity.getGiveCost()));
+            priceDTO.setInsuranceCost(orderEntity.getInsuranceCost());
+            //TODO ... 积分点数：系统配置进行计算
+            priceDTO.setGiveIntegralPoint(0);
+            priceDTO.setBreakCost(BigDecimal.ZERO);
+
+            if(orderEntity.getUnpaidCost().compareTo(BigDecimal.ZERO) > 0){
+                UserDetailDTO userDetailDTO = userServiceApi.selectUserDetailById(orderEntity.getUserId());
+                priceDTO.setMyWallet(new BigDecimal(userDetailDTO.getWallet() + ""));
+                priceDTO.setMyIntegral(userDetailDTO.getIntegral());
+            }
+            return priceDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean doPay(PayConfirmDTO payConfirmDTO) {
+        return null;
+    }
+
+    @Override
+    public PayPriceDTO changePrice(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean doChange(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean scanBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public String smsBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public EvaluateCategoryDTO evaluateCategory() {
+        return null;
+    }
+
+    @Override
+    public Boolean doEvaluate(EvaluateInfoDTO evaluateInfoDTO) {
+        return null;
+    }
+
+}

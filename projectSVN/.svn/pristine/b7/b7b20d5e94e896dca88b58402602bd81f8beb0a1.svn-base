@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.LLineMapper" >
+    <resultMap id="PlanInfoBaseResultMap" type="com.zacx.serivce.dal.entity.LPlan"
+        extends="com.zacx.serivce.dal.mapper.LPlanMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="getPlanInfoByLine" resultMap="PlanInfoBaseResultMap" parameterType="com.zacx.serivce.dal.entity.LLine">
+      SELECT p.* from l_plan p,l_line l
+      where p.line_id=l.id
+      <if test="id !=null ">
+          and l.id =#{id}
+      </if>
+      <if test="code !=null ">
+          and l.code =#{code}
+      </if>
+      <if test="name!=null">
+          and l.name like CONCAT('%',#{name},'%')
+      </if>
+      <if test="siteStartId!=null">
+          and l.site_start_id =#{siteStartId}
+      </if>
+      <if test="siteEndId!=null">
+          and l.site_end_id =#{siteEndId}
+      </if>
+      <if test="status!=null">
+          and l.status =#{status}
+      </if>
+    </select>
+</mapper>

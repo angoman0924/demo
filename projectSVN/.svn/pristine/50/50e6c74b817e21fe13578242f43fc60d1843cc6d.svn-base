@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OEvaluateCategory;
+import com.zacx.serivce.dal.entity.OEvaluateCategoryExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OEvaluateCategoryMapper {
+    int countByExample(OEvaluateCategoryExample example);
+
+    int deleteByExample(OEvaluateCategoryExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(OEvaluateCategory record);
+
+    int insertSelective(OEvaluateCategory record);
+
+    List<OEvaluateCategory> selectByExample(OEvaluateCategoryExample example);
+
+    OEvaluateCategory selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") OEvaluateCategory record, @Param("example") OEvaluateCategoryExample example);
+
+    int updateByExample(@Param("record") OEvaluateCategory record, @Param("example") OEvaluateCategoryExample example);
+
+    int updateByPrimaryKeySelective(OEvaluateCategory record);
+
+    int updateByPrimaryKey(OEvaluateCategory record);
+}

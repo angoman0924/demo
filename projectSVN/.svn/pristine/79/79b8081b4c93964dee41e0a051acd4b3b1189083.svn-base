@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.ORefund;
+import com.zacx.serivce.dal.entity.ORefundExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface ORefundMapper {
+    int countByExample(ORefundExample example);
+
+    int deleteByExample(ORefundExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(ORefund record);
+
+    int insertSelective(ORefund record);
+
+    List<ORefund> selectByExample(ORefundExample example);
+
+    ORefund selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") ORefund record, @Param("example") ORefundExample example);
+
+    int updateByExample(@Param("record") ORefund record, @Param("example") ORefundExample example);
+
+    int updateByPrimaryKeySelective(ORefund record);
+
+    int updateByPrimaryKey(ORefund record);
+}

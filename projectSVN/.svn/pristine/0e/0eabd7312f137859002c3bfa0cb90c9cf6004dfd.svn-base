@@ -1,0 +1,14 @@
+package com.zacx.serivce.order.service;
+
+import com.zacx.serivce.order.api.dto.CreateOrderDTO;
+import com.zacx.serivce.order.api.dto.OrderMainDTO;
+import org.springframework.stereotype.Service;
+
+@Service
+public class LocOrderCreateService {
+
+    public OrderMainDTO test(CreateOrderDTO createOrderDTO) {
+        return null;
+    }
+
+}

@@ -1,0 +1,49 @@
+package com.zacx.gateway.passenger.dto;
+
+import com.zacx.serivce.dal.enums.OperateModeEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * 新增订单实体类
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-30 18:57
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Data
+@ApiModel(value = "OrderEnter", description = "订单信息")
+public class OrderEnter<OrderPassenger> {
+    @ApiModelProperty("路线ID")
+    private Integer lineId;
+    @ApiModelProperty("路线班次ID")
+    private Integer lineScheduleId;
+    @ApiModelProperty("乘客列表")
+    private List<OrderPassenger> passengers;
+    @ApiModelProperty("保险ID列表")
+    private List<Integer> insuranceIds;
+
+    @ApiModelProperty("运营模式")
+    private OperateModeEnum operateMode;
+    @Data
+    @ApiModel(value = "OrderPassenger", description = "订单信息")
+    public static class OrderPassenger{
+
+        @ApiModelProperty("乘客ID")
+        private Integer passengerId;
+
+        @ApiModelProperty("乘客上车地址")
+        private String address;
+
+        @ApiModelProperty(value = "地址纬度",example = "31.20759")
+        private Double lat;
+        @ApiModelProperty(value = "地址经度",example = "121.29186")
+        private Double lng;
+
+
+    }
+}

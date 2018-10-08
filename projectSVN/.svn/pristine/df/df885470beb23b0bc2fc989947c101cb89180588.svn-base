@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.SConfig;
+import com.zacx.serivce.dal.entity.SConfigExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface SConfigMapper {
+    int countByExample(SConfigExample example);
+
+    int deleteByExample(SConfigExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(SConfig record);
+
+    int insertSelective(SConfig record);
+
+    List<SConfig> selectByExample(SConfigExample example);
+
+    SConfig selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") SConfig record, @Param("example") SConfigExample example);
+
+    int updateByExample(@Param("record") SConfig record, @Param("example") SConfigExample example);
+
+    int updateByPrimaryKeySelective(SConfig record);
+
+    int updateByPrimaryKey(SConfig record);
+}

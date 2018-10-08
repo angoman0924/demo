@@ -1,0 +1,80 @@
+/*
+*
+* LSchedulingMoveApplyMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LSchedulingMoveApply;
+import com.zacx.serivce.dal.entity.LSchedulingMoveApplyExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LSchedulingMoveApplyMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(LSchedulingMoveApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(LSchedulingMoveApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(LSchedulingMoveApply record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(LSchedulingMoveApply record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<LSchedulingMoveApply> selectByExample(LSchedulingMoveApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    LSchedulingMoveApply selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") LSchedulingMoveApply record, @Param("example") LSchedulingMoveApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") LSchedulingMoveApply record, @Param("example") LSchedulingMoveApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(LSchedulingMoveApply record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(LSchedulingMoveApply record);
+}

@@ -1,0 +1,165 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LPlan {
+    private Integer id;
+
+    private String code;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private Integer lineId;
+
+    private Boolean isRelay;
+
+    private Long ticketPrice;
+
+    private Integer saleNumber;
+
+    private Integer shiftType;
+
+    private Integer carTypeId;
+
+    private Integer schedulingStatus;
+
+    private Integer saleStatus;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(Integer lineId) {
+        this.lineId = lineId;
+    }
+
+    public Boolean getIsRelay() {
+        return isRelay;
+    }
+
+    public void setIsRelay(Boolean isRelay) {
+        this.isRelay = isRelay;
+    }
+
+    public Long getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(Long ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public Integer getSaleNumber() {
+        return saleNumber;
+    }
+
+    public void setSaleNumber(Integer saleNumber) {
+        this.saleNumber = saleNumber;
+    }
+
+    public Integer getShiftType() {
+        return shiftType;
+    }
+
+    public void setShiftType(Integer shiftType) {
+        this.shiftType = shiftType;
+    }
+
+    public Integer getCarTypeId() {
+        return carTypeId;
+    }
+
+    public void setCarTypeId(Integer carTypeId) {
+        this.carTypeId = carTypeId;
+    }
+
+    public Integer getSchedulingStatus() {
+        return schedulingStatus;
+    }
+
+    public void setSchedulingStatus(Integer schedulingStatus) {
+        this.schedulingStatus = schedulingStatus;
+    }
+
+    public Integer getSaleStatus() {
+        return saleStatus;
+    }
+
+    public void setSaleStatus(Integer saleStatus) {
+        this.saleStatus = saleStatus;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BCharteredCarModel;
+import com.zacx.serivce.dal.entity.BCharteredCarModelExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BCharteredCarModelMapper {
+    int countByExample(BCharteredCarModelExample example);
+
+    int deleteByExample(BCharteredCarModelExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BCharteredCarModel record);
+
+    int insertSelective(BCharteredCarModel record);
+
+    List<BCharteredCarModel> selectByExample(BCharteredCarModelExample example);
+
+    BCharteredCarModel selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BCharteredCarModel record, @Param("example") BCharteredCarModelExample example);
+
+    int updateByExample(@Param("record") BCharteredCarModel record, @Param("example") BCharteredCarModelExample example);
+
+    int updateByPrimaryKeySelective(BCharteredCarModel record);
+
+    int updateByPrimaryKey(BCharteredCarModel record);
+}

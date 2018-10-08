@@ -1,0 +1,226 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class OTicket {
+    private Integer id;
+
+    private String ticketCode;
+
+    private Integer userId;
+
+    private BigDecimal ticketPrice;
+
+    private BigDecimal insurancePrice;
+
+    private Date signDate;
+
+    private BigDecimal takeCost;
+
+    private BigDecimal giveCost;
+
+    private String verificationCode;
+
+    private String carModel;
+
+    private String plateNumber;
+
+    private String seatNumber;
+
+    private Boolean isPickUp;
+
+    private String passengerName;
+
+    private Integer cardType;
+
+    private String passengerCardno;
+
+    private String insuranceCode;
+
+    private Integer status;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTicketCode() {
+        return ticketCode;
+    }
+
+    public void setTicketCode(String ticketCode) {
+        this.ticketCode = ticketCode;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public BigDecimal getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(BigDecimal ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public BigDecimal getInsurancePrice() {
+        return insurancePrice;
+    }
+
+    public void setInsurancePrice(BigDecimal insurancePrice) {
+        this.insurancePrice = insurancePrice;
+    }
+
+    public Date getSignDate() {
+        return signDate;
+    }
+
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
+    }
+
+    public BigDecimal getTakeCost() {
+        return takeCost;
+    }
+
+    public void setTakeCost(BigDecimal takeCost) {
+        this.takeCost = takeCost;
+    }
+
+    public BigDecimal getGiveCost() {
+        return giveCost;
+    }
+
+    public void setGiveCost(BigDecimal giveCost) {
+        this.giveCost = giveCost;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public String getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
+    }
+
+    public Boolean getIsPickUp() {
+        return isPickUp;
+    }
+
+    public void setIsPickUp(Boolean isPickUp) {
+        this.isPickUp = isPickUp;
+    }
+
+    public String getPassengerName() {
+        return passengerName;
+    }
+
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
+
+    public Integer getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(Integer cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getPassengerCardno() {
+        return passengerCardno;
+    }
+
+    public void setPassengerCardno(String passengerCardno) {
+        this.passengerCardno = passengerCardno;
+    }
+
+    public String getInsuranceCode() {
+        return insuranceCode;
+    }
+
+    public void setInsuranceCode(String insuranceCode) {
+        this.insuranceCode = insuranceCode;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

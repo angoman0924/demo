@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/zacx-core/zacx-core.iml" filepath="$PROJECT_DIR$/zacx-core/zacx-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-dal/zacx-dal.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-dal/zacx-dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway.iml" filepath="$PROJECT_DIR$/zacx-gateway/zacx-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway-base/zacx-gateway-base.iml" filepath="$PROJECT_DIR$/zacx-gateway/zacx-gateway-base/zacx-gateway-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway-driver/zacx-gateway-driver.iml" filepath="$PROJECT_DIR$/zacx-gateway/zacx-gateway-driver/zacx-gateway-driver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway-passenger/zacx-gateway-passenger.iml" filepath="$PROJECT_DIR$/zacx-gateway/zacx-gateway-passenger/zacx-gateway-passenger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-parent.iml" filepath="$PROJECT_DIR$/zacx-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-basic/zacx-service-basic.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-basic/zacx-service-basic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-basic-api/zacx-service-basic-api.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-basic-api/zacx-service-basic-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-line/zacx-service-line.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-line/zacx-service-line.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-line-api/zacx-service-line-api.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-line-api/zacx-service-line-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-mall/zacx-service-mall.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-mall/zacx-service-mall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-mall-api/zacx-service-mall-api.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-mall-api/zacx-service-mall-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-order/zacx-service-order.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-order/zacx-service-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-order-api/zacx-service-order-api.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-order-api/zacx-service-order-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-user/zacx-service-user.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-user/zacx-service-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zacx-service/zacx-service-user-api/zacx-service-user-api.iml" filepath="$PROJECT_DIR$/zacx-service/zacx-service-user-api/zacx-service-user-api.iml" />
+    </modules>
+  </component>
+</project>

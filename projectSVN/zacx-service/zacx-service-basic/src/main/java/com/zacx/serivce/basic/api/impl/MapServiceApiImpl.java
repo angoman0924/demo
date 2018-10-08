@@ -1,0 +1,254 @@
+package com.zacx.serivce.basic.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.zacx.core.enums.Code;
+import com.zacx.core.util.HttpClient;
+import com.zacx.serivce.basic.api.MapServiceApi;
+import com.zacx.serivce.basic.api.dto.*;
+import com.zacx.serivce.basic.api.exceptions.BasicServiceException;
+import com.zacx.serivce.basic.service.CityService;
+import com.zacx.serivce.cache.key.RedisKeys;
+import com.zacx.serivce.dal.entity.BCity;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import redis.clients.jedis.JedisCluster;
+
+import javax.annotation.Resource;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @ClassName: MapService
+ * @Description: 地图服务
+ * @author wcj
+ * @date 2017-02-28
+ */
+@Slf4j
+@Service("mapService")
+public class MapServiceApiImpl implements MapServiceApi {
+    @Resource
+    private JedisCluster jedisCluster;
+    @Resource
+    private CityService cityService;
+    // 经度截取，小数点后五位
+    private static final DecimalFormat lngDf = new DecimalFormat("###.#####");
+    // 纬度截取，小数点后五位
+    private static final DecimalFormat latDf = new DecimalFormat("##.#####");
+
+    private static final String FAIL = "0";
+
+//    @Value("#{app.mapUrl}")
+    private String url = "http://restapi.amap.com/v3/geocode/regeo";
+//    @Value("#{app.mapKey}")
+    private String key = "7b5928d200a192ed663cafe5bab3d51c";
+
+    /**
+     * <p>
+     * Title: getAreaCode
+     * </p>
+     * <p>
+     * Description: 根据经纬度，查询高德行政区域code
+     * </p>
+     *
+     * @param location
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public MapLocationResult getAreaCode(MapLocationEnter location) {
+        if (location == null || location.getLng() == null || location.getLat() == null || StringUtils.isBlank(url)
+                || StringUtils.isBlank(key)) {
+            return null;
+        }
+        if (location.getLng() == 0 || location.getLng() == 0) {
+            return null;
+        }
+        // 经度，小数点后取5位
+        String lng = lngDf.format(location.getLng());
+        String lat = latDf.format(location.getLat());
+        // ?key=您的key&location=121.70679,31.5864
+        String param = "?key=" + key + "&location=" + lng + "," + lat;
+        String result = HttpClient.get(url + param);
+        if (StringUtils.isBlank(result)) {
+            log.error("HttpClient.get(url={}) ERROR: result:{}. ", url, result);
+            return null;
+        }else{
+            log.info("HttpClient.get(url={}) success: result:{}. ", url, result);
+        }
+        Map<String, Object> mapResult = JSON.parseObject(result, new HashMap<String, Object>().getClass());
+        if (mapResult == null) {
+            return null;
+        }
+        String status = mapResult.get("status") +"";
+        // 值为0或1，0表示false；1表示true
+        if (FAIL.equals(status)) {
+            log.error("HttpClient.get(url={}) ERROR: status:{}, 0:fail 1:success", url + param, status);
+            return null;
+        }
+
+        mapResult = (Map<String, Object>) mapResult.get("regeocode");
+        String address = mapResult.get("formatted_address") + "";
+        mapResult = (Map<String, Object>) mapResult.get("addressComponent");
+        String adCode = mapResult.get("adcode") + "";
+        String cityCode = mapResult.get("citycode") + "";
+        String province = mapResult.get("province") + "";
+        String country = mapResult.get("country") + "";
+        String city = mapResult.get("city") + "";
+        String district = mapResult.get("district") + "";
+        if("[]".equals(city) || StringUtils.isBlank(city)){
+            city = province;
+        }
+        return new MapLocationResult(adCode, address, province, city, cityCode,country, district);
+    }
+
+    /**
+     * Description: 根据经纬度，查询高德行政区域code
+     * @param location
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public MapCodeResult getCode(MapLocationEnter location) {
+        if (location == null || location.getLng() == null || location.getLat() == null || StringUtils.isBlank(url)
+                || StringUtils.isBlank(key)) {
+            return null;
+        }
+        if (location.getLng() == 0 || location.getLng() == 0) {
+            return null;
+        }
+        // 经度，小数点后取5位
+        String lng = lngDf.format(location.getLng());
+        String lat = latDf.format(location.getLat());
+        // ?key=您的key&location=121.70679,31.5864
+        String param = "?key=" + key + "&location=" + lng + "," + lat;
+        String result = HttpClient.get(url + param);
+        if (StringUtils.isBlank(result)) {
+            log.error("HttpClient.get(url={}) ERROR: result:{}. ", url, result);
+            return null;
+        }
+        Map<String, Object> mapResult = JSON.parseObject(result, new HashMap<String, Object>().getClass());
+        if (mapResult == null) {
+            return null;
+        }
+        String status = mapResult.get("status")+ "";
+        // 值为0或1，0表示false；1表示true
+        if (FAIL.equals(status)) {
+            log.error("HttpClient.get(url={}) ERROR: status:{}, 0:fail 1:success", url + param, status);
+            return null;
+        }
+
+        Map<String, Object> rgMap = (Map<String, Object>) mapResult.get("regeocode");
+        if (rgMap != null) {
+            Map<String, Object> acMap = (Map<String, Object>) rgMap.get("addressComponent");
+            if (null != acMap) {
+                Object cityCode = acMap.get("citycode");
+                if (null != cityCode && cityCode instanceof String) {
+                    String areaCode = acMap.get("adcode") + "";
+                    String province = acMap.get("province") + "";
+                    String city = acMap.get("city") + "";
+                    if ("[]".equals(city) || StringUtils.isBlank(city)) {
+                        city = province;
+                    }
+                    String address = rgMap.get("formatted_address") + "";
+                    String area = acMap.get("district") + "";
+                    return new MapCodeResult(address, province, city, cityCode.toString(), area, areaCode);
+                }
+            }
+        }
+        log.error("经纬度有误解析错误");
+        return null;
+    }
+
+//    @Override
+//    public List<CoordinateInfo> getCityAreaByCoordinate(String lng, String lat){
+//        TtCity ttCity= getCityByCoordinate(lng,lat);
+//        if(ttCity==null){
+//            return Collections.emptyList();
+//        }
+//        List<CoordinateInfo> coordinateInfos= new ArrayList<>();
+//        List<CityAreaResult> list = ttCityAreaMapper.selectByCityId(ttCity.getId());
+//        log.info("cityArea:{}",list);
+//        if(list!=null&&list.size()>0){
+//            CityAreaResult result=list.get(0);
+//            String[] points =result.getPoints().split(";");
+//            CoordinateInfo coordinateInfo = null;
+//            for(String p:points){
+//                coordinateInfo = new CoordinateInfo();
+//                String[] point = p.split(",");
+//                coordinateInfo.setLongitude(point[0]);
+//                coordinateInfo.setLatitude(point[1]);
+//                coordinateInfos.add(coordinateInfo);
+//            }
+//        }
+//        return coordinateInfos;
+//    }
+
+    @Override
+    public CityDTO getCityByCoordinate(String lng, String lat){
+        CityDTO cityInfo = null;
+        try {
+            MapLocationResult result = getMapLocation(lng,lat);
+            if(null == result){
+                return cityInfo;
+            }
+
+//            String cityName = "";
+//            if (StringUtils.isNotEmpty(result.getDistrict()) && !"[]".equals(result.getDistrict()) && !result.getDistrict().endsWith("区")) {
+//                cityName = result.getDistrict();
+//            } else if (StringUtils.isNotEmpty(result.getCity()) && !"[]".equals(result.getCity())) {
+//                cityName = result.getCity();
+//            } else if (StringUtils.isNotEmpty(result.getProvince())) {
+//                cityName = result.getProvince();
+//            } else if (StringUtils.isNotEmpty(result.getCountry())) {
+//                cityName = result.getCountry();
+//            }
+//            log.info("MapServiceImpl.getCityByCoordinate cityName = {}.",cityName);
+//            if (StringUtils.isNotEmpty(cityName)) {
+////                cityInfo = ttCityMapper.selectCityByCityName(cityName);
+//            }
+
+            BCity bCity = cityService.getCityByCode(result.getAdCode());
+            if (bCity == null) {
+                log.info("根据编码查找城市不存在,adCode:{}", result.getAdCode());
+                return cityInfo;
+            }
+            cityInfo = new CityDTO();
+            BeanUtils.copyProperties(bCity, cityInfo);
+            log.info("MapServiceImpl.getCityByCoordinate = {}.",JSON.toJSON(cityInfo));
+        } catch (Exception e) {
+            log.error("MapServiceImpl.getCityByCoordinate({}).  Exception: {},{}", e,lng,lat);
+            throw new BasicServiceException(Code.ERROR_DATA_NOT_FOUND, "经纬度有误解析错误");
+        }
+        return cityInfo;
+    }
+
+    private MapLocationResult getMapLocation(String lng,String lat) throws Exception{
+        MapLocationEnter location = new MapLocationEnter();
+        location.setLng(Double.parseDouble(lng));
+        location.setLat(Double.parseDouble(lat));
+        MapLocationResult result = getAreaCode(location);
+        if(null!=result){
+            log.info("getMapLocation :" +lng+","+lat + " return:" +  result.toString());
+        }
+        return result;
+    }
+
+    @Override
+    public CoordinateDTO getCoordinateInfo(CoordinateDTO dto) {
+        CoordinateDTO ret = null;
+        //车辆定位
+        if (dto.getType() == 1) {
+            String json = jedisCluster.hget(RedisKeys.GPS_REALTIME_DEVICE_KEY, dto.getCode());
+            ret = JSON.parseObject(json, CoordinateDTO.class);
+        }
+        //手机定位
+        if (dto.getType() == 2) {
+            String json = jedisCluster.hget(RedisKeys.GPS_REALTIME_PERSON_KEY, dto.getCode());
+            ret = JSON.parseObject(json, CoordinateDTO.class);
+        }
+        return ret;
+    }
+}

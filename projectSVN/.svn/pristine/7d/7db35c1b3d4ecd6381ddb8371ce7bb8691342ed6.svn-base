@@ -1,0 +1,14 @@
+package com.zacx.serivce.order.service;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.order.api.dto.OrderDetailDTO;
+import com.zacx.serivce.order.api.dto.OrderMainDTO;
+import com.zacx.serivce.order.api.dto.OrderQueryDTO;
+
+public interface OrderQueryLocService {
+
+    PageInfo<OrderMainDTO> queryOrderList(OrderQueryDTO orderQueryDTO);
+
+    OrderDetailDTO queryOrderDetail(Integer orderId);
+
+}

@@ -1,0 +1,284 @@
+/*
+*
+* OEvaluate.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class OEvaluate {
+    /**
+     * 
+     */
+    private Integer id;
+
+    /**
+     * 
+     */
+    private Integer userId;
+
+    /**
+     * 
+     */
+    private Integer orderId;
+
+    /**
+     * 用户昵称
+     */
+    private String nick;
+
+    /**
+     * 评价内容
+     */
+    private String description;
+
+    /**
+     * 
+     */
+    private String type1Name;
+
+    /**
+     * 类别1评分
+     */
+    private Integer type1Score;
+
+    /**
+     * 
+     */
+    private String type2Name;
+
+    /**
+     * 类别2评分
+     */
+    private Integer type2Score;
+
+    /**
+     * 
+     */
+    private String type3Name;
+
+    /**
+     * 
+     */
+    private Integer type3Score;
+
+    /**
+     * 评价内容标签集合
+     */
+    private String labeLlist;
+
+    /**
+     * 
+     */
+    private Date createAt;
+
+    /**
+     * 
+     * @return id 
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 
+     * @return user_id 
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 
+     * @param userId 
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 
+     * @return order_id 
+     */
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    /**
+     * 
+     * @param orderId 
+     */
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    /**
+     * 用户昵称
+     * @return nick 用户昵称
+     */
+    public String getNick() {
+        return nick;
+    }
+
+    /**
+     * 用户昵称
+     * @param nick 用户昵称
+     */
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    /**
+     * 评价内容
+     * @return description 评价内容
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 评价内容
+     * @param description 评价内容
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * 
+     * @return type1_name 
+     */
+    public String getType1Name() {
+        return type1Name;
+    }
+
+    /**
+     * 
+     * @param type1Name 
+     */
+    public void setType1Name(String type1Name) {
+        this.type1Name = type1Name;
+    }
+
+    /**
+     * 类别1评分
+     * @return type1_score 类别1评分
+     */
+    public Integer getType1Score() {
+        return type1Score;
+    }
+
+    /**
+     * 类别1评分
+     * @param type1Score 类别1评分
+     */
+    public void setType1Score(Integer type1Score) {
+        this.type1Score = type1Score;
+    }
+
+    /**
+     * 
+     * @return type2_name 
+     */
+    public String getType2Name() {
+        return type2Name;
+    }
+
+    /**
+     * 
+     * @param type2Name 
+     */
+    public void setType2Name(String type2Name) {
+        this.type2Name = type2Name;
+    }
+
+    /**
+     * 类别2评分
+     * @return type2_score 类别2评分
+     */
+    public Integer getType2Score() {
+        return type2Score;
+    }
+
+    /**
+     * 类别2评分
+     * @param type2Score 类别2评分
+     */
+    public void setType2Score(Integer type2Score) {
+        this.type2Score = type2Score;
+    }
+
+    /**
+     * 
+     * @return type3_name 
+     */
+    public String getType3Name() {
+        return type3Name;
+    }
+
+    /**
+     * 
+     * @param type3Name 
+     */
+    public void setType3Name(String type3Name) {
+        this.type3Name = type3Name;
+    }
+
+    /**
+     * 
+     * @return type3_score 
+     */
+    public Integer getType3Score() {
+        return type3Score;
+    }
+
+    /**
+     * 
+     * @param type3Score 
+     */
+    public void setType3Score(Integer type3Score) {
+        this.type3Score = type3Score;
+    }
+
+    /**
+     * 评价内容标签集合
+     * @return labe_llist 评价内容标签集合
+     */
+    public String getLabeLlist() {
+        return labeLlist;
+    }
+
+    /**
+     * 评价内容标签集合
+     * @param labeLlist 评价内容标签集合
+     */
+    public void setLabeLlist(String labeLlist) {
+        this.labeLlist = labeLlist;
+    }
+
+    /**
+     * 
+     * @return create_at 
+     */
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    /**
+     * 
+     * @param createAt 
+     */
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+}

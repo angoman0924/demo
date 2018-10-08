@@ -1,0 +1,166 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class LHotzone {
+    private Integer id;
+
+    private Integer lineId;
+
+    private Integer siteId;
+
+    private BigDecimal latitude;
+
+    private BigDecimal longitude;
+
+    private Integer radiusOne;
+
+    private Long priceOne;
+
+    private Integer radiusTwo;
+
+    private Long priceTwo;
+
+    private Integer radiusThree;
+
+    private Long priceThree;
+
+    private Integer status;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(Integer lineId) {
+        this.lineId = lineId;
+    }
+
+    public Integer getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Integer siteId) {
+        this.siteId = siteId;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    public Integer getRadiusOne() {
+        return radiusOne;
+    }
+
+    public void setRadiusOne(Integer radiusOne) {
+        this.radiusOne = radiusOne;
+    }
+
+    public Long getPriceOne() {
+        return priceOne;
+    }
+
+    public void setPriceOne(Long priceOne) {
+        this.priceOne = priceOne;
+    }
+
+    public Integer getRadiusTwo() {
+        return radiusTwo;
+    }
+
+    public void setRadiusTwo(Integer radiusTwo) {
+        this.radiusTwo = radiusTwo;
+    }
+
+    public Long getPriceTwo() {
+        return priceTwo;
+    }
+
+    public void setPriceTwo(Long priceTwo) {
+        this.priceTwo = priceTwo;
+    }
+
+    public Integer getRadiusThree() {
+        return radiusThree;
+    }
+
+    public void setRadiusThree(Integer radiusThree) {
+        this.radiusThree = radiusThree;
+    }
+
+    public Long getPriceThree() {
+        return priceThree;
+    }
+
+    public void setPriceThree(Long priceThree) {
+        this.priceThree = priceThree;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

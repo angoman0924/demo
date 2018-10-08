@@ -1,0 +1,19 @@
+package com.zacx.serivce.basic.api.impl;
+
+import com.zacx.serivce.basic.api.BasicDemoServiceApi;
+import com.zacx.serivce.basic.api.dto.Demo;
+import com.zacx.serivce.basic.service.LocBasicDemoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class BasicDemoServiceApiImpl implements BasicDemoServiceApi {
+    @Autowired
+    LocBasicDemoService locBasicDemoService;
+
+    @Override
+    public boolean test(Demo demo) {
+        return locBasicDemoService.test(demo);
+    }
+
+}

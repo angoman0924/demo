@@ -1,0 +1,22 @@
+package com.zacx.serivce.user.service;
+
+
+import com.zacx.serivce.dal.entity.UUser;
+import com.zacx.serivce.user.api.dto.UserDTO;
+
+import java.util.List;
+
+/**
+* @desc    用户相关
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月04日 14:59:57
+**/
+public interface UserService {
+    /**
+     * 获取用户列表
+     * @param dto
+     * @return
+     */
+    List<UUser> geUserList(UserDTO dto);
+}

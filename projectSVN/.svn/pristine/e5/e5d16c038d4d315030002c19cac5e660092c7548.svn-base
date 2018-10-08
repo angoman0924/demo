@@ -1,0 +1,67 @@
+package com.zacx.core.util;
+
+import com.github.pagehelper.PageInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by song on 2017/10/26.
+ * 对象常用工具类
+ */
+public final class BeanUtils {
+
+    /**
+     * 判断对象是否为空，如果为空，直接抛出异常
+     *
+     * @param object       需要检查的对象
+     * @param errorMessage 异常信息
+     * @return 非空的对象
+     */
+    public static Object requireNonNull(Object object, String errorMessage) {
+        if (null == object) {
+            throw new NullPointerException(errorMessage);
+        }
+        return object;
+    }
+    /**
+     * 判断对象是否不为null
+     *
+     * @param object 需要判断的对象
+     * @return 是否不为null
+     */
+    public static boolean nonNull(Object object) {
+        return null != object;
+    }
+    /**
+     * 判断对象是否为null
+     *
+     * @param object 需要判断的对象
+     * @return 是否为null
+     */
+    public static boolean isNull(Object object) {
+        return null == object;
+    }
+
+
+    public static <D,T> PageInfo<D> pageEntityConvert2PageDTO(PageInfo<T> pageInfoEntity,Class<D> clazz){
+        PageInfo<D> pageInfo=new PageInfo<>();
+        if(null!=pageInfoEntity&&null!=pageInfoEntity.getList()&&!pageInfoEntity.getList().isEmpty()){
+            org.springframework.beans.BeanUtils.copyProperties(pageInfoEntity,pageInfo);
+            List<D> list=new ArrayList<>();
+            pageInfoEntity.getList().forEach(e->{
+                try {
+                    D temp=clazz.newInstance();
+                    org.springframework.beans.BeanUtils.copyProperties(e,temp);
+                    list.add(temp);
+                } catch (InstantiationException e1) {
+                    e1.printStackTrace();
+                } catch (IllegalAccessException e1) {
+                    e1.printStackTrace();
+                }
+            });
+            pageInfo.setList(list);
+        }
+        return pageInfo;
+    }
+}

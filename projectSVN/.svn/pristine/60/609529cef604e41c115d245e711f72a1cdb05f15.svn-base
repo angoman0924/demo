@@ -1,0 +1,80 @@
+/*
+*
+* UUserIntegralWaterBillsMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserIntegralWaterBills;
+import com.zacx.serivce.dal.entity.UUserIntegralWaterBillsExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserIntegralWaterBillsMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(UUserIntegralWaterBillsExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(UUserIntegralWaterBillsExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(UUserIntegralWaterBills record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(UUserIntegralWaterBills record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<UUserIntegralWaterBills> selectByExample(UUserIntegralWaterBillsExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    UUserIntegralWaterBills selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") UUserIntegralWaterBills record, @Param("example") UUserIntegralWaterBillsExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") UUserIntegralWaterBills record, @Param("example") UUserIntegralWaterBillsExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(UUserIntegralWaterBills record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(UUserIntegralWaterBills record);
+}

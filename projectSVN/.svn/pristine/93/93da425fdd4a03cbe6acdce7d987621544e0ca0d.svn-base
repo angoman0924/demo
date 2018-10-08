@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.LSchedulingMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.LScheduling" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="plan_id" property="planId" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="driver_id" property="driverId" jdbcType="INTEGER" />
+    <result column="passenger_number" property="passengerNumber" jdbcType="INTEGER" />
+    <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
+    <result column="is_sign" property="isSign" jdbcType="BIT" />
+    <result column="is_self" property="isSelf" jdbcType="BIT" />
+    <result column="is_work_overtime" property="isWorkOvertime" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, start_time, end_time, plan_id, car_id, driver_id, passenger_number, sign_time, 
+    is_sign, is_self, is_work_overtime, status, create_at, create_by, modify_at, modify_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.LSchedulingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from l_scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_scheduling
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_scheduling
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.LSchedulingExample" >
+    delete from l_scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.LScheduling" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into l_scheduling (start_time, end_time, plan_id, 
+      car_id, driver_id, passenger_number, 
+      sign_time, is_sign, is_self, 
+      is_work_overtime, status, create_at, 
+      create_by, modify_at, modify_by
+      )
+    values (#{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{planId,jdbcType=INTEGER}, 
+      #{carId,jdbcType=INTEGER}, #{driverId,jdbcType=INTEGER}, #{passengerNumber,jdbcType=INTEGER}, 
+      #{signTime,jdbcType=TIMESTAMP}, #{isSign,jdbcType=BIT}, #{isSelf,jdbcType=BIT}, 
+      #{isWorkOvertime,jdbcType=BIT}, #{status,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.LScheduling" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into l_scheduling
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="driverId != null" >
+        driver_id,
+      </if>
+      <if test="passengerNumber != null" >
+        passenger_number,
+      </if>
+      <if test="signTime != null" >
+        sign_time,
+      </if>
+      <if test="isSign != null" >
+        is_sign,
+      </if>
+      <if test="isSelf != null" >
+        is_self,
+      </if>
+      <if test="isWorkOvertime != null" >
+        is_work_overtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="driverId != null" >
+        #{driverId,jdbcType=INTEGER},
+      </if>
+      <if test="passengerNumber != null" >
+        #{passengerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="signTime != null" >
+        #{signTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSign != null" >
+        #{isSign,jdbcType=BIT},
+      </if>
+      <if test="isSelf != null" >
+        #{isSelf,jdbcType=BIT},
+      </if>
+      <if test="isWorkOvertime != null" >
+        #{isWorkOvertime,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.LSchedulingExample" resultType="java.lang.Integer" >
+    select count(*) from l_scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update l_scheduling
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planId != null" >
+        plan_id = #{record.planId,jdbcType=INTEGER},
+      </if>
+      <if test="record.carId != null" >
+        car_id = #{record.carId,jdbcType=INTEGER},
+      </if>
+      <if test="record.driverId != null" >
+        driver_id = #{record.driverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.passengerNumber != null" >
+        passenger_number = #{record.passengerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.signTime != null" >
+        sign_time = #{record.signTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isSign != null" >
+        is_sign = #{record.isSign,jdbcType=BIT},
+      </if>
+      <if test="record.isSelf != null" >
+        is_self = #{record.isSelf,jdbcType=BIT},
+      </if>
+      <if test="record.isWorkOvertime != null" >
+        is_work_overtime = #{record.isWorkOvertime,jdbcType=BIT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null" >
+        modify_by = #{record.modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update l_scheduling
+    set id = #{record.id,jdbcType=INTEGER},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      plan_id = #{record.planId,jdbcType=INTEGER},
+      car_id = #{record.carId,jdbcType=INTEGER},
+      driver_id = #{record.driverId,jdbcType=INTEGER},
+      passenger_number = #{record.passengerNumber,jdbcType=INTEGER},
+      sign_time = #{record.signTime,jdbcType=TIMESTAMP},
+      is_sign = #{record.isSign,jdbcType=BIT},
+      is_self = #{record.isSelf,jdbcType=BIT},
+      is_work_overtime = #{record.isWorkOvertime,jdbcType=BIT},
+      status = #{record.status,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{record.modifyBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.LScheduling" >
+    update l_scheduling
+    <set >
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="driverId != null" >
+        driver_id = #{driverId,jdbcType=INTEGER},
+      </if>
+      <if test="passengerNumber != null" >
+        passenger_number = #{passengerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="signTime != null" >
+        sign_time = #{signTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSign != null" >
+        is_sign = #{isSign,jdbcType=BIT},
+      </if>
+      <if test="isSelf != null" >
+        is_self = #{isSelf,jdbcType=BIT},
+      </if>
+      <if test="isWorkOvertime != null" >
+        is_work_overtime = #{isWorkOvertime,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.LScheduling" >
+    update l_scheduling
+    set start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      plan_id = #{planId,jdbcType=INTEGER},
+      car_id = #{carId,jdbcType=INTEGER},
+      driver_id = #{driverId,jdbcType=INTEGER},
+      passenger_number = #{passengerNumber,jdbcType=INTEGER},
+      sign_time = #{signTime,jdbcType=TIMESTAMP},
+      is_sign = #{isSign,jdbcType=BIT},
+      is_self = #{isSelf,jdbcType=BIT},
+      is_work_overtime = #{isWorkOvertime,jdbcType=BIT},
+      status = #{status,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BOtherPlatform;
+import com.zacx.serivce.dal.entity.BOtherPlatformExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BOtherPlatformMapper {
+    int countByExample(BOtherPlatformExample example);
+
+    int deleteByExample(BOtherPlatformExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BOtherPlatform record);
+
+    int insertSelective(BOtherPlatform record);
+
+    List<BOtherPlatform> selectByExample(BOtherPlatformExample example);
+
+    BOtherPlatform selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BOtherPlatform record, @Param("example") BOtherPlatformExample example);
+
+    int updateByExample(@Param("record") BOtherPlatform record, @Param("example") BOtherPlatformExample example);
+
+    int updateByPrimaryKeySelective(BOtherPlatform record);
+
+    int updateByPrimaryKey(BOtherPlatform record);
+}

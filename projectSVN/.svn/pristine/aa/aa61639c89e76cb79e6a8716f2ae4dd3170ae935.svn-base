@@ -1,0 +1,25 @@
+package com.zacx.serivce.user.api.dto;
+
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+
+@Data
+@ApiModel
+public class PassengerDTO {
+    private Integer id;
+
+    private String name;
+
+    private String cardType;
+
+    private String cardNumber;
+
+    private Long userId;
+
+    private Integer personGroup;
+
+    private String mobile;
+
+    private Integer status;
+
+}

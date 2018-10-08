@@ -1,0 +1,105 @@
+package com.zacx.serivce.line.api;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.line.api.dto.*;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+
+import java.util.List;
+
+/**
+ * 班次调度服务api
+ * Created by song on 2018/10/3.
+ */
+public interface SchedulingServiceApi {
+    /**
+     * 添加记录
+     * @param dto
+     * @return
+     * @throws LineServiceException
+     */
+    Integer insert(SchedulingDTO dto) throws LineServiceException;
+
+    /**
+     * 更新记录
+     * @param dto
+     * @return
+     * @throws LineServiceException
+     */
+    int update(SchedulingDTO dto) throws LineServiceException;
+
+    /**
+     * 批量删除记录
+     * @param ids
+     * @param userCode
+     * @return
+     * @throws LineServiceException
+     */
+    int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException;
+
+    /**
+     * 数据查询
+     * @param dto
+     * @return
+     */
+    PageInfo<SchedulingDTO> getSchedulingPageInfo(SchedulingDTO dto);
+
+    /**
+     * 192  查询我的排班
+     * @param dto
+     * @return
+     */
+    PageInfo<SchedulingExtDTO> getSchedulingPageInfoByDriver(QuerySchedulingByDriverConditionDTO dto);
+    /**
+     * NO.193 班次调整申请
+     * @param dtos
+     * @return
+     * @throws LineServiceException
+     */
+    int schedulingMoveApply(List<SchedulingMoveApplyDTO> dtos)throws LineServiceException;
+
+    /**
+     * NO.194 司机签到
+     * @param dto
+     * @return
+     * @throws LineServiceException
+     */
+    int driverSign(SchedulingDTO dto) throws LineServiceException;
+
+    /**
+     * NO.200 司机结束行程
+     * @param dto
+     * @return
+     * @throws LineServiceException
+     */
+    int schedulingCompleteByDriver(SchedulingDTO dto) throws LineServiceException;
+
+    /**
+     * 根据主键获取实体
+     * @param id
+     * @return
+     */
+    SchedulingDTO  findByPrimaryKey(Integer id);
+
+
+    /**
+     * 205 查看车辆或人员的历史排班
+     * @param dto
+     * @return
+     */
+    PageInfo<SchedulingExtDTO> getSchedulingHistory(QuerySchedulingHistoryConditionDTO dto);
+
+    /**
+     * 202 获取当前车次的信息 站点 热区 乘客
+     * @param condition
+     * @return
+     */
+    SchedulingSiteHotzonePassengerDTO getSchedulingSiteHotzonePassengerInfo(QuerySchedulingSiteHotzonePassengerConditionDTO condition);
+
+
+    /**
+     * 196   获取上车点人员信息
+     * @param scheduingId
+     * @return
+     */
+    TicketInfoListDTO getTicketInfoListBy(Integer scheduingId);
+}

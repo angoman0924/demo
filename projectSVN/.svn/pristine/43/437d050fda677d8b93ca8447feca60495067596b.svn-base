@@ -1,0 +1,53 @@
+package com.zacx.serivce.dal.entity;
+
+public class BBank {
+    private Integer id;
+
+    private String name;
+
+    private String logo;
+
+    private Integer withdrawCashMax;
+
+    private Boolean isEnable;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public Integer getWithdrawCashMax() {
+        return withdrawCashMax;
+    }
+
+    public void setWithdrawCashMax(Integer withdrawCashMax) {
+        this.withdrawCashMax = withdrawCashMax;
+    }
+
+    public Boolean getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(Boolean isEnable) {
+        this.isEnable = isEnable;
+    }
+}

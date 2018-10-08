@@ -1,0 +1,115 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+
+public class UUserDriver {
+    private Integer id;
+
+    private Integer userId;
+
+    private String roleIds;
+
+    private String headPortrait;
+
+    private String accountName;
+
+    private String address;
+
+    private Integer integral;
+
+    private BigDecimal wallet;
+
+    private String payPwd;
+
+    private Integer status;
+
+    private String remark;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
+    }
+
+    public BigDecimal getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(BigDecimal wallet) {
+        this.wallet = wallet;
+    }
+
+    public String getPayPwd() {
+        return payPwd;
+    }
+
+    public void setPayPwd(String payPwd) {
+        this.payPwd = payPwd;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+}

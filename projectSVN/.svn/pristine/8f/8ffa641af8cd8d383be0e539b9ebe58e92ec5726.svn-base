@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UFeedback;
+import com.zacx.serivce.dal.entity.UFeedbackExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UFeedbackMapper {
+    int countByExample(UFeedbackExample example);
+
+    int deleteByExample(UFeedbackExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UFeedback record);
+
+    int insertSelective(UFeedback record);
+
+    List<UFeedback> selectByExample(UFeedbackExample example);
+
+    UFeedback selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UFeedback record, @Param("example") UFeedbackExample example);
+
+    int updateByExample(@Param("record") UFeedback record, @Param("example") UFeedbackExample example);
+
+    int updateByPrimaryKeySelective(UFeedback record);
+
+    int updateByPrimaryKey(UFeedback record);
+}

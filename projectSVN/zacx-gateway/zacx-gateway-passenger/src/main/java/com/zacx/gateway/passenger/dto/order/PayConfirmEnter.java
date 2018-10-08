@@ -1,0 +1,37 @@
+package com.zacx.gateway.passenger.dto.order;
+
+import com.zacx.core.enums.PayTypeEnum;
+import com.zacx.serivce.order.api.enums.OrderPaySceneEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * @description: 支付订单信息
+ *
+ * @author: kiting
+ * @date: 2018年10月3日 19:25
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+@ApiModel(value = "PayConfirmEnter", description = "支付订单信息")
+public class PayConfirmEnter {
+
+    @ApiModelProperty(value = "订单ID", dataType = "Integer", required = true)
+    private Integer orderId;
+
+    @ApiModelProperty(value = "支付场景", dataType = "String")
+    OrderPaySceneEnum orderPayScene;
+
+    //支持混合支付
+    @ApiModelProperty(value = "支付类型", dataType = "String", required = true)
+    private PayTypeEnum payType;
+
+    @ApiModelProperty(value = "支付金额", dataType = "BigDecimal", required = true)
+    private BigDecimal couponCost;
+
+}

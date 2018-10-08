@@ -1,0 +1,53 @@
+package com.zacx.serivce.dal.entity;
+
+public class BIntegral {
+    private Integer id;
+
+    private String name;
+
+    private Integer point;
+
+    private Integer direction;
+
+    private String remark;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
+    public Integer getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Integer direction) {
+        this.direction = direction;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+}

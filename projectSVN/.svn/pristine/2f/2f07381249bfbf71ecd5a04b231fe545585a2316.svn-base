@@ -1,0 +1,32 @@
+package com.zacx.core.enums;
+
+import java.util.Optional;
+
+/**
+* @author gulx
+* @Description 数据来源
+* @Date  2018/9/26 11:55
+* @Param 
+* @copyright 上海拜米网络科技有限公司
+* @return 
+**/
+public enum SourceEnum {
+    IOS,ANDROID,PC,H5,
+    OTHER; //其他
+    /**
+    * @author gulx
+    * @Description 根据字符串获取枚举值
+    * @Date  2018/9/27 11:31
+    * @Param [source]
+    * @copyright 上海拜米网络科技有限公司
+    * @return java.util.Optional<com.zacx.core.enums.SourceEnum>
+    **/
+    public static Optional<SourceEnum> get(String source){
+        for(SourceEnum p:SourceEnum.values()){
+            if(p.toString().equals(source)){
+                return Optional.of(p);
+            }
+        }
+        return Optional.empty();
+    }
+}

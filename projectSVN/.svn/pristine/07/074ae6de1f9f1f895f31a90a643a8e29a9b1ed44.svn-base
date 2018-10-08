@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OOrderOperateLog;
+import com.zacx.serivce.dal.entity.OOrderOperateLogExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OOrderOperateLogMapper {
+    int countByExample(OOrderOperateLogExample example);
+
+    int deleteByExample(OOrderOperateLogExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(OOrderOperateLog record);
+
+    int insertSelective(OOrderOperateLog record);
+
+    List<OOrderOperateLog> selectByExample(OOrderOperateLogExample example);
+
+    OOrderOperateLog selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") OOrderOperateLog record, @Param("example") OOrderOperateLogExample example);
+
+    int updateByExample(@Param("record") OOrderOperateLog record, @Param("example") OOrderOperateLogExample example);
+
+    int updateByPrimaryKeySelective(OOrderOperateLog record);
+
+    int updateByPrimaryKey(OOrderOperateLog record);
+}

@@ -1,0 +1,93 @@
+package com.zacx.serivce.order.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.order.api.OrderServiceApi;
+import com.zacx.serivce.order.api.dto.*;
+import com.zacx.serivce.order.service.OrderCreateLocService;
+import com.zacx.serivce.order.service.OrderLocService;
+import com.zacx.serivce.order.service.OrderPayLocService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+
+@Slf4j
+@Component
+public class OrderServiceImpl implements OrderServiceApi {
+    @Autowired
+    OrderCreateLocService orderCreateLocService;
+    @Autowired
+    OrderLocService orderLocService;
+
+    @Override
+    public BigDecimal compPrice(CreateOrderDTO createOrderDTO) {
+        log.info("====== 预算订单价格服务参数 ======：{}", JSON.toJSONString(createOrderDTO));
+        BigDecimal price = orderCreateLocService.compPrice(createOrderDTO);
+        log.info("====== 预算订单价格服务结果 ======：{}", price);
+        return price;
+    }
+
+    @Override
+    public OrderMainDTO create(CreateOrderDTO createOrderDTO) {
+        log.info("====== 订单创建服务参数 ======：{}", JSON.toJSONString(createOrderDTO));
+        OrderMainDTO order = orderCreateLocService.create(createOrderDTO);
+        log.info("====== 预算创建服务结果 ======：{}", JSON.toJSONString(order));
+        return order;
+    }
+
+    @Override
+    public PayPriceDTO payDetail(Integer orderId) {
+        log.info("====== 订单支付明细服务参数 ======：{}", orderId);
+        PayPriceDTO priceDetail = orderLocService.payDetail(orderId);
+        log.info("====== 订单支付明细服务结果 ======：{}", JSON.toJSONString(priceDetail));
+        return priceDetail;
+    }
+
+    @Override
+    public Boolean doPay(PayConfirmDTO payConfirmDTO) {
+        return null;
+    }
+
+    @Override
+    public PayPriceDTO changePrice(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean doChange(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public PageInfo<OrderMainDTO> queryOrderList(OrderQueryDTO orderQueryDTO) {
+        return null;
+    }
+
+    @Override
+    public OrderDetailDTO queryOrderDetail(Integer orderId) {
+        return null;
+    }
+
+    @Override
+    public Boolean scanBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public String smsBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public EvaluateCategoryDTO evaluateCategory() {
+        return null;
+    }
+
+    @Override
+    public Boolean doEvaluate(EvaluateInfoDTO evaluateInfoDTO) {
+        return null;
+    }
+
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zacx.serivce.dal.mapper.BCityMapper">
+    <select id="selectByKey" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.BCity" >
+        select
+        id, level, name, pinyin_code, code, parent_code, type
+        from b_city where 1=1
+        <if test="name != null and pinyinCode != null">
+            and (name like "%"#{name,jdbcType=VARCHAR}"%" or pinyin_code LIKE #{pinyinCode,jdbcType=VARCHAR}"%")
+        </if>
+        and type != 1 and type != 4 and level != 1 and level != 4
+        order by pinyin_code
+
+    </select>
+</mapper>

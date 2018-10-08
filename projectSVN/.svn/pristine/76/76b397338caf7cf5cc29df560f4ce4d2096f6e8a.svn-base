@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.UInvoiceApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.UInvoiceApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="invoice_company_id" property="invoiceCompanyId" jdbcType="INTEGER" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="DECIMAL" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, user_id, invoice_company_id, invoice_money, apply_time, `status`, create_at, 
+    modify_at
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.UInvoiceApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from u_invoice_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from u_invoice_apply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from u_invoice_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.UInvoiceApplyExample" >
+    delete from u_invoice_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.UInvoiceApply" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_invoice_apply (code, user_id, invoice_company_id, 
+      invoice_money, apply_time, `status`, 
+      create_at, modify_at)
+    values (#{code,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{invoiceCompanyId,jdbcType=INTEGER}, 
+      #{invoiceMoney,jdbcType=DECIMAL}, #{applyTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{modifyAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.UInvoiceApply" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_invoice_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="invoiceCompanyId != null" >
+        invoice_company_id,
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceCompanyId != null" >
+        #{invoiceCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceMoney != null" >
+        #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.UInvoiceApplyExample" resultType="java.lang.Integer" >
+    select count(*) from u_invoice_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update u_invoice_apply
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceCompanyId != null" >
+        invoice_company_id = #{record.invoiceCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceMoney != null" >
+        invoice_money = #{record.invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.applyTime != null" >
+        apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update u_invoice_apply
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      invoice_company_id = #{record.invoiceCompanyId,jdbcType=INTEGER},
+      invoice_money = #{record.invoiceMoney,jdbcType=DECIMAL},
+      apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      `status` = #{record.status,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.UInvoiceApply" >
+    update u_invoice_apply
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceCompanyId != null" >
+        invoice_company_id = #{invoiceCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.UInvoiceApply" >
+    update u_invoice_apply
+    set code = #{code,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      invoice_company_id = #{invoiceCompanyId,jdbcType=INTEGER},
+      invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

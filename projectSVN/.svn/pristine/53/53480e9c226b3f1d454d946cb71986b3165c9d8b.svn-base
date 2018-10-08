@@ -1,0 +1,72 @@
+package com.zacx.serivce.line.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.dal.entity.LLine;
+import com.zacx.serivce.dal.entity.LLineExample;
+import com.zacx.serivce.dal.mapper.LLineMapper;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.LineService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * 线路内部服务逻辑实现
+ * Created by song on 2018/10/2.
+ */
+@Service
+public class LineServiceImpl implements LineService {
+    @Autowired
+    private LLineMapper lineMapper;
+    @Override
+    public int insert(LLine record) throws LineServiceException {
+        return lineMapper.insertSelective(record);
+    }
+
+    @Override
+    public int update(LLine record) throws LineServiceException {
+        return lineMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int removeListByIds(List<Integer> ids) throws LineServiceException {
+        LLineExample example=new LLineExample();
+        example.createCriteria().andIdIn(ids);
+        return lineMapper.deleteByExample(example);
+    }
+
+    @Override
+    public PageInfo<LLine> getLinePageInfo(LLine record,int pageIndex,int pageSize,String orderCase) {
+        PageHelper.startPage(pageIndex,pageSize);
+        List<LLine> lLines = lineMapper.selectByExample(this.params2example(record,orderCase));
+        PageInfo<LLine> lLinePageInfo=new PageInfo<>(lLines);
+        return lLinePageInfo;
+    }
+
+    private LLineExample params2example(LLine record,String orderCase){
+        LLineExample example=new LLineExample();
+        LLineExample.Criteria criteria = example.createCriteria();
+        if(null!=record.getId()){
+            criteria.andIdEqualTo(record.getId());
+        }
+        if(null!=record.getDistance()){
+            criteria.andDistanceEqualTo(record.getDistance());
+        }
+        if(null!=record.getName()&&!"".equals(record.getName().trim().length())){
+            criteria.andNameLike(record.getName());
+        }
+        if(null!=record.getSiteEndId()){
+            criteria.andSiteEndIdEqualTo(record.getSiteEndId());
+        }
+        if(null!=record.getSiteStartId()){
+            criteria.andSiteStartIdEqualTo(record.getSiteStartId());
+        }
+        if(null!=record.getStatus()){
+            criteria.andStatusEqualTo(record.getStatus());
+        }
+        example.setOrderByClause(orderCase);
+        return example;
+    }
+}

@@ -1,0 +1,19 @@
+package com.zacx.serivce.order.api.impl;
+
+import com.zacx.serivce.order.api.OrderDemoServiceApi;
+import com.zacx.serivce.order.api.dto.Demo;
+import com.zacx.serivce.order.service.LocOrderDemoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OrderDemoServiceApiImpl implements OrderDemoServiceApi {
+    @Autowired
+    LocOrderDemoService locOrderDemoService;
+
+    @Override
+    public boolean test(Demo demo) {
+        return locOrderDemoService.test(demo);
+    }
+
+}

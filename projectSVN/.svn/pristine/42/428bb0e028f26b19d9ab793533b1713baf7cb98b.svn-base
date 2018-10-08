@@ -1,0 +1,105 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LLine {
+    private Integer id;
+
+    private String name;
+
+    private Integer siteStartId;
+
+    private Integer siteEndId;
+
+    private Integer status;
+
+    private Double distance;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getSiteStartId() {
+        return siteStartId;
+    }
+
+    public void setSiteStartId(Integer siteStartId) {
+        this.siteStartId = siteStartId;
+    }
+
+    public Integer getSiteEndId() {
+        return siteEndId;
+    }
+
+    public void setSiteEndId(Integer siteEndId) {
+        this.siteEndId = siteEndId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

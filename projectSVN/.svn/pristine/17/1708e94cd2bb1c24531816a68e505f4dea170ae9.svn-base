@@ -1,0 +1,62 @@
+package com.zacx.gateway.passenger.dto.order;
+
+import com.zacx.serivce.order.api.enums.OrderPaySceneEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * @description: 订单金额相关操作的基础结果数据
+ * @author: kiting
+ * @date: 2018年10月04日 13:47
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+@ApiModel(value = "PayPriceBaseResult", description = "场景基础支付信息")
+public class PayPriceBaseResult {
+
+    @ApiModelProperty(value = "订单编号", dataType = "String")
+    private String orderCode;
+
+    //包车没有此信息
+    @ApiModelProperty(value = "排班ID", dataType = "Integer")
+    private Integer planId;
+    //班车使用排版地点；包车使用接送地点
+    @ApiModelProperty(value = "开始地点", dataType = "String")
+    private String startPlace;
+    @ApiModelProperty(value = "结束地点", dataType = "String")
+    private String endPlace;
+    @ApiModelProperty(value = "车辆信息", dataType = "CarInfo")
+    private CarInfo carInfo;
+    @ApiModelProperty(value = "司机信息", dataType = "String")
+    private String driverDesc;
+
+    @ApiModelProperty(value = "出发时间", dataType = "String")
+    private String startTime;
+
+    @ApiModelProperty(value = "创建时间", dataType = "String")
+    private String createAt;
+
+
+    @ApiModelProperty(value = "订单金额", dataType = "String")
+    private String totalCost;
+
+    @ApiModelProperty(value = "待支付金额", dataType = "String")
+    private String unpaidCost;
+
+    //公式：paidCost = totalCost - unpaidCost
+    @ApiModelProperty(value = "已付金额", dataType = "String")
+    private String paidCost;
+
+    //接和送总费用
+    @ApiModelProperty(value = "服务手续费用", dataType = "String")
+    private String serviceCost;
+
+    @ApiModelProperty(value = "保险费用", dataType = "String")
+    private String insuranceCost;
+
+    @ApiModelProperty(value = "积分点数", dataType = "Integer")
+    private Integer giveIntegralPoint;
+
+}

@@ -1,0 +1,47 @@
+package com.zacx.serivce.order.api.dto;
+
+import lombok.Data;
+
+/**
+ * @description: 订单信息（列表，简单）
+ * @author: kiting
+ * @date: 2018年10月04日 17:30
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class OrderQueryDTO {
+
+    //用户ID
+    private Integer userId;
+
+    //映射成状态类别列表对接服务：
+    //所有：ALL（默认），准备：READY，运行：RUNNING，完成：FINISH
+    //状态组
+    private String statusGroup;
+
+    //格式（yyyy-MM-dd HH:mm:ss）
+    //下单时间-开始
+    private String startCreateAt;
+    //下单时间-开始
+    private String endCreateAt;
+
+    //格式（yyyy-MM-dd HH:mm:ss）
+    //出行时间-开始
+    private String startTravelAt;
+    //出行时间-开始
+    private String endTravelAt;
+
+    //获取车辆信息
+    private Integer qCar;
+
+    //获取司机信息
+    private Integer qDriver;
+
+    //获取评价数量
+    private Integer qEvaluateCount;
+
+    //获取车辆GPS信息
+    private Integer qGps;
+
+}

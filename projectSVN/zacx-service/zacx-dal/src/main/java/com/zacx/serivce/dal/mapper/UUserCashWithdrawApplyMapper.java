@@ -1,0 +1,80 @@
+/*
+*
+* UUserCashWithdrawApplyMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserCashWithdrawApply;
+import com.zacx.serivce.dal.entity.UUserCashWithdrawApplyExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserCashWithdrawApplyMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(UUserCashWithdrawApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(UUserCashWithdrawApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(UUserCashWithdrawApply record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(UUserCashWithdrawApply record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<UUserCashWithdrawApply> selectByExample(UUserCashWithdrawApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    UUserCashWithdrawApply selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") UUserCashWithdrawApply record, @Param("example") UUserCashWithdrawApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") UUserCashWithdrawApply record, @Param("example") UUserCashWithdrawApplyExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(UUserCashWithdrawApply record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(UUserCashWithdrawApply record);
+}

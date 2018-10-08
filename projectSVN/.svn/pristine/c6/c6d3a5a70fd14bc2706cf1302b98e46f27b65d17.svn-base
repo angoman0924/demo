@@ -1,0 +1,46 @@
+package com.zacx.serivce.order.api.dto;
+
+
+
+import lombok.Data;
+
+/**
+ * @description: 订单信息（列表，简单）
+ * @author: kiting
+ * @date: 2018年10月04日 17:30
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class OrderBaseResult {
+
+    //订单ID", dataType = "Integer")
+    private Integer orderId;
+
+    //订单编号", dataType = "String")
+    private String orderCode;
+
+    //开始地点", dataType = "String")
+    private String startPlace;
+
+    //结束地点", dataType = "String")
+    private String endPlace;
+
+    //出发时间", dataType = "String")
+    private String startTime;
+
+    //创建时间", dataType = "String")
+    private String createAt;
+
+    //订单金额", dataType = "String")
+    private String totalCost;
+
+    //业务类型：1班线 2包车
+    //业务类型", dataType = "Integer")
+    private Integer businessType;
+
+    //自营包车，上门接送
+    //服务描述", dataType = "String")
+    private String serviceDesc;
+
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserCashWithdraw;
+import com.zacx.serivce.dal.entity.UUserCashWithdrawExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserCashWithdrawMapper {
+    int countByExample(UUserCashWithdrawExample example);
+
+    int deleteByExample(UUserCashWithdrawExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UUserCashWithdraw record);
+
+    int insertSelective(UUserCashWithdraw record);
+
+    List<UUserCashWithdraw> selectByExample(UUserCashWithdrawExample example);
+
+    UUserCashWithdraw selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UUserCashWithdraw record, @Param("example") UUserCashWithdrawExample example);
+
+    int updateByExample(@Param("record") UUserCashWithdraw record, @Param("example") UUserCashWithdrawExample example);
+
+    int updateByPrimaryKeySelective(UUserCashWithdraw record);
+
+    int updateByPrimaryKey(UUserCashWithdraw record);
+}

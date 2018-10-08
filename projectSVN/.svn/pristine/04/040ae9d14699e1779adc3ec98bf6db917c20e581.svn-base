@@ -1,0 +1,156 @@
+/*
+*
+* UEmergencyContact.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.entity;
+
+public class UEmergencyContact {
+    /**
+     * 
+     */
+    private Integer id;
+
+    /**
+     * 
+     */
+    private Integer userId;
+
+    /**
+     * 1用户 2司机
+     */
+    private Integer userType;
+
+    /**
+     * 
+     */
+    private String name;
+
+    /**
+     * 
+     */
+    private String phone;
+
+    /**
+     * 
+     */
+    private String address;
+
+    /**
+     * 
+     */
+    private String remark;
+
+    /**
+     * 
+     * @return id 
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 
+     * @return user_id 
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 
+     * @param userId 
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 1用户 2司机
+     * @return user_type 1用户 2司机
+     */
+    public Integer getUserType() {
+        return userType;
+    }
+
+    /**
+     * 1用户 2司机
+     * @param userType 1用户 2司机
+     */
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    /**
+     * 
+     * @return name 
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * 
+     * @param name 
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 
+     * @return phone 
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * 
+     * @param phone 
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * 
+     * @return address 
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * 
+     * @param address 
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * 
+     * @return remark 
+     */
+    public String getRemark() {
+        return remark;
+    }
+
+    /**
+     * 
+     * @param remark 
+     */
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+}

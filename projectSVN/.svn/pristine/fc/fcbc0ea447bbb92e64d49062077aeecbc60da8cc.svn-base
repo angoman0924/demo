@@ -1,0 +1,173 @@
+package com.zacx.core.util;
+
+import java.util.UUID;
+
+/**
+ * Created by song on 2017/10/26.
+ * String工具类
+ */
+public final class StringUtils {
+    /**
+     * 此类不需要实例化
+     */
+    private StringUtils() {
+    }
+
+    /**
+     * 字符串转整型
+     * 转不了返回0处理
+     *
+     * @param str
+     * @return
+     */
+    public static int parseInt(String str) {
+        if (null == str || "".equals(str)) return 0;
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * 判断一个字符串是否为空，null也会返回true
+     *
+     * @param str 需要判断的字符串
+     * @return 是否为空，null也会返回true
+     */
+    public static boolean isBlank(String str) {
+        return null == str || "".equals(str.trim()) || "null".equals(str.trim());
+    }
+
+    /**
+     * 判断一个字符串是否不为空
+     *
+     * @param str 需要判断的字符串
+     * @return 是否为空
+     */
+    public static boolean isNotBlank(String str) {
+        return !isBlank(str);
+    }
+
+    /**
+     * 判断一组字符串是否有空值
+     *
+     * @param strs 需要判断的一组字符串
+     * @return 判断结果，只要其中一个字符串为null或者为空，就返回true
+     */
+    public static boolean hasBlank(String... strs) {
+        if (null == strs || 0 == strs.length) {
+            return true;
+        } else {
+            //这种代码如果用java8就会很优雅了
+            for (String str : strs) {
+                if (isBlank(str)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static String reverse(String str, int length) {
+        StringBuffer sb = new StringBuffer(str);
+        int a = sb.length();
+        if (a < length) {
+            for (int i = 0; i < length - a; i++) {
+                sb.append("0");
+            }
+        }
+
+        sb = sb.reverse();
+
+        return sb.toString();
+    }
+
+    public static String getUUID() {
+        return UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");
+    }
+
+
+    /*string准备被填充的字符串；
+    padded_length填充之后的字符串长度，也就是该函数返回的字符串长度，
+    如果这个数量比原字符串的长度要短，lpad函数将会把字符串截取成从左到右的n个字符;
+    pad_string填充字符串，是个可选参数，这个字符串是要粘贴到string的左边，
+    如果这个参数未写，lpad函数将会在string的左边粘贴空格*/
+    public static String lpad(String str, int padded_length, String pad_string) {
+        if (str.length() >= padded_length) {
+            return str;
+        } else {
+            String padStr = BeanUtils.isNull(pad_string) ? " " : pad_string;
+            for (int i = 0; i < padded_length - str.length(); i++) {
+                str = padStr + str;
+            }
+        }
+
+        return str;
+    }
+
+
+    public static String obj2Str(Object obj) {
+        if (obj == null) {
+            return "";
+        }
+        return obj.toString();
+    }
+
+    /**
+     * 全角转半角函数(DBC case)
+     *
+     * @param value
+     * @return
+     */
+    public static final String ToDBC(String value) {
+        if (isBlank(value)) {
+            return value;
+        }
+        char[] c = value.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] >= 65281 && c[i] <= 65374) {
+                c[i] = (char) (c[i] - 65248);
+            } else if (c[i] == 12288) { // 空格
+                c[i] = (char) 32;
+            }
+        }
+        return new String(c);
+    }
+
+    /**
+     * 半角转全角函数(SBC case)
+     *
+     * @param value
+     * @return
+     */
+    public static final String ToSBC(String value) {
+        if (isBlank(value)) {
+            return value;
+        }
+        char[] c = value.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == 32) {
+                c[i] = (char) 12288;
+            } else if (c[i] < 127) {
+                c[i] = (char) (c[i] + 65248);
+            }
+        }
+        return new String(c);
+    }
+
+    /**
+     * 通过{i}，占位符，格式化字符串。只支持｛｝格式
+     * @param str
+     * @param args
+     * @return
+     */
+    public static String formart(String str,Object... args){
+        if(isBlank(str)) return "";
+        if(args.length<=0) return str;
+        for(int i=0;i<args.length;i++){
+            str=str.replace("{"+i+"}",args[0].toString());
+        }
+        return str;
+    }
+}

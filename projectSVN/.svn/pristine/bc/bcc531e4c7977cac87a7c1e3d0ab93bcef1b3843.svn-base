@@ -1,0 +1,74 @@
+package com.zacx.serivce.line.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.dal.entity.LScheduling;
+import com.zacx.serivce.line.api.SchedulingServiceApi;
+import com.zacx.serivce.line.api.dto.SchedulingDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.SchedulingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 班次调度api服务
+ * Created by song on 2018/10/5.
+ */
+@Service
+public class SchedulingServiceApiImpl implements SchedulingServiceApi {
+    Logger logger= LoggerFactory.getLogger(SchedulingServiceApiImpl.class);
+    @Autowired
+    private SchedulingService schedulingService;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(SchedulingDTO dto) throws LineServiceException {
+        logger.info("SchedulingServiceApi.insert,params:{}", JSON.toJSONString(dto));
+        LScheduling record=new LScheduling();
+        BeanUtils.copyProperties(dto,record);
+        int r = schedulingService.insert(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(SchedulingDTO dto) throws LineServiceException {
+        logger.info("SchedulingServiceApi.update,params:{}", JSON.toJSONString(dto));
+        LScheduling record=new LScheduling();
+        BeanUtils.copyProperties(dto,record);
+        int r = schedulingService.update(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException {
+        logger.info("SchedulingServiceApi.removeListByIds,params:{}", JSON.toJSONString(ids));
+        int r = schedulingService.removeListByIds(ids,userCode);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    public PageInfo<SchedulingDTO> getSchedulingPageInfo(SchedulingDTO dto) {
+        logger.info("SchedulingServiceApi.getSchedulingPageInfo,params:{}",JSON.toJSONString(dto));
+
+        PageInfo<LScheduling> pageInfo = schedulingService.getSchedulingPageInfo(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<SchedulingDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,SchedulingDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+
+        return page;
+    }
+}

@@ -1,0 +1,13 @@
+package com.zacx.serivce.line.service;
+
+import com.zacx.serivce.line.api.dto.Demo;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LocLineDemoService {
+
+    public boolean test(Demo demo) {
+        return false;
+    }
+
+}

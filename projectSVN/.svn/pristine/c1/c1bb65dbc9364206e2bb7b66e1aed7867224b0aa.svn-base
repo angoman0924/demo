@@ -1,0 +1,116 @@
+/*
+*
+* LCar2User.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LCar2User {
+    /**
+     * 
+     */
+    private Integer id;
+
+    /**
+     * 车辆id
+     */
+    private Integer carId;
+
+    /**
+     * 司机id(u_user中的用户id)
+     */
+    private Integer userId;
+
+    /**
+     * 
+     */
+    private Date createAt;
+
+    /**
+     * 
+     */
+    private String createBy;
+
+    /**
+     * 
+     * @return id 
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 车辆id
+     * @return car_id 车辆id
+     */
+    public Integer getCarId() {
+        return carId;
+    }
+
+    /**
+     * 车辆id
+     * @param carId 车辆id
+     */
+    public void setCarId(Integer carId) {
+        this.carId = carId;
+    }
+
+    /**
+     * 司机id(u_user中的用户id)
+     * @return user_id 司机id(u_user中的用户id)
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 司机id(u_user中的用户id)
+     * @param userId 司机id(u_user中的用户id)
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 
+     * @return create_at 
+     */
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    /**
+     * 
+     * @param createAt 
+     */
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    /**
+     * 
+     * @return create_by 
+     */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**
+     * 
+     * @param createBy 
+     */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+}

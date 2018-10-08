@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UAlarm;
+import com.zacx.serivce.dal.entity.UAlarmExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UAlarmMapper {
+    int countByExample(UAlarmExample example);
+
+    int deleteByExample(UAlarmExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UAlarm record);
+
+    int insertSelective(UAlarm record);
+
+    List<UAlarm> selectByExample(UAlarmExample example);
+
+    UAlarm selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UAlarm record, @Param("example") UAlarmExample example);
+
+    int updateByExample(@Param("record") UAlarm record, @Param("example") UAlarmExample example);
+
+    int updateByPrimaryKeySelective(UAlarm record);
+
+    int updateByPrimaryKey(UAlarm record);
+}

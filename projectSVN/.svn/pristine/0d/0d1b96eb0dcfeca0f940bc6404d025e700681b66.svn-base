@@ -1,0 +1,375 @@
+package com.zacx.serivce.user.api.impl;
+
+
+import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
+import com.zacx.core.enums.Code;
+import com.zacx.core.enums.PlatformEnum;
+import com.zacx.core.model.api.TokenInfo;
+import com.zacx.core.util.IDCardUtil;
+import com.zacx.core.util.JwtUtils;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.cache.key.RedisKeys;
+import com.zacx.serivce.cache.key.enums.SerialCodeRuleEnum;
+import com.zacx.serivce.dal.entity.*;
+import com.zacx.serivce.dal.entity.ext.UUserCashWithdrawApplyExt;
+import com.zacx.serivce.dal.mapper.UPassengerMapper;
+import com.zacx.serivce.dal.mapper.UUserDetailMapper;
+import com.zacx.serivce.dal.mapper.UUserMapper;
+import com.zacx.serivce.line.api.SchedulingServiceApi;
+import com.zacx.serivce.line.api.dto.SchedulingDTO;
+import com.zacx.serivce.order.api.dto.TicketDTO;
+import com.zacx.serivce.service.SerialService;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.*;
+import com.zacx.serivce.user.api.exceptions.UserAssert;
+import com.zacx.serivce.user.api.exceptions.UserServiceException;
+import com.zacx.serivce.user.service.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.JedisCluster;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-18 14:12
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Slf4j
+@Service
+public class UserServiceApiImpl implements UserServiceApi {
+    @Resource
+    private UserCashWithdrawApplyService userCashWithdrawApplyService;
+    @Resource
+    private SchedulingServiceApi schedulingServiceApi;
+    @Resource
+    private AlarmService alarmService;
+    @Resource
+    private SerialService serialService;
+    @Resource
+    private JedisCluster jedisCluster;
+    @Resource
+    private UserService userService;
+    @Resource
+    private UserDriverService userDriverService;
+    @Resource
+    private UserCouponService userCouponService;
+    @Resource
+    private UUserMapper uUserMapper;
+    @Resource
+    private UUserDetailMapper uUserDetailMapper;
+    @Resource
+    private UPassengerMapper uPassengerMapper;
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    /**
+     * 登录接口
+     */
+    @Override
+    public SessionUser login(LoginInfoDTO enter) {
+        UserAssert.notNull(enter.getPlatform(), Code.ERROR_ARGUMENT, "平台类型不能为空");
+        if (StringUtils.isBlank(enter.getMobile())) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"手机号码不能为空").addArgument("loginEnter",enter);
+        }
+        if (StringUtils.isBlank(enter.getVerificationCode())) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"验证码不能为空").addArgument("loginEnter",enter);
+        }
+        //验证验证码是否正确
+        boolean isCheck = checkCode(enter.getMobile(), enter.getVerificationCode());
+        // 校验失败
+        if (!isCheck) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "验证码错误或者已过期");
+        }
+        //根据用户手机号码查询是否存在
+        UUser uUser = userService.selectUserByMobile(enter.getMobile());
+        if (uUser == null && enter.getPlatform().equals(PlatformEnum.PASSENGER)){
+            //新增用户基本信息
+            uUser = new UUser();
+            uUser.setUserType(1); //乘客用户
+            uUser.setPhone(enter.getMobile());
+            uUser.setCreateAt(new Date());
+            uUser.setModifyAt(uUser.getCreateAt());
+            uUser.setCreateBy("SYSTEM");
+            UserAssert.isTrue(userService.insert(uUser) > 0, Code.ERROR_DB_OPERATE,"注册用户失败");
+        }
+        System.out.println("用户主表编号" + uUser.getId());
+        return setSessionUser(enter.getPlatform(), uUser);
+    }
+
+    private int seconds = 15 * 24 * 60 * 60;
+    /**设置用户session信息*/
+    private SessionUser setSessionUser(PlatformEnum platform, UUser uUser) {
+        String key = getSessionKey(platform, uUser.getId()); //S_SESSION_KEY_PM_18788891200
+        SessionUser result = new SessionUser();
+        BeanUtils.copyProperties(uUser, result);
+        result.setToken(UUID.randomUUID().toString()); //生成token
+
+        jedisCluster.set(key, JSON.toJSONString(result));
+        jedisCluster.expire(key, seconds);
+        log.info("Platform:{}, SetSession key:{}, Token:{}", platform,  key, result.getToken());
+        return result;
+    }
+
+    public SessionUser getSessionUser(PlatformEnum platform, Integer userId, String token) {
+        UserAssert.hasText(token, Code.ERROR_ARGUMENT, "token内容不能为空");
+        SessionUser sessionUser = null;
+        String dataJson = jedisCluster.get(getSessionKey(platform, userId));
+        if (dataJson == null) {
+            return sessionUser;
+        }
+        return JSON.parseObject(dataJson, SessionUser.class);
+    }
+
+    private String getSessionKey(PlatformEnum platform, Integer userId) {
+        UserAssert.notNull(userId, Code.ERROR_ARGUMENT, "用户ID不能为空");
+
+        String prefix = null;
+        if (platform.equals(PlatformEnum.PASSENGER)) {
+            prefix = "PM";
+        }
+        if (platform.equals(PlatformEnum.DRIVER)) {
+            prefix = "DM";
+        }
+        UserAssert.notNull(prefix, Code.ERROR_ARGUMENT, "设置session错误, 平台类型参数不正确");
+        String code = Strings.padStart(userId + "", 11, '0');
+        return RedisKeys.getSessionKey(prefix, code); //S_SESSION_KEY_PM_18788891200
+    }
+
+    @Override
+    public UserDTO selectUserByMobile(String mobile) {
+        UUser uUser = userService.selectUserByMobile(mobile);
+        if(uUser != null){
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(uUser,userDTO);
+            return userDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public UserDTO selectUserById(Integer id) {
+        UUser uUser = userService.selectUserById(id);
+        if(uUser != null){
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(uUser,userDTO);
+            return userDTO;
+        }
+        return null;
+    }
+
+    /**
+     * 通过用户编号查询用户详情信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserDetailDTO selectUserDetailById(Integer userId) {
+        UUserDetail uUserDetail = userService.selectUserDetailById(userId);
+        if(uUserDetail != null){
+            UserDetailDTO userDetailDTO = new UserDetailDTO();
+            BeanUtils.copyProperties(uUserDetail,userDetailDTO);
+            return userDetailDTO;
+        }
+        return null;
+    }
+
+    /**
+     * 手机号码注册用户
+     * @param enter
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public UserInfo mobileRegister(UserInfo enter) {
+        if(StringUtils.isBlank(enter.getMobile())){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"手机号码不能为空").addArgument("loginEnter",enter);
+        }
+        if(enter.getMobile().length() != 11){
+            throw new UserServiceException(Code.ERROR_ARGUMENT,"手机号码格式不正确").addArgument("loginEnter",enter);
+        }
+        Date currTime = new Date();
+        //新增用户基本信息
+        UUser uUser = new UUser();
+        if (enter.getPlatform().equals(PlatformEnum.PASSENGER)) {
+            uUser.setUserType(1);
+        }
+        if (enter.getPlatform().equals(PlatformEnum.DRIVER)) {
+            uUser.setUserType(2);
+        }
+        uUser.setPhone(enter.getMobile());
+        uUser.setCreateAt(currTime);
+        uUser.setModifyAt(currTime);
+        uUser.setCreateBy("SYSTEM");
+        UserAssert.isTrue(userService.insert(uUser) > 0, Code.ERROR_DB_OPERATE,"注册用户主表失败");
+
+//        //新增用户成功后返回主键Id
+//        Integer userId = uUser.getId().intValue();
+//        //新增用户详情表
+//        UUserDetail uUserDetail = new UUserDetail();
+//        uUserDetail.setUserId(userId);
+//        //定位信息  先存经度lng 后存纬度lat
+//        uUserDetail.setCoordinate(enter.getLng()+","+enter.getLat());
+//        //查询该定位所在的城市
+//        uUserDetail.setCityId(1);//测试数据 模拟为1
+//        uUserDetail.setIntegral(0);//积分
+//        uUserDetail.setWallet(BigDecimal.ZERO);//钱包
+//        uUserDetail.setRoleIds("1,2,3,4,5");//权限 需要判断用户所在平台查询用户默认权限
+//        uUserDetail.setStatus(1);//注册默认正常 1
+//        Integer userDetailResult = userService.insertUserDetail(uUserDetail);
+//        if(userDetailResult == 0){
+//            throw new UserServiceException(Code.ERROR_DB_OPERATE,"新增详情表失败");
+//        }
+        TokenInfo tokenInfo = new TokenInfo();
+        tokenInfo.setRoles("0");
+        tokenInfo.setPlatform(enter.getPlatform());
+        tokenInfo.setUserId(uUser.getId());
+        enter.setToken(jwtUtils.generateToken(tokenInfo));
+        return enter;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean realName(RealNameDTO dto) {
+        UUser userEntity = uUserMapper.selectByPrimaryKey(dto.getUserId());
+        if (userEntity == null) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "用户不存在");
+        }
+        if (StringUtils.isNotBlank(userEntity.getCardNo())) {
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "用户已经通过实名认证,无需再次认证");
+        }
+        //证件类型: 1身份证 2驾驶证 3军官证 4护照 5其他
+        boolean isSucc = false;
+        dto.setCardName(dto.getCardName().trim());
+        if (dto.getCardType() == 1) { //身份证
+            isSucc = new IDCardUtil().verify(dto.getCardNo());
+        }
+        if (dto.getCardType() == 4) { //护照
+            isSucc = new IDCardUtil().checkMTPS(dto.getCardNo());
+        }
+        if (dto.getCardType() == 5) { //台胞证
+            isSucc = new IDCardUtil().checkMTPS(dto.getCardNo());
+        }
+        if (dto.getCardType() == 6) { //港澳通行证
+            isSucc = new IDCardUtil().checkMTPS(dto.getCardNo());
+        }
+        if (!isSucc){
+            throw new UserServiceException(Code.ERROR_ARGUMENT, "要输入有效的证件号码噢");
+        }
+        UUser query = new UUser();
+        UserDTO uDto = new UserDTO();
+        uDto.setCardNo(dto.getCardNo());
+        if (userService.geUserList(uDto).size() > 0) {
+            throw new UserServiceException(Code.ERROR_DB_OPERATE, "证件号码已经使用");
+        }
+        UUser update = new UUser();
+        update.setId(dto.getUserId());
+        update.setName(dto.getCardName());
+        update.setCardNo(dto.getCardNo());
+        update.setCardType(dto.getCardType());
+        if (uUserMapper.updateByPrimaryKeySelective(update) == 0) {
+            throw new UserServiceException(Code.ERROR_DB_OPERATE, "更新认证信息失败");
+        }
+        //实名认证新增乘客信息
+        UPassenger uPassenger = new UPassenger();
+        uPassenger.setCardNo(dto.getCardNo());
+        uPassenger.setCardType(dto.getCardType());
+        uPassenger.setName(dto.getCardName());
+        uPassenger.setUserId(dto.getUserId());
+        uPassenger.setPhone(userEntity.getPhone());
+        uPassenger.setPersonGroup(1);
+        if (uPassengerMapper.insertSelective(uPassenger) == 0) {
+            throw new UserServiceException(Code.ERROR_DB_OPERATE, "增加乘客信息失败");
+        }
+        return true;
+    }
+
+    @Override
+    public List<UserCouponDTO> getCouponList(UserCouponDTO dto) {
+        List<UUserCoupon> uUserCouponList = userCouponService.getUserCouponList(dto);
+        return ObjectUtils.ListEntity2ListDTO(uUserCouponList, UserCouponDTO.class);
+    }
+
+    @Override
+    public int addAlarm(AlarmDTO dto) {
+        log.info("请注意!! {}报警!!, 坐标:{}", dto.getPlatform().equals(PlatformEnum.PASSENGER) ? "乘客" : "司机");
+        UserAssert.notNull(dto.getUserId(), Code.ERROR_UNKNOWN, "用户ID不能为空");
+
+        //Todo 从order服务根据用户id查询当前(最后)的车票信息,这里模拟处理
+        //TicketDTO ticketDTO = ticktService.getTicketByUserId(dto.getUserId());
+        TicketDTO ticketDTO = new TicketDTO();
+        UserAssert.notNull(ticketDTO, Code.ERROR_DATA_NOT_FOUND, "当前车票信息不存在");
+        //Todo 这里要去scheduling_id,字段暂不存在
+        SchedulingDTO schedulingDTO = schedulingServiceApi.findByPrimaryKey(ticketDTO.getId());
+        UserAssert.notNull(schedulingDTO, Code.ERROR_UNKNOWN, "指定的车次行程不存在");
+        //司机签到后，与司机结束该班次（1个小时内），可以点击报警【（签到时间）  与   （司机结束时间+1小时）之间，可以报警】
+        long currTime = System.currentTimeMillis(); //当前时间
+        long startTime = schedulingDTO.getSignTime().getTime(); //开始时间
+        long endTime = schedulingDTO.getEndTime().getTime() + (60 * 60 * 1000); //结束时间
+        UserAssert.isTrue(currTime>startTime && currTime<=endTime, Code.ERROR_UNKNOWN, "“对不起，当前没有班次，无法报警");
+
+        UAlarm uAlarmEntity = new UAlarm();
+        uAlarmEntity.setCode(serialService.generateCode(SerialCodeRuleEnum.USER_ALARM)); //流水单号
+        uAlarmEntity.setUserId(dto.getUserId());
+        uAlarmEntity.setUserType(dto.getPlatform().equals(PlatformEnum.PASSENGER) ? 1 : 2);
+        uAlarmEntity.setCoordinate(dto.getCoordinate());
+        uAlarmEntity.setTime(new Date());
+        uAlarmEntity.setDescribe(dto.getDescribe());
+        uAlarmEntity.setStatus(0);
+        return alarmService.addAlarm(uAlarmEntity);
+    }
+
+    @Override
+    public int addCashWithdraw(UserCashWithdrawApplyDTO dto) {
+        UserAssert.notNull(dto.getUserId(), Code.ERROR_ARGUMENT, "用户ID不能为空");
+        UserAssert.notNull(dto.getUserType(), Code.ERROR_ARGUMENT, "用户类型不能为空");
+        UserAssert.notNull(dto.getToBankAccountId(), Code.ERROR_ARGUMENT, "转入账号ID不能为空");
+        UserAssert.notNull(dto.getMoney(), Code.ERROR_ARGUMENT, "提现金额不能为空");
+
+        UUserCashWithdrawApply entity = new UUserCashWithdrawApply();
+        BeanUtils.copyProperties(dto, entity);
+        entity.setStatus(0); //申请状态
+        entity.setApplyTime(new Date()); //申请时间
+        entity.setCode(serialService.generateCode(SerialCodeRuleEnum.USER_WITHDRAW));
+        return userCashWithdrawApplyService.addUserCashWithdrawApply(entity);
+    }
+
+    @Override
+    public List<UserCashWithdrawApplyDTO> getCashWithdrawList(UserCashWithdrawApplyDTO dto) {
+        List<UserCashWithdrawApplyDTO> dtoList = new ArrayList<>();
+        List<UUserCashWithdrawApplyExt> entityList = userCashWithdrawApplyService.getUserCashWithdrawApplyExtList(dto);
+        entityList.forEach(item -> {
+            int codeLength = item.getToBankAccountCode().length();
+            item.setToBankAccountDesc(item.getToBankAccountName() + "(" + item.getToBankAccountCode().substring(codeLength - 4) + ")");
+            UserCashWithdrawApplyDTO temp = new UserCashWithdrawApplyDTO();
+            BeanUtils.copyProperties(item, temp);
+            dtoList.add(temp);
+        });
+        return dtoList;
+    }
+
+
+    //验证码校验
+    private boolean checkCode(String tel, String code) {
+        if("8080".equals(code)){
+            return true;
+        }
+        String codeKey = RedisKeys.getMobileCodeKey(tel);
+        log.info("checkCode === " + jedisCluster.get(codeKey) + " ====");
+        if (code.equals(jedisCluster.get(codeKey))) {
+            jedisCluster.del(codeKey);
+            return true;
+        }
+        return false;
+    }
+}

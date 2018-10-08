@@ -1,0 +1,50 @@
+package com.zacx.serivce.user.api;
+
+
+import com.zacx.serivce.user.api.dto.*;
+
+import java.util.List;
+
+/**
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-18 14:11
+ * @copyright 上海拜米网络科技有限公司
+ **/
+public interface UserServiceApi {
+    /**
+     * @author gulx
+     * @Description 登陆（返回Token）
+     * @Date  2018/9/27 14:37
+     * @Param [mobile 手机号码, verificationCode 验证码]
+     * @copyright 上海拜米网络科技有限公司
+     * @return com.zacx.gateway.passenger.dto.UserInfo
+     **/
+    String login(LoginInfo enter);
+
+    UserDTO selectUserByMobile(String mobile);
+
+    /**
+     * 根据用户编号查询用户信息
+     * @param userId
+     * @return
+     */
+    UserDetailDTO selectUserById(Integer userId);
+
+
+    /**
+     * 注册用户
+     * @param userInfo
+     * @return
+     */
+    UserInfo mobileRegister(UserInfo userInfo);
+
+    /**
+     * 实名认证
+     * @param dto
+     * @return
+     */
+    boolean realName(RealNameDTO dto);
+
+    List<UserCouponDTO> getCouponList(UserCouponDTO dto);
+}

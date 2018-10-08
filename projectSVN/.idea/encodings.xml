@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway-base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway-driver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-gateway/zacx-gateway-passenger" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-dal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-basic" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-basic-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-line" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-line-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-mall" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-mall-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-order" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-order-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zacx-service/zacx-service-user-api" charset="UTF-8" />
+  </component>
+</project>

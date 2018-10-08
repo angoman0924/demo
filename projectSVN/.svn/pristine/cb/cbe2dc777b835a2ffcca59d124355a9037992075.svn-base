@@ -1,0 +1,24 @@
+package com.zacx.serivce.line.service;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.dal.entity.LScheduling;
+import com.zacx.serivce.line.api.dto.SchedulingDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+
+import java.util.List;
+
+/**
+ * 班次调度内部服务
+ * Created by song on 2018/10/3.
+ */
+public interface SchedulingService {
+    //写表
+    int insert(LScheduling record) throws LineServiceException;
+    //更新
+    int update(LScheduling record) throws LineServiceException;
+    //删除
+    int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException;
+
+    //分页查询
+    PageInfo<LScheduling> getSchedulingPageInfo(SchedulingDTO dto);
+}

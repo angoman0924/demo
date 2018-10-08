@@ -1,0 +1,17 @@
+package com.zacx.serivce.user.model;
+
+import com.zacx.core.enums.PlatformEnum;
+import com.zacx.core.model.api.ClientInfo;
+import lombok.Data;
+
+/**
+ * Created by liusi on 2018/9/29.
+ */
+@Data
+public class UserRegisterInfo {
+    //版本 来源 经纬度
+    ClientInfo clientInfo;
+    private String mobile;
+    private String verificationCode;
+    private PlatformEnum platform;
+}

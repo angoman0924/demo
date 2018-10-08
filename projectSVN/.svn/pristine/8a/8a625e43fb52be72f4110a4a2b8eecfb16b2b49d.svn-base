@@ -1,0 +1,106 @@
+package com.zacx.serivce.user.service.impl;
+
+import com.xiaoleilu.hutool.http.HttpUtil;
+import com.xiaoleilu.hutool.json.JSONObject;
+import com.xiaoleilu.hutool.util.ReUtil;
+import com.zacx.core.enums.Code;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.dal.entity.UUser;
+import com.zacx.serivce.dal.entity.UUserBankAccount;
+import com.zacx.serivce.dal.entity.UUserBankAccountExample;
+import com.zacx.serivce.dal.mapper.UUserBankAccountMapper;
+import com.zacx.serivce.user.api.dto.BankAccountDTO;
+import com.zacx.serivce.user.api.exceptions.UserServiceException;
+import com.zacx.serivce.user.service.BankAccountService;
+import com.zacx.serivce.user.service.UserService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 用户银行卡Service实现类
+ * Created by liusi on 2018/10/7.
+ */
+@Service
+public class BankAccountServiceImpl implements BankAccountService {
+
+    @Resource
+    private UUserBankAccountMapper uUserBankAccountMapper;
+
+    @Resource
+    private UserService userService;
+
+    @Override
+    public int insert(BankAccountDTO bankAccountDTO) {
+        Date date = new Date();
+        bankAccountDTO.setCreateAt(date);//默认为当前时间
+        //根据银行卡号查询所属银行名称
+        bankAccountDTO.setBankName(queryBankNameByCardNumber(bankAccountDTO.getCode()));
+        bankAccountDTO.setType(1);//类型为银行卡
+        bankAccountDTO.setBankId(1);//测试 默认银行编号 1
+      //根据用户ID查询用户详情信息
+        UUser uUser = userService.selectUserById(bankAccountDTO.getUserId());
+        if(uUser == null){
+            throw new UserServiceException(Code.ERROR_DATA_NOT_FOUND,"未找到编号"+bankAccountDTO.getUserId()+"该用户信息");
+        }
+        bankAccountDTO.setUserCardNo(uUser.getCardNo());//身份证信息
+        bankAccountDTO.setUserPhone(uUser.getPhone());//联系方式
+        UUserBankAccount uUserBankAccount = new UUserBankAccount();
+        BeanUtils.copyProperties(bankAccountDTO,uUserBankAccount);
+        Integer result = uUserBankAccountMapper.insert(uUserBankAccount);
+        if(result == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"新增失败");
+        }
+        bankAccountDTO.setId(uUserBankAccount.getId());
+        return result;
+    }
+
+    @Override
+    public List<BankAccountDTO> selectByExample(BankAccountDTO bankAccountDTO) {
+        UUserBankAccountExample uUserBankAccountExample = new UUserBankAccountExample();
+        uUserBankAccountExample.createCriteria().andUserIdEqualTo(bankAccountDTO.getId());
+        List<UUserBankAccount> list = uUserBankAccountMapper.selectByExample(uUserBankAccountExample);
+        List<BankAccountDTO> passengerResults = ObjectUtils.ListEntity2ListDTO(list, BankAccountDTO.class);
+        return passengerResults;
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        Integer result = uUserBankAccountMapper.deleteByPrimaryKey(id);
+        if(result == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"删除失败");
+        }
+        return result;
+    }
+
+
+    //通过银行卡号查找所在银行名称
+    private String queryBankNameByCardNumber(String cardNumber){
+        //6217731600831479  6217731600831479
+        //银行代码请求接口 url
+        String url = "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo="+cardNumber+"&cardBinCheck=true";
+        String url1 = "https://apimg.alipay.com/combo.png?d=cashier&t=ABC,CCB";
+        //发送请求，得到 josn 类型的字符串
+        String result = HttpUtil.get(url);
+        // 转为 Json 对象
+        JSONObject json = new JSONObject(result);
+        //获取到 bank 代码
+        String bank = String.valueOf(json.get("bank"));
+        //爬取支付宝银行合作商页面
+        String listContent = HttpUtil.get("http://ab.alipay.com/i/yinhang.htm","gb2312");
+        //过滤得到需要的银行名称
+        List<String> titles = ReUtil.findAll("<span title=\"(.*?)\" class=\"icon "+cardNumber+"\">(.*?)</span>", listContent, 2);
+        String bankName = "";
+        for (String title : titles)
+        {            //打印银行名称
+            System.out.println(title);
+            bankName = title;
+            return bankName;
+        }
+        return bankName;
+    }
+
+}

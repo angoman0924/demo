@@ -1,0 +1,60 @@
+package com.zacx.serivce.user.service.impl;
+
+import com.zacx.core.enums.Code;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.dal.entity.UUserBankAccount;
+import com.zacx.serivce.dal.entity.UUserBankAccountExample;
+import com.zacx.serivce.dal.mapper.UUserBankAccountMapper;
+import com.zacx.serivce.user.api.dto.BankAccountDTO;
+import com.zacx.serivce.user.api.exceptions.UserServiceException;
+import com.zacx.serivce.user.service.BankAccountService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 用户银行卡Service实现类
+ * Created by liusi on 2018/10/7.
+ */
+@Service
+public class BankAccountServiceImpl implements BankAccountService {
+
+    @Resource
+    private UUserBankAccountMapper uUserBankAccountMapper;
+
+    @Override
+    public int insert(BankAccountDTO bankAccountDTO) {
+        Date date = new Date();
+        bankAccountDTO.setCreateAt(date);//默认为当前时间
+        UUserBankAccount uUserBankAccount = new UUserBankAccount();
+        BeanUtils.copyProperties(bankAccountDTO,uUserBankAccount);
+        Integer result = uUserBankAccountMapper.insert(uUserBankAccount);
+        if(result == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"新增失败");
+        }
+        bankAccountDTO.setId(uUserBankAccount.getId());
+        return result;
+    }
+
+    @Override
+    public List<BankAccountDTO> selectByExample(BankAccountDTO bankAccountDTO) {
+        UUserBankAccountExample uUserBankAccountExample = new UUserBankAccountExample();
+        uUserBankAccountExample.createCriteria().andUserIdEqualTo(bankAccountDTO.getId());
+        List<UUserBankAccount> list = uUserBankAccountMapper.selectByExample(uUserBankAccountExample);
+        List<BankAccountDTO> passengerResults = ObjectUtils.ListEntity2ListDTO(list, BankAccountDTO.class);
+        return passengerResults;
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        Integer result = uUserBankAccountMapper.deleteByPrimaryKey(id);
+        if(result == 0){
+            throw new UserServiceException(Code.ERROR_DB_OPERATE,"删除失败");
+        }
+        return result;
+    }
+
+}

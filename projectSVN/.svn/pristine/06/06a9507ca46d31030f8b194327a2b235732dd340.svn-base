@@ -1,0 +1,143 @@
+package com.zacx.gateway.passenger.controller;
+
+import com.google.common.base.Strings;
+import com.zacx.core.annotation.MethodFlag;
+import com.zacx.core.enums.Code;
+import com.zacx.gateway.base.base.ClientInfo;
+import com.zacx.gateway.base.base.Result;
+import com.zacx.gateway.base.util.WebUtils;
+import com.zacx.gateway.passenger.constants.PassengerApiUrl;
+import com.zacx.gateway.passenger.dto.CouponResult;
+import com.zacx.gateway.passenger.dto.LoginEnter;
+import com.zacx.gateway.passenger.dto.RealNameEnter;
+import com.zacx.serivce.basic.api.ChitServiceApi;
+import com.zacx.serivce.user.api.PassengerServiceApi;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.LoginInfoDTO;
+import com.zacx.serivce.user.api.dto.RealNameDTO;
+import com.zacx.serivce.user.api.dto.UserDTO;
+import com.zacx.serivce.user.api.dto.UserDetailDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * 用户相关接口
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-17 20:31
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Api(description = "用户")
+@RestController
+@RequestMapping(PassengerApiUrl.USER)
+public class UserController {
+    @Resource
+    private ChitServiceApi chitServiceApi;
+    @Autowired
+    private UserServiceApi userServiceApi;
+    @Autowired
+    private PassengerServiceApi passengerServiceApi;
+
+    @MethodFlag
+    @ApiOperation(value = "用户登陆/注册")
+    @PostMapping(PassengerApiUrl.LOGIN)
+    public Result<String> login(@RequestBody LoginEnter enter){
+        LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
+        BeanUtils.copyProperties(enter, loginInfoDTO);
+        String result = userServiceApi.login(loginInfoDTO);
+        return Result.success(result);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "发送验证码")
+    @GetMapping("sendSmsCode")
+    public Result<Boolean> sendSmsCode(HttpServletRequest request, @ApiParam(name = "mobile", value = "手机号码") String mobile) {
+        if (Strings.isNullOrEmpty(mobile) || mobile.length() < 11) {
+            return Result.error(Code.ERROR_ARGUMENT,"手机号码格式错误");
+        }
+        String ip = WebUtils.getClientIpAddr(request);
+        ip = Strings.isNullOrEmpty(ip) ? "": ip;
+        chitServiceApi.sendSmsCode(mobile, ip);
+        return Result.success(true);
+    }
+
+    /**
+     * 实名认证
+     */
+    @MethodFlag
+    @ApiOperation(value = "实名认证")
+    @PostMapping(value = "realName")
+    public Result<Boolean> realName(@RequestBody RealNameEnter enter) {
+        RealNameDTO realNameDTO = new RealNameDTO();
+        BeanUtils.copyProperties(enter, realNameDTO);
+        if (!userServiceApi.realName(realNameDTO)) {
+            return Result.error(Code.ERROR_DB_OPERATE, "认证失败");
+        }
+        return Result.success();
+    }
+
+    /**
+     * 优惠券列表
+     */
+    @MethodFlag
+    @ApiOperation(value = "优惠券列表")
+    @GetMapping(value = "couponList")
+    public Result<List<CouponResult>> couponList(@ApiParam(value = "用户ID", required = true) Integer userId) {
+        return null;
+    }
+
+    @ApiOperation(value = "根据手机号码查询用户")
+    @GetMapping(PassengerApiUrl.MOBILE)
+    public Result<UserDTO> selectUserByMobile(@ApiParam("用户手机号码") @PathVariable("mobile") String mobile){
+        UserDTO result = userServiceApi.selectUserByMobile(mobile);
+        return Result.success(result);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "根据用户编号查询用户详细信息")
+    @PostMapping(PassengerApiUrl.ID)
+    public Result<UserDetailDTO> selectUserBykey(@ApiParam("用户编号") @PathVariable("id") Integer id){
+        if(id == 0 || id == null){
+            return Result.error(Code.ERROR_ARGUMENT,"用户编号不能为空");
+        }
+        UserDetailDTO userDetailDTO = userServiceApi.selectUserById(id);
+        if(userDetailDTO == null){
+            return Result.error(Code.ERROR_DATA_NOT_FOUND,"没有找到相关信息");
+        }
+        return Result.success(userDetailDTO);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "一键报警")
+    @GetMapping("helpMe")
+    public Result<Boolean> helpMe(Integer userId) {
+        if (userId == null) {
+            Result.error(Code.ERROR_ARGUMENT, "用户ID不能为空");
+        }
+        return Result.success(true);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "参数测试")
+    @GetMapping("parameter")
+    public Result<ClientInfo> parameter(ClientInfo clientInfo){
+        return Result.success(clientInfo);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "参数测试1")
+    @GetMapping("parameter1")
+    public Result<String> parameter1(ClientInfo clientInfo,@RequestParam("id") int id){
+
+        return Result.success(clientInfo+"id="+id);
+    }
+}

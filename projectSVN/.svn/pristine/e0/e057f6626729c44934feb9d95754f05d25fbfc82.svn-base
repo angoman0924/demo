@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.CActivity;
+import com.zacx.serivce.dal.entity.CActivityExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface CActivityMapper {
+    int countByExample(CActivityExample example);
+
+    int deleteByExample(CActivityExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(CActivity record);
+
+    int insertSelective(CActivity record);
+
+    List<CActivity> selectByExample(CActivityExample example);
+
+    CActivity selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") CActivity record, @Param("example") CActivityExample example);
+
+    int updateByExample(@Param("record") CActivity record, @Param("example") CActivityExample example);
+
+    int updateByPrimaryKeySelective(CActivity record);
+
+    int updateByPrimaryKey(CActivity record);
+}

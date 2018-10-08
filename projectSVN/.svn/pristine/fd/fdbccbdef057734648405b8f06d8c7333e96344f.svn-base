@@ -1,0 +1,37 @@
+package com.zacx.serivce.user.api.dto;
+
+import com.zacx.core.model.api.ClientInfo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * 用户详情表
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-27 14:28
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Data
+@ApiModel(value = "UserInfoResult", description = "用户详情信息")
+public class UserInfo extends UserDetailDTO {
+    @ApiModelProperty("令牌")
+    private String token;
+
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("手机号码")
+    private String mobile;
+
+    @ApiModelProperty("验证码")
+    private String verificationCode;
+
+    @ApiModelProperty("平台账号")
+    private String platform;
+
+    @ApiModelProperty("通用参数")
+    private ClientInfo clientInfo;
+
+}

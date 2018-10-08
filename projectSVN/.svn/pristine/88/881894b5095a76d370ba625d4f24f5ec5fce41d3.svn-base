@@ -1,0 +1,75 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+
+public class BInsurance {
+    private Integer id;
+
+    private String name;
+
+    private String insuranceCompany;
+
+    private BigDecimal premium;
+
+    private Integer type;
+
+    private String describe;
+
+    private Integer status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getInsuranceCompany() {
+        return insuranceCompany;
+    }
+
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany;
+    }
+
+    public BigDecimal getPremium() {
+        return premium;
+    }
+
+    public void setPremium(BigDecimal premium) {
+        this.premium = premium;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+}

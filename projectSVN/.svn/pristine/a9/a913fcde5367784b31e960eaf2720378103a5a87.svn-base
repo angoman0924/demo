@@ -1,0 +1,10 @@
+package com.zacx.serivce.order.api;
+
+import com.zacx.serivce.order.api.dto.OrderCreateDTO;
+
+public interface OrderServiceApi {
+
+    boolean create(OrderCreateDTO orderCreateDTO);
+
+
+}

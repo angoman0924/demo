@@ -1,0 +1,99 @@
+/*
+*
+* SymSitemapMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.SymSitemap;
+import com.zacx.serivce.dal.entity.SymSitemapExample;
+import com.zacx.serivce.dal.entity.SymSitemapWithBLOBs;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface SymSitemapMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer sitemapid);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(SymSitemapWithBLOBs record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(SymSitemapWithBLOBs record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<SymSitemapWithBLOBs> selectByExampleWithBLOBs(SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<SymSitemap> selectByExample(SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    SymSitemapWithBLOBs selectByPrimaryKey(Integer sitemapid);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") SymSitemapWithBLOBs record, @Param("example") SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleWithBLOBs(@Param("record") SymSitemapWithBLOBs record, @Param("example") SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") SymSitemap record, @Param("example") SymSitemapExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(SymSitemapWithBLOBs record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeyWithBLOBs(SymSitemapWithBLOBs record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(SymSitemap record);
+}

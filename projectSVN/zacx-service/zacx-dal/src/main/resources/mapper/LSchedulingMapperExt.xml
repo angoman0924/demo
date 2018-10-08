@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.LSchedulingMapperExt">
+    <resultMap id="BaseExtResultMap" type="com.zacx.serivce.dal.entity.ext.LSchedulingExt"
+               extends="com.zacx.serivce.dal.mapper.LSchedulingMapper.BaseResultMap">
+        <result column="distance" property="distance" jdbcType="DOUBLE"/>
+        <result column="site_start_addr" property="siteStartAddr" jdbcType="VARCHAR"/>
+        <result column="site_start_name" property="siteStartName" jdbcType="VARCHAR"/>
+        <result column="site_end_addr" property="siteEndAddr" jdbcType="VARCHAR"/>
+        <result column="site_end_name" property="siteEndName" jdbcType="VARCHAR"/>
+        <result column="site_start_id" property="siteStartId" jdbcType="INTEGER"/>
+        <result column="site_end_id" property="siteEndId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getSchedulingHistory" resultMap="BaseExtResultMap" parameterType="com.zacx.serivce.dal.model.QuerySchedulingHistoryCondition">
+    SELECT n.*,ls2.address site_end_addr,ls2.`name` site_end_name from (
+    SELECT m.*,ls1.address site_start_addr,ls1.`name` site_start_name from (
+    SELECT t.*,l.site_end_id,l.site_start_id,l.distance from (
+    SELECT d.*,p.line_id lid from l_scheduling d,l_plan p
+    where d.plan_id=p.id
+        <if test="flag == 'n'.toString()">
+           and d.car_id in
+           <foreach collection="carIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+           </foreach>
+        </if>
+        <if test="flag == 'y'.toString()">
+           and d.driver_id=#{queryId}
+        </if>
+    ) t,l_line l
+    where t.lid=l.id) m
+    LEFT JOIN l_site ls1 ON m.site_start_id=ls1.id ) n
+    LEFT JOIN l_site ls2 ON n.site_end_id=ls2.id
+    </select>
+
+    <select id="getSchedulingPageInfoByDriver" resultMap="BaseExtResultMap" parameterType="com.zacx.serivce.dal.model.QuerySchedulingByDriverCondition">
+    SELECT n.*,ls2.address site_end_addr,ls2.`name` site_end_name from (
+    SELECT m.*,ls1.address site_start_addr,ls1.`name` site_start_name from (
+    SELECT t.*,l.site_end_id,l.site_start_id,l.distance from (
+    SELECT d.*,p.line_id lid from l_scheduling d,l_plan p
+    where d.plan_id=p.id and d.driver_id=#{driverId}
+    <if test="status != null">
+        and d.status=#{status}
+    </if>
+    <if test="startTime != null">
+        and d.start_time &gt;= #{status}
+    </if>
+    <if test="endTime != null">
+        and d.start_time &lt;= #{endTime}
+    </if>
+    ) t,l_line l
+    where t.lid=l.id) m
+    LEFT JOIN l_site ls1 ON m.site_start_id=ls1.id ) n
+    LEFT JOIN l_site ls2 ON n.site_end_id=ls2.id
+    </select>
+</mapper>

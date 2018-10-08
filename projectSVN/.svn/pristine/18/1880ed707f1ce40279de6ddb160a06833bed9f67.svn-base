@@ -1,0 +1,23 @@
+package com.zacx.serivce.line.api;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.line.api.dto.SiteDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+
+import java.util.List;
+
+/**
+ * 站点服务api
+ * Created by song on 2018/10/3.
+ */
+public interface SiteServiceApi {
+    //写表
+    int insert(SiteDTO dto) throws LineServiceException;
+    //更新
+    int update(SiteDTO dto) throws LineServiceException;
+    //删除
+    int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException;
+
+    //分页查询
+    PageInfo<SiteDTO> getSitePageInfo(SiteDTO dto);
+}

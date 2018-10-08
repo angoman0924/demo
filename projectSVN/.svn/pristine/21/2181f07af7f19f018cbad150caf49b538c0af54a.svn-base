@@ -1,0 +1,32 @@
+package com.zacx.gateway.driver.constants;
+
+import com.zacx.core.constants.Constants;
+
+/**
+ * URL地址
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-18 14:16
+ * @copyright 上海拜米网络科技有限公司
+ **/
+public interface DriverApiUrl {
+
+    String USER="v1/user";
+    String BASE_URI_V1 =  Constants.API+USER;
+
+
+
+    String DEMO="/demo";
+    //根据手机号码查询用户
+    String MOBILE="/mobile/{mobile}";
+
+    //线路模块
+    String LINE_GET_MY_SCHEDULING_INFO="v1/lines/getMySchedulingInfo";
+    String LINE_SCHEDULING_MOVE_APPLY="v1/lines/schedulingMoveApply";
+    String LINE_DRIVER_SIGN="v1/lines/driverSign";
+    String LINE_GET_HOTZONE_BY_LINE="v1/lines/getHotzoneResultByLine";
+    String LINE_GET_HOTZONE_INFO_BY_SITEID="v1/lines/getHotzoneInfoBySiteId";
+    String LINE_SCHEDULING_COMPLETE_BY_DRIVER="v1/lines/schedulingCompleteByDriver";
+
+}

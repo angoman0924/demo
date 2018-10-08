@@ -1,0 +1,55 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class UHotCity {
+    private Integer id;
+
+    private Integer userId;
+
+    private String cityName;
+
+    private String cityCode;
+
+    private Date useTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public Date getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(Date useTime) {
+        this.useTime = useTime;
+    }
+}

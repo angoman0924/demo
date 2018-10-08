@@ -1,0 +1,80 @@
+/*
+*
+* UInvoiceApplyDetailMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UInvoiceApplyDetail;
+import com.zacx.serivce.dal.entity.UInvoiceApplyDetailExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UInvoiceApplyDetailMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(UInvoiceApplyDetailExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(UInvoiceApplyDetailExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(UInvoiceApplyDetail record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(UInvoiceApplyDetail record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<UInvoiceApplyDetail> selectByExample(UInvoiceApplyDetailExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    UInvoiceApplyDetail selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") UInvoiceApplyDetail record, @Param("example") UInvoiceApplyDetailExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") UInvoiceApplyDetail record, @Param("example") UInvoiceApplyDetailExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(UInvoiceApplyDetail record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(UInvoiceApplyDetail record);
+}

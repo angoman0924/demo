@@ -1,0 +1,80 @@
+/*
+*
+* UUserDriverMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserDriver;
+import com.zacx.serivce.dal.entity.UUserDriverExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserDriverMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(UUserDriverExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(UUserDriverExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(UUserDriver record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(UUserDriver record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<UUserDriver> selectByExample(UUserDriverExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    UUserDriver selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") UUserDriver record, @Param("example") UUserDriverExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") UUserDriver record, @Param("example") UUserDriverExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(UUserDriver record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(UUserDriver record);
+}

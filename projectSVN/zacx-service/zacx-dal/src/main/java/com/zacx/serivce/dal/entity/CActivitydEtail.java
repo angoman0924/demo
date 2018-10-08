@@ -1,0 +1,368 @@
+/*
+*
+* CActivitydEtail.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class CActivitydEtail {
+    /**
+     * 
+     */
+    private Integer id;
+
+    /**
+     * 
+     */
+    private Integer typeId;
+
+    /**
+     * 
+     */
+    private String titile;
+
+    /**
+     * 
+     */
+    private String desc1;
+
+    /**
+     * 
+     */
+    private String desc2;
+
+    /**
+     * 
+     */
+    private String image1;
+
+    /**
+     * 
+     */
+    private String image2;
+
+    /**
+     * 
+     */
+    private Integer sort;
+
+    /**
+     * 
+     */
+    private Integer status;
+
+    /**
+     * 
+     */
+    private Date dateStart;
+
+    /**
+     * 
+     */
+    private Date dateEnd;
+
+    /**
+     * 
+     */
+    private Date createAt;
+
+    /**
+     * 
+     */
+    private String createBy;
+
+    /**
+     * 
+     */
+    private Integer activityId;
+
+    /**
+     * 
+     */
+    private String url1;
+
+    /**
+     * 
+     */
+    private String url2;
+
+    /**
+     * 
+     */
+    private String body;
+
+    /**
+     * 
+     * @return id 
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 
+     * @return type_id 
+     */
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    /**
+     * 
+     * @param typeId 
+     */
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    /**
+     * 
+     * @return titile 
+     */
+    public String getTitile() {
+        return titile;
+    }
+
+    /**
+     * 
+     * @param titile 
+     */
+    public void setTitile(String titile) {
+        this.titile = titile;
+    }
+
+    /**
+     * 
+     * @return desc1 
+     */
+    public String getDesc1() {
+        return desc1;
+    }
+
+    /**
+     * 
+     * @param desc1 
+     */
+    public void setDesc1(String desc1) {
+        this.desc1 = desc1;
+    }
+
+    /**
+     * 
+     * @return desc2 
+     */
+    public String getDesc2() {
+        return desc2;
+    }
+
+    /**
+     * 
+     * @param desc2 
+     */
+    public void setDesc2(String desc2) {
+        this.desc2 = desc2;
+    }
+
+    /**
+     * 
+     * @return image1 
+     */
+    public String getImage1() {
+        return image1;
+    }
+
+    /**
+     * 
+     * @param image1 
+     */
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    /**
+     * 
+     * @return image2 
+     */
+    public String getImage2() {
+        return image2;
+    }
+
+    /**
+     * 
+     * @param image2 
+     */
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    /**
+     * 
+     * @return sort 
+     */
+    public Integer getSort() {
+        return sort;
+    }
+
+    /**
+     * 
+     * @param sort 
+     */
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    /**
+     * 
+     * @return status 
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 
+     * @param status 
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 
+     * @return date_start 
+     */
+    public Date getDateStart() {
+        return dateStart;
+    }
+
+    /**
+     * 
+     * @param dateStart 
+     */
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    /**
+     * 
+     * @return date_end 
+     */
+    public Date getDateEnd() {
+        return dateEnd;
+    }
+
+    /**
+     * 
+     * @param dateEnd 
+     */
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    /**
+     * 
+     * @return create_at 
+     */
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    /**
+     * 
+     * @param createAt 
+     */
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    /**
+     * 
+     * @return create_by 
+     */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**
+     * 
+     * @param createBy 
+     */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    /**
+     * 
+     * @return activity_id 
+     */
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    /**
+     * 
+     * @param activityId 
+     */
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    /**
+     * 
+     * @return url1 
+     */
+    public String getUrl1() {
+        return url1;
+    }
+
+    /**
+     * 
+     * @param url1 
+     */
+    public void setUrl1(String url1) {
+        this.url1 = url1;
+    }
+
+    /**
+     * 
+     * @return url2 
+     */
+    public String getUrl2() {
+        return url2;
+    }
+
+    /**
+     * 
+     * @param url2 
+     */
+    public void setUrl2(String url2) {
+        this.url2 = url2;
+    }
+
+    /**
+     * 
+     * @return body 
+     */
+    public String getBody() {
+        return body;
+    }
+
+    /**
+     * 
+     * @param body 
+     */
+    public void setBody(String body) {
+        this.body = body;
+    }
+}

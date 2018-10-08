@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BIntegral;
+import com.zacx.serivce.dal.entity.BIntegralExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BIntegralMapper {
+    int countByExample(BIntegralExample example);
+
+    int deleteByExample(BIntegralExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BIntegral record);
+
+    int insertSelective(BIntegral record);
+
+    List<BIntegral> selectByExample(BIntegralExample example);
+
+    BIntegral selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BIntegral record, @Param("example") BIntegralExample example);
+
+    int updateByExample(@Param("record") BIntegral record, @Param("example") BIntegralExample example);
+
+    int updateByPrimaryKeySelective(BIntegral record);
+
+    int updateByPrimaryKey(BIntegral record);
+}

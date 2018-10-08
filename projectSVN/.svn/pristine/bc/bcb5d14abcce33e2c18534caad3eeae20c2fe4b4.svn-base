@@ -1,0 +1,43 @@
+package com.zacx.serivce.user.service.impl;
+
+
+import com.github.pagehelper.PageHelper;
+import com.zacx.serivce.dal.entity.UUser;
+import com.zacx.serivce.dal.entity.UUserExample;
+import com.zacx.serivce.dal.mapper.UUserMapper;
+import com.zacx.serivce.user.api.dto.UserDTO;
+import com.zacx.serivce.user.service.UserService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+* @desc    用户相关
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月04日 15:04:19
+**/
+@Service
+public class UserServiceImpl implements UserService {
+    @Resource
+    private UUserMapper uUserMapper;
+
+    @Override
+    public List<UUser> geUserList(UserDTO dto) {
+        PageHelper.startPage(dto.getPageIndex(),dto. getPageSize());
+        List<UUser> uUsers = uUserMapper.selectByExample(this.params2example(dto));
+        return uUsers;
+    }
+
+    private UUserExample params2example(UserDTO dto){
+        UUserExample example = new UUserExample();
+        UUserExample.Criteria criteria = example.createCriteria();
+
+        if(null != dto.getId()){
+            criteria.andIdEqualTo(dto.getId());
+        }
+        example.setOrderByClause(dto.getSortCase());
+        return example;
+    }
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LHotzone;
+import com.zacx.serivce.dal.entity.LHotzoneExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LHotzoneMapper {
+    int countByExample(LHotzoneExample example);
+
+    int deleteByExample(LHotzoneExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LHotzone record);
+
+    int insertSelective(LHotzone record);
+
+    List<LHotzone> selectByExample(LHotzoneExample example);
+
+    LHotzone selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LHotzone record, @Param("example") LHotzoneExample example);
+
+    int updateByExample(@Param("record") LHotzone record, @Param("example") LHotzoneExample example);
+
+    int updateByPrimaryKeySelective(LHotzone record);
+
+    int updateByPrimaryKey(LHotzone record);
+}

@@ -1,0 +1,35 @@
+package com.zacx.serivce.order.api.dto;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * @description: 订单金额相关操作的基础结果数据
+ * @author: kiting
+ * @date: 2018年10月04日 13:47
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class OrderDetailDTO extends OrderBaseDTO implements Serializable {
+
+    //包车时没有，不需要查询
+    //乘客列表
+    List<PassengerInfo> passengerList;
+
+    //订单基础费用
+    private String baseCost;
+
+    //接和送总费用
+    //服务手续费用
+    private String serviceCost;
+
+    //保险费用
+    private String insuranceCost;
+
+    //积分点数
+    private Integer giveIntegralPoint;
+
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserDetail;
+import com.zacx.serivce.dal.entity.UUserDetailExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserDetailMapper {
+    int countByExample(UUserDetailExample example);
+
+    int deleteByExample(UUserDetailExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UUserDetail record);
+
+    int insertSelective(UUserDetail record);
+
+    List<UUserDetail> selectByExample(UUserDetailExample example);
+
+    UUserDetail selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UUserDetail record, @Param("example") UUserDetailExample example);
+
+    int updateByExample(@Param("record") UUserDetail record, @Param("example") UUserDetailExample example);
+
+    int updateByPrimaryKeySelective(UUserDetail record);
+
+    int updateByPrimaryKey(UUserDetail record);
+}

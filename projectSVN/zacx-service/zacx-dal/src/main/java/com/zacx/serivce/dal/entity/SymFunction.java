@@ -1,0 +1,135 @@
+/*
+*
+* SymFunction.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+public class SymFunction {
+    /**
+     * 
+     */
+    private String functionid;
+
+    /**
+     * 功能名称
+     */
+    private String name;
+
+    /**
+     * 父功能
+     */
+    private String parentid;
+
+    /**
+     * 1:菜单功能,  2:详细功能
+     */
+    private Integer category;
+
+    /**
+     * 网站地图Id
+     */
+    private Integer sitemapid;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
+
+    /**
+     * 
+     * @return FunctionId 
+     */
+    public String getFunctionid() {
+        return functionid;
+    }
+
+    /**
+     * 
+     * @param functionid 
+     */
+    public void setFunctionid(String functionid) {
+        this.functionid = functionid;
+    }
+
+    /**
+     * 功能名称
+     * @return Name 功能名称
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * 功能名称
+     * @param name 功能名称
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 父功能
+     * @return ParentId 父功能
+     */
+    public String getParentid() {
+        return parentid;
+    }
+
+    /**
+     * 父功能
+     * @param parentid 父功能
+     */
+    public void setParentid(String parentid) {
+        this.parentid = parentid;
+    }
+
+    /**
+     * 1:菜单功能,  2:详细功能
+     * @return Category 1:菜单功能,  2:详细功能
+     */
+    public Integer getCategory() {
+        return category;
+    }
+
+    /**
+     * 1:菜单功能,  2:详细功能
+     * @param category 1:菜单功能,  2:详细功能
+     */
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
+    /**
+     * 网站地图Id
+     * @return SiteMapId 网站地图Id
+     */
+    public Integer getSitemapid() {
+        return sitemapid;
+    }
+
+    /**
+     * 网站地图Id
+     * @param sitemapid 网站地图Id
+     */
+    public void setSitemapid(Integer sitemapid) {
+        this.sitemapid = sitemapid;
+    }
+
+    /**
+     * 排序
+     * @return Sort 排序
+     */
+    public Integer getSort() {
+        return sort;
+    }
+
+    /**
+     * 排序
+     * @param sort 排序
+     */
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+}

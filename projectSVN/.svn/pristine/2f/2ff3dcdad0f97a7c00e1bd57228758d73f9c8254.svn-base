@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BBank;
+import com.zacx.serivce.dal.entity.BBankExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BBankMapper {
+    int countByExample(BBankExample example);
+
+    int deleteByExample(BBankExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BBank record);
+
+    int insertSelective(BBank record);
+
+    List<BBank> selectByExample(BBankExample example);
+
+    BBank selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BBank record, @Param("example") BBankExample example);
+
+    int updateByExample(@Param("record") BBank record, @Param("example") BBankExample example);
+
+    int updateByPrimaryKeySelective(BBank record);
+
+    int updateByPrimaryKey(BBank record);
+}

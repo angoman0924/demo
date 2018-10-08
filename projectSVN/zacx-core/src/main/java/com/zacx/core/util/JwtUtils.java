@@ -1,0 +1,169 @@
+package com.zacx.core.util;
+
+import com.zacx.core.enums.PlatformEnum;
+import com.zacx.core.model.api.TokenInfo;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+
+/**
+ * JWT工具类
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-25 21:21
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Component
+public class JwtUtils {
+    static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+    @Value("${jjwt.secret:skjfsiewij23ji@##sdfk}")
+    private String secret;
+
+    @Value("${jjwt.expiration:10}")
+    private long expirationSecond;
+
+    public JwtUtils() {
+    }
+
+    public JwtUtils(String secret, long expirationSecond) {
+        this.secret = secret;
+        this.expirationSecond = expirationSecond;
+    }
+
+    private Claims getClaimsByToken(String token) {
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    }
+
+    public Date getExpirationDateByToken(String token) {
+        return getClaimsByToken(token).getExpiration();
+    }
+
+    private boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateByToken(token);
+        return expiration.before(new Date());
+    }
+
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+        final Date createdDate = new Date();
+        final Date expirationDate = new Date(createdDate.getTime() + expirationSecond * 1000);
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(createdDate)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
+    }
+
+
+    /**
+     * @return java.lang.String
+     * @author gulx
+     * @Description 根据用户信息生成token
+     * @Date 2018/9/26 15:03
+     * @Param [user]
+     * @copyright 上海拜米网络科技有限公司
+     **/
+    public String generateToken(TokenInfo user) {
+        logger.info("user:{}", user);
+        if (user == null || user.getPlatform() == null || user.getUserId() == null) {
+            logger.error("用户信息不能为空");
+            throw new JwtException("user can not be null");
+        }
+        return String.format("%s-%s", user.getPlatform().ordinal(), user.getUserId());
+    }
+    public String generateTokenX(TokenInfo user) {
+        logger.info("user:{}", user);
+        if (user == null || user.getPlatform() == null || user.getUserId() == null) {
+            logger.error("用户信息不能为空");
+            throw new JwtException("user can not be null");
+        }
+        Map<String, Object> claims = new HashMap<String, Object>();
+        claims.put(TokenInfo.PLATFORM_KEY, user.getPlatform().toString());
+        claims.put(TokenInfo.ROLES_KEY, user.getRoles());
+        return doGenerateToken(claims, String.valueOf(user.getUserId()));
+    }
+
+    /**
+     * @return java.util.Optional<com.zacx.serivce.user.model.TokenInfo>
+     * @author gulx
+     * @Description 根据token获取当前登陆的用户
+     * @Date 2018/9/26 15:03
+     * @Param [token]
+     * @copyright 上海拜米网络科技有限公司
+     **/
+    public Optional<TokenInfo> getLoginUser(String token) {
+        logger.info("token:{}", token);
+        try {
+            if (token == null) {
+                return Optional.empty();
+            }
+            String[] arr = token.split("-");
+            TokenInfo user = new TokenInfo();
+            user.setPlatform(PlatformEnum.values()[(Integer.valueOf(arr[0]))]);
+            user.setUserId(Integer.valueOf(arr[1]));
+            return Optional.of(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        return Optional.empty();
+    }
+    public Optional<TokenInfo> getLoginUserX(String token) {
+        logger.info("token:{}", token);
+        try {
+            if (token == null) {
+                return Optional.empty();
+            }
+            Claims claims = getClaimsByToken(token);
+            Integer userId = NumberUtils.toInt(claims.getSubject());
+            TokenInfo user = new TokenInfo();
+            user.setUserId(userId);
+            Optional<PlatformEnum> platformOptional = PlatformEnum.get(claims.get(TokenInfo.PLATFORM_KEY, String.class));
+            if (platformOptional.isPresent()) {
+                user.setPlatform(platformOptional.get());
+            } else {
+                logger.error("invalid platform value");
+                return Optional.empty();
+            }
+            user.setRoles(claims.get(TokenInfo.ROLES_KEY, String.class));
+            return Optional.of(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        JwtUtils jwtUtils = new JwtUtils("abcd", 10);
+        TokenInfo user = new TokenInfo();
+        user.setUserId(1);
+        user.setPlatform(PlatformEnum.PASSENGER);
+        user.setRoles("1,2,3");
+        String token = jwtUtils.generateToken(user);
+        Claims claimsMap = jwtUtils.getClaimsByToken(token);
+        System.out.println(token);
+        //Thread.sleep(1000*8);
+        Optional<TokenInfo> user2 = jwtUtils.getLoginUser(token);
+        System.out.println(user2.get());
+    }
+
+}

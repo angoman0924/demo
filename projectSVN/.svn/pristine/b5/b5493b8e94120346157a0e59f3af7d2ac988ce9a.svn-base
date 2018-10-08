@@ -1,0 +1,19 @@
+package com.zacx.serivce.line.api.dto;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Map;
+
+/**
+ * 根据城市地点 返回长途汽车站点查询条件实体
+ * Created by song on 2018/10/4.
+ */
+@Data
+public class QuerySiteInfoByCityCodeConditionDTO implements Serializable{
+    private static final long serialVersionUID = -3660859514396502140L;
+    /**
+     * 城市代码、级别
+     */
+    private Map<String,Integer> codeLeverMap;
+}

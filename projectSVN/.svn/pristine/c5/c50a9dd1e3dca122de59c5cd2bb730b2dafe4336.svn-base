@@ -1,0 +1,39 @@
+package com.zacx.serivce.dal.config;
+
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+
+/**
+ * @author Liang Jun
+ * @version 1.0
+ * @desc Redis配置
+ * @date 2018年10月02日 21:28:18
+ **/
+//@Configuration
+public class RedisConfig {
+    @Value("${redis.ip}")
+    private String host;
+    @Value("${redis.port}")
+    private int port;
+    @Value("${redis.timeout")
+    private int timeout;
+
+//    @Bean
+    public JedisConnectionFactory getJedisConnectionFactory() {
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+        jedisConnectionFactory.setHostName(host);
+        jedisConnectionFactory.setPort(port);
+        jedisConnectionFactory.setTimeout(timeout);
+        return jedisConnectionFactory;
+    }
+
+//    @Bean
+    public RedisTemplate getRedisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        redisTemplate.setEnableTransactionSupport(true);
+        return redisTemplate;
+    }
+}

@@ -1,0 +1,80 @@
+package com.zacx.serivce.order.api.impl;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.order.api.OrderServiceApi;
+import com.zacx.serivce.order.api.dto.*;
+import com.zacx.serivce.order.service.LocOrderCreateService;
+import com.zacx.serivce.order.service.LocOrderQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+
+@Component
+public class OrderServiceImpl implements OrderServiceApi {
+    @Autowired
+    LocOrderCreateService locOrderCreateService;
+    @Autowired
+    LocOrderQueryService locOrderQueryService;
+
+    @Override
+    public BigDecimal compPrice(CreateOrderDTO createOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public OrderMainDTO create(CreateOrderDTO createOrderDTO) {
+        return locOrderCreateService.test(createOrderDTO);
+    }
+
+    @Override
+    public PayPriceDTO payDetail(Integer orderId) {
+        return null;
+    }
+
+    @Override
+    public Boolean doPay(PayConfirmDTO payConfirmDTO) {
+        return null;
+    }
+
+    @Override
+    public PayPriceDTO changePrice(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean doChange(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public PageInfo<OrderMainDTO> queryOrderList(OrderQueryDTO orderQueryDTO) {
+        return null;
+    }
+
+    @Override
+    public OrderDetailDTO queryOrderDetail(Integer orderId) {
+        return null;
+    }
+
+    @Override
+    public Boolean scanBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public String smsBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public EvaluateCategoryDTO evaluateCategory() {
+        return null;
+    }
+
+    @Override
+    public Boolean doEvaluate(EvaluateInfoDTO evaluateInfoDTO) {
+        return null;
+    }
+
+}

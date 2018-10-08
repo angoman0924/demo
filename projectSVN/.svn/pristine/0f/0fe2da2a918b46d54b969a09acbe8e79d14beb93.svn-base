@@ -1,0 +1,48 @@
+package com.zacx.gateway.passenger.dto.order;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * @description: 班线预算
+ * 1.下单时的总金额 = 车票数量 * 票价 - 优惠券金额 + 保险费 + 接车费用 + 送人费用
+ * 2.未付款金额
+ *
+ * @author: kiting
+ * @date: 2018年10月3日 19:25
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+@ApiModel(value = "AddPlanOrderPriceEnter", description = "计算班线订单价格")
+public class AddPlanOrderPriceEnter {
+
+    //排班可已查到线路（包车排班是支付后自动生成，没有线路数据lineID关联；schedulingId是排班后统一更新）
+    @ApiModelProperty(value = "排班ID", dataType = "Integer", required = true)
+    private Integer planId;
+
+    @ApiModelProperty(value = "乘客ID列表", dataType = "List", required = true)
+    private List<Integer> passengerIds;
+
+    @ApiModelProperty(value = "保险ID列表", dataType = "List")
+    private List<Integer> insuranceIds;
+
+    //接送信息，接送类型可定义为3，计算距离（价格相关）；数据库存经纬度（经度,纬度）
+    @ApiModelProperty(value = "接车坐标经度", dataType = "BigDecimal",example = "121.29186")
+    private BigDecimal takeLng;
+    @ApiModelProperty(value = "接车坐标纬度", dataType = "BigDecimal",example = "31.20759")
+    private BigDecimal takeLat;
+    @ApiModelProperty(value = "接车详细地址", dataType = "String")
+    private String takeAddress;
+    @ApiModelProperty(value = "送人坐标经度", dataType = "BigDecimal",example = "121.29186")
+    private BigDecimal giveLng;
+    @ApiModelProperty(value = "送人坐标纬度", dataType = "BigDecimal",example = "31.20759")
+    private BigDecimal giveLat;
+    @ApiModelProperty(value = "'送人详细地址", dataType = "String")
+    private String giveAddress;
+
+}

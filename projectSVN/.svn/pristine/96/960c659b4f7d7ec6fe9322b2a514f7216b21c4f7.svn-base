@@ -1,0 +1,165 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LScheduling {
+    private Integer id;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private Integer planId;
+
+    private Integer carId;
+
+    private Integer driverId;
+
+    private Integer passengerNumber;
+
+    private Date signTime;
+
+    private Boolean isSign;
+
+    private Boolean isSelf;
+
+    private Boolean isWorkOvertime;
+
+    private Integer status;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(Integer planId) {
+        this.planId = planId;
+    }
+
+    public Integer getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Integer carId) {
+        this.carId = carId;
+    }
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
+
+    public Integer getPassengerNumber() {
+        return passengerNumber;
+    }
+
+    public void setPassengerNumber(Integer passengerNumber) {
+        this.passengerNumber = passengerNumber;
+    }
+
+    public Date getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Date signTime) {
+        this.signTime = signTime;
+    }
+
+    public Boolean getIsSign() {
+        return isSign;
+    }
+
+    public void setIsSign(Boolean isSign) {
+        this.isSign = isSign;
+    }
+
+    public Boolean getIsSelf() {
+        return isSelf;
+    }
+
+    public void setIsSelf(Boolean isSelf) {
+        this.isSelf = isSelf;
+    }
+
+    public Boolean getIsWorkOvertime() {
+        return isWorkOvertime;
+    }
+
+    public void setIsWorkOvertime(Boolean isWorkOvertime) {
+        this.isWorkOvertime = isWorkOvertime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

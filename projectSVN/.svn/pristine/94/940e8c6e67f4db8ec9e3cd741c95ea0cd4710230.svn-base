@@ -1,0 +1,200 @@
+/*
+*
+* UPlatformAccount.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class UPlatformAccount {
+    /**
+     * 类型编号 主键 自增
+     */
+    private Integer id;
+
+    /**
+     * 开通的平台账号
+     */
+    private String platform;
+
+    /**
+     * 类型状态
+     */
+    private Integer status;
+
+    /**
+     * 
+     */
+    private Long userId;
+
+    /**
+     * 当前平台下拥有的角色ID,已英文逗号分隔
+     */
+    private String roleIds;
+
+    /**
+     * 
+     */
+    private Date createAt;
+
+    /**
+     * 
+     */
+    private String createBy;
+
+    /**
+     * 
+     */
+    private Date modifyAt;
+
+    /**
+     * 
+     */
+    private String modifyBy;
+
+    /**
+     * 类型编号 主键 自增
+     * @return id 类型编号 主键 自增
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 类型编号 主键 自增
+     * @param id 类型编号 主键 自增
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 开通的平台账号
+     * @return platform 开通的平台账号
+     */
+    public String getPlatform() {
+        return platform;
+    }
+
+    /**
+     * 开通的平台账号
+     * @param platform 开通的平台账号
+     */
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    /**
+     * 类型状态
+     * @return status 类型状态
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 类型状态
+     * @param status 类型状态
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 
+     * @return user_id 
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * 
+     * @param userId 
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 当前平台下拥有的角色ID,已英文逗号分隔
+     * @return role_ids 当前平台下拥有的角色ID,已英文逗号分隔
+     */
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    /**
+     * 当前平台下拥有的角色ID,已英文逗号分隔
+     * @param roleIds 当前平台下拥有的角色ID,已英文逗号分隔
+     */
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    /**
+     * 
+     * @return create_at 
+     */
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    /**
+     * 
+     * @param createAt 
+     */
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    /**
+     * 
+     * @return create_by 
+     */
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    /**
+     * 
+     * @param createBy 
+     */
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    /**
+     * 
+     * @return modify_at 
+     */
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    /**
+     * 
+     * @param modifyAt 
+     */
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    /**
+     * 
+     * @return modify_by 
+     */
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    /**
+     * 
+     * @param modifyBy 
+     */
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

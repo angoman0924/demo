@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.LCarMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.LCar" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+    <result column="licenseplate" property="licenseplate" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="seat_number" property="seatNumber" jdbcType="INTEGER" />
+    <result column="operation_type" property="operationType" jdbcType="INTEGER" />
+    <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP" />
+    <result column="join_date" property="joinDate" jdbcType="TIMESTAMP" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, owner_id, licenseplate, brand, model, seat_number, operation_type, creation_date, 
+    join_date, create_at, create_by, modify_at, modify_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.LCarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from l_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.LCarExample" >
+    delete from l_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.LCar" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into l_car (owner_id, licenseplate, brand, 
+      model, seat_number, operation_type, 
+      creation_date, join_date, create_at, 
+      create_by, modify_at, modify_by
+      )
+    values (#{ownerId,jdbcType=INTEGER}, #{licenseplate,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{model,jdbcType=VARCHAR}, #{seatNumber,jdbcType=INTEGER}, #{operationType,jdbcType=INTEGER}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{joinDate,jdbcType=TIMESTAMP}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.LCar" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into l_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="licenseplate != null" >
+        licenseplate,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="seatNumber != null" >
+        seat_number,
+      </if>
+      <if test="operationType != null" >
+        operation_type,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="joinDate != null" >
+        join_date,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="licenseplate != null" >
+        #{licenseplate,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="seatNumber != null" >
+        #{seatNumber,jdbcType=INTEGER},
+      </if>
+      <if test="operationType != null" >
+        #{operationType,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="joinDate != null" >
+        #{joinDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.LCarExample" resultType="java.lang.Integer" >
+    select count(*) from l_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update l_car
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ownerId != null" >
+        owner_id = #{record.ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.licenseplate != null" >
+        licenseplate = #{record.licenseplate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatNumber != null" >
+        seat_number = #{record.seatNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.operationType != null" >
+        operation_type = #{record.operationType,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null" >
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.joinDate != null" >
+        join_date = #{record.joinDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null" >
+        modify_by = #{record.modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update l_car
+    set id = #{record.id,jdbcType=INTEGER},
+      owner_id = #{record.ownerId,jdbcType=INTEGER},
+      licenseplate = #{record.licenseplate,jdbcType=VARCHAR},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=VARCHAR},
+      seat_number = #{record.seatNumber,jdbcType=INTEGER},
+      operation_type = #{record.operationType,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      join_date = #{record.joinDate,jdbcType=TIMESTAMP},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{record.modifyBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.LCar" >
+    update l_car
+    <set >
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="licenseplate != null" >
+        licenseplate = #{licenseplate,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="seatNumber != null" >
+        seat_number = #{seatNumber,jdbcType=INTEGER},
+      </if>
+      <if test="operationType != null" >
+        operation_type = #{operationType,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="joinDate != null" >
+        join_date = #{joinDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.LCar" >
+    update l_car
+    set owner_id = #{ownerId,jdbcType=INTEGER},
+      licenseplate = #{licenseplate,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      seat_number = #{seatNumber,jdbcType=INTEGER},
+      operation_type = #{operationType,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      join_date = #{joinDate,jdbcType=TIMESTAMP},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

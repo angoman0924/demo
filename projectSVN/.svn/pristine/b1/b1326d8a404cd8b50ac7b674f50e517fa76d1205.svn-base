@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LSite;
+import com.zacx.serivce.dal.entity.LSiteExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LSiteMapper {
+    int countByExample(LSiteExample example);
+
+    int deleteByExample(LSiteExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LSite record);
+
+    int insertSelective(LSite record);
+
+    List<LSite> selectByExample(LSiteExample example);
+
+    LSite selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LSite record, @Param("example") LSiteExample example);
+
+    int updateByExample(@Param("record") LSite record, @Param("example") LSiteExample example);
+
+    int updateByPrimaryKeySelective(LSite record);
+
+    int updateByPrimaryKey(LSite record);
+}

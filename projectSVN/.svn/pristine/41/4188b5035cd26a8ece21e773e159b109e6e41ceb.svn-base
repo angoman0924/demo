@@ -1,0 +1,21 @@
+package com.zacx.serivce.dal.enums;
+/**
+* @author gulx
+* @Description 票的状态
+* @Date  2018/9/29 10:47
+* @copyright 上海拜米网络科技有限公司
+* @return 
+**/
+public enum TicketStatusEnum {
+    UNCHECKED("未检票"),
+    CHECKED("已检票"),
+    RETURNED("已经退票");
+    private String type;
+    TicketStatusEnum(String type){
+        this.type =type;
+    }
+
+    public String getType() {
+        return type;
+    }
+}

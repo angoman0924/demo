@@ -1,0 +1,73 @@
+package com.zacx.gateway.base.base;
+
+import com.zacx.core.enums.SourceEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 手机请求通用参数
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-26 17:06
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@ApiModel(value = "ClientInfo", description = "通用请求参数")
+public class ClientInfo {
+    public static final String LAT="header_lat";
+    public static final String LNG="header_lng";
+    public static final String SOURCE="header_source";
+    public static final String TOKEN="header_token";
+    public static final String VERSION="header_version";
+
+    @ApiModelProperty("手机经度(系统自动取header_lng注入)")
+    private Double lng;
+    @ApiModelProperty("手机纬度(系统自动取header_lat注入)")
+    private Double lat;
+    @ApiModelProperty("请求来源(系统自动取header_source注入)")
+    private SourceEnum source;
+    @ApiModelProperty("APP的版本号(系统自动取header_version注入)")
+    private String version;
+    @ApiModelProperty("用户ID(系统自动注入)")
+    private Integer userId;
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    public SourceEnum getSource() {
+        return source;
+    }
+
+    public void setSource(SourceEnum source) {
+        this.source = source;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+}

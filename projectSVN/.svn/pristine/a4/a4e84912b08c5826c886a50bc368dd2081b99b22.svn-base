@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LSchedulingMoveApply;
+import com.zacx.serivce.dal.entity.LSchedulingMoveApplyExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LSchedulingMoveApplyMapper {
+    int countByExample(LSchedulingMoveApplyExample example);
+
+    int deleteByExample(LSchedulingMoveApplyExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LSchedulingMoveApply record);
+
+    int insertSelective(LSchedulingMoveApply record);
+
+    List<LSchedulingMoveApply> selectByExample(LSchedulingMoveApplyExample example);
+
+    LSchedulingMoveApply selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LSchedulingMoveApply record, @Param("example") LSchedulingMoveApplyExample example);
+
+    int updateByExample(@Param("record") LSchedulingMoveApply record, @Param("example") LSchedulingMoveApplyExample example);
+
+    int updateByPrimaryKeySelective(LSchedulingMoveApply record);
+
+    int updateByPrimaryKey(LSchedulingMoveApply record);
+}

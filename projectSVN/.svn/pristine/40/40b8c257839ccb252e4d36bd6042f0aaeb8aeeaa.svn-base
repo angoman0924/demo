@@ -1,0 +1,25 @@
+package com.zacx.serivce.order.service;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.order.api.dto.*;
+import org.springframework.stereotype.Service;
+
+public interface OrderLocService {
+
+    PayPriceDTO payDetail(Integer orderId);
+
+    PayPriceDTO changeDetail(ChangeOrderDTO changeOrderDTO);
+
+    Boolean doPay(PayConfirmDTO payConfirmDTO);
+
+    Boolean doChange(ChangeOrderDTO changeOrderDTO);
+
+    Boolean scanBoardingCode(BoardingValiDTO boardingValiDTO);
+
+    String smsBoardingCode(BoardingValiDTO boardingValiDTO);
+
+    EvaluateCategoryDTO evaluateCategory();
+
+    Boolean doEvaluate(EvaluateInfoDTO evaluateInfoDTO);
+
+}

@@ -1,0 +1,13 @@
+package com.zacx.serivce.user.service;
+
+import com.zacx.serivce.user.api.dto.Demo;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LocUserDemoService {
+
+    public boolean test(Demo demo) {
+        return false;
+    }
+
+}

@@ -1,0 +1,24 @@
+package com.zacx.serivce.basic.api.dto;
+
+
+import com.zacx.core.model.api.BaseDTO;
+import lombok.Data;
+
+/**
+* @desc    城市
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月03日 19:29:56
+**/
+@Data
+public class CityDTO extends BaseDTO {
+    private Integer id;
+
+    private Integer type;
+
+    private String name;
+
+    private String code;
+
+    private String parentCode;
+}

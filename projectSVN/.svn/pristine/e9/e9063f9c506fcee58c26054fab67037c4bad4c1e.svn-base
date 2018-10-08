@@ -1,0 +1,114 @@
+/*
+*
+* MGoodOrderDetail.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+public class MGoodOrderDetail {
+    /**
+     * 
+     */
+    private Integer id;
+
+    /**
+     * 
+     */
+    private Integer goodId;
+
+    /**
+     * 
+     */
+    private Integer number;
+
+    /**
+     * 
+     */
+    private Integer priceIntegral;
+
+    /**
+     * 
+     */
+    private Integer orderId;
+
+    /**
+     * 
+     * @return id 
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 
+     * @return good_id 
+     */
+    public Integer getGoodId() {
+        return goodId;
+    }
+
+    /**
+     * 
+     * @param goodId 
+     */
+    public void setGoodId(Integer goodId) {
+        this.goodId = goodId;
+    }
+
+    /**
+     * 
+     * @return number 
+     */
+    public Integer getNumber() {
+        return number;
+    }
+
+    /**
+     * 
+     * @param number 
+     */
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    /**
+     * 
+     * @return price_integral 
+     */
+    public Integer getPriceIntegral() {
+        return priceIntegral;
+    }
+
+    /**
+     * 
+     * @param priceIntegral 
+     */
+    public void setPriceIntegral(Integer priceIntegral) {
+        this.priceIntegral = priceIntegral;
+    }
+
+    /**
+     * 
+     * @return order_id 
+     */
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    /**
+     * 
+     * @param orderId 
+     */
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+}

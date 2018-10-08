@@ -1,0 +1,13 @@
+package com.zacx.serivce.basic.service;
+
+import com.zacx.serivce.basic.api.dto.Demo;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LocBasicDemoService {
+
+    public boolean test(Demo demo) {
+        return false;
+    }
+
+}

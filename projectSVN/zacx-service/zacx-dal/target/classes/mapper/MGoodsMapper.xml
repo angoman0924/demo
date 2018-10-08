@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.MGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.MGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price_money" property="priceMoney" jdbcType="DECIMAL" />
+    <result column="price_integral" property="priceIntegral" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="limit_number" property="limitNumber" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="image1" property="image1" jdbcType="VARCHAR" />
+    <result column="image2" property="image2" jdbcType="VARCHAR" />
+    <result column="body_images" property="bodyImages" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="sale_number" property="saleNumber" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, `name`, price_money, price_integral, category, limit_number, description, 
+    image1, image2, body_images, `number`, sale_number, `status`, create_at, create_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.MGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from m_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from m_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from m_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.MGoodsExample" >
+    delete from m_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.MGoods" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into m_goods (code, `name`, price_money, 
+      price_integral, category, limit_number, 
+      description, image1, image2, 
+      body_images, `number`, sale_number, 
+      `status`, create_at, create_by
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{priceMoney,jdbcType=DECIMAL}, 
+      #{priceIntegral,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{limitNumber,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{image1,jdbcType=VARCHAR}, #{image2,jdbcType=VARCHAR}, 
+      #{bodyImages,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{saleNumber,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.MGoods" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into m_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="priceMoney != null" >
+        price_money,
+      </if>
+      <if test="priceIntegral != null" >
+        price_integral,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="limitNumber != null" >
+        limit_number,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="image1 != null" >
+        image1,
+      </if>
+      <if test="image2 != null" >
+        image2,
+      </if>
+      <if test="bodyImages != null" >
+        body_images,
+      </if>
+      <if test="number != null" >
+        `number`,
+      </if>
+      <if test="saleNumber != null" >
+        sale_number,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMoney != null" >
+        #{priceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="priceIntegral != null" >
+        #{priceIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="limitNumber != null" >
+        #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="image1 != null" >
+        #{image1,jdbcType=VARCHAR},
+      </if>
+      <if test="image2 != null" >
+        #{image2,jdbcType=VARCHAR},
+      </if>
+      <if test="bodyImages != null" >
+        #{bodyImages,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="saleNumber != null" >
+        #{saleNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.MGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from m_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update m_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceMoney != null" >
+        price_money = #{record.priceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.priceIntegral != null" >
+        price_integral = #{record.priceIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitNumber != null" >
+        limit_number = #{record.limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image1 != null" >
+        image1 = #{record.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image2 != null" >
+        image2 = #{record.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bodyImages != null" >
+        body_images = #{record.bodyImages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        `number` = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.saleNumber != null" >
+        sale_number = #{record.saleNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update m_goods
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      price_money = #{record.priceMoney,jdbcType=DECIMAL},
+      price_integral = #{record.priceIntegral,jdbcType=INTEGER},
+      category = #{record.category,jdbcType=INTEGER},
+      limit_number = #{record.limitNumber,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      image1 = #{record.image1,jdbcType=VARCHAR},
+      image2 = #{record.image2,jdbcType=VARCHAR},
+      body_images = #{record.bodyImages,jdbcType=VARCHAR},
+      `number` = #{record.number,jdbcType=INTEGER},
+      sale_number = #{record.saleNumber,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.MGoods" >
+    update m_goods
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMoney != null" >
+        price_money = #{priceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="priceIntegral != null" >
+        price_integral = #{priceIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="limitNumber != null" >
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="image1 != null" >
+        image1 = #{image1,jdbcType=VARCHAR},
+      </if>
+      <if test="image2 != null" >
+        image2 = #{image2,jdbcType=VARCHAR},
+      </if>
+      <if test="bodyImages != null" >
+        body_images = #{bodyImages,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="saleNumber != null" >
+        sale_number = #{saleNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.MGoods" >
+    update m_goods
+    set code = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      price_money = #{priceMoney,jdbcType=DECIMAL},
+      price_integral = #{priceIntegral,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      limit_number = #{limitNumber,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      image1 = #{image1,jdbcType=VARCHAR},
+      image2 = #{image2,jdbcType=VARCHAR},
+      body_images = #{bodyImages,jdbcType=VARCHAR},
+      `number` = #{number,jdbcType=INTEGER},
+      sale_number = #{saleNumber,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

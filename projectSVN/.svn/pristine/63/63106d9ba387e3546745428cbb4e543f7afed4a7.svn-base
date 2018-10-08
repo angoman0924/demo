@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserBankAccount;
+import com.zacx.serivce.dal.entity.UUserBankAccountExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserBankAccountMapper {
+    int countByExample(UUserBankAccountExample example);
+
+    int deleteByExample(UUserBankAccountExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UUserBankAccount record);
+
+    int insertSelective(UUserBankAccount record);
+
+    List<UUserBankAccount> selectByExample(UUserBankAccountExample example);
+
+    UUserBankAccount selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UUserBankAccount record, @Param("example") UUserBankAccountExample example);
+
+    int updateByExample(@Param("record") UUserBankAccount record, @Param("example") UUserBankAccountExample example);
+
+    int updateByPrimaryKeySelective(UUserBankAccount record);
+
+    int updateByPrimaryKey(UUserBankAccount record);
+}

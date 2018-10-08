@@ -1,0 +1,75 @@
+package com.zacx.serivce.line.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.dal.entity.LPlan;
+import com.zacx.serivce.line.api.PlanServiceApi;
+import com.zacx.serivce.line.api.dto.PlanDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.PlanService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 班次服务api
+ * Created by song on 2018/10/3.
+ */
+@Service
+public class PlanServiceApiImpl implements PlanServiceApi {
+    Logger logger= LoggerFactory.getLogger(PlanServiceApiImpl.class);
+
+    @Autowired
+    private PlanService planService;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(PlanDTO dto) throws LineServiceException {
+        logger.info("PlanServiceApi.insert,params:{}", JSON.toJSONString(dto));
+        LPlan record=new LPlan();
+        BeanUtils.copyProperties(dto,record);
+        int r = planService.insert(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(PlanDTO dto) throws LineServiceException {
+        logger.info("PlanServiceApi.update,params:{}", JSON.toJSONString(dto));
+        LPlan record=new LPlan();
+        BeanUtils.copyProperties(dto,record);
+        int r = planService.update(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException {
+        logger.info("PlanServiceApi.removeListByIds,params:{}", JSON.toJSONString(ids));
+        int r = planService.removeListByIds(ids,userCode);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    public PageInfo<PlanDTO> getPlanPageInfo(PlanDTO dto) {
+        logger.info("PlanServiceApi.getPlanPageInfo,params:{}",JSON.toJSONString(dto));
+
+        PageInfo<LPlan> pageInfo = planService.getPlanPageInfo(dto);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<PlanDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,PlanDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+
+
+        return page;
+    }
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserDriver;
+import com.zacx.serivce.dal.entity.UUserDriverExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserDriverMapper {
+    int countByExample(UUserDriverExample example);
+
+    int deleteByExample(UUserDriverExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UUserDriver record);
+
+    int insertSelective(UUserDriver record);
+
+    List<UUserDriver> selectByExample(UUserDriverExample example);
+
+    UUserDriver selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UUserDriver record, @Param("example") UUserDriverExample example);
+
+    int updateByExample(@Param("record") UUserDriver record, @Param("example") UUserDriverExample example);
+
+    int updateByPrimaryKeySelective(UUserDriver record);
+
+    int updateByPrimaryKey(UUserDriver record);
+}

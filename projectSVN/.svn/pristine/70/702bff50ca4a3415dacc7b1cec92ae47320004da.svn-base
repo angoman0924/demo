@@ -1,0 +1,20 @@
+package com.zacx.serivce.order.api.dto;
+
+
+
+import lombok.Data;
+
+/**
+ * @description: 获取登车短信码
+ * @author: kiting
+ * @date: 2018年10月04日 20:54
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class BoardingCodeResult {
+
+    //获取登车短信码", dataType = "String")
+    private String verificationCode;
+
+}

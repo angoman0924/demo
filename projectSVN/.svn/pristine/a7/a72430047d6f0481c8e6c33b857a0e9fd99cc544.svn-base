@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserCoupon;
+import com.zacx.serivce.dal.entity.UUserCouponExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserCouponMapper {
+    int countByExample(UUserCouponExample example);
+
+    int deleteByExample(UUserCouponExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UUserCoupon record);
+
+    int insertSelective(UUserCoupon record);
+
+    List<UUserCoupon> selectByExample(UUserCouponExample example);
+
+    UUserCoupon selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UUserCoupon record, @Param("example") UUserCouponExample example);
+
+    int updateByExample(@Param("record") UUserCoupon record, @Param("example") UUserCouponExample example);
+
+    int updateByPrimaryKeySelective(UUserCoupon record);
+
+    int updateByPrimaryKey(UUserCoupon record);
+}

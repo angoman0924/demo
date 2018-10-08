@@ -1,0 +1,72 @@
+/*
+*
+* SymSitemapWithBLOBs.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+public class SymSitemapWithBLOBs extends SymSitemap {
+    /**
+     * 站点路径
+     */
+    private String path;
+
+    /**
+     * 菜单图片
+     */
+    private String imageurl;
+
+    /**
+     * 快捷菜单
+     */
+    private String shortkeyimageurl;
+
+    /**
+     * 站点路径
+     * @return Path 站点路径
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * 站点路径
+     * @param path 站点路径
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    /**
+     * 菜单图片
+     * @return ImageUrl 菜单图片
+     */
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    /**
+     * 菜单图片
+     * @param imageurl 菜单图片
+     */
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    /**
+     * 快捷菜单
+     * @return ShortKeyImageUrl 快捷菜单
+     */
+    public String getShortkeyimageurl() {
+        return shortkeyimageurl;
+    }
+
+    /**
+     * 快捷菜单
+     * @param shortkeyimageurl 快捷菜单
+     */
+    public void setShortkeyimageurl(String shortkeyimageurl) {
+        this.shortkeyimageurl = shortkeyimageurl;
+    }
+}

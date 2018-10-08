@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LPlan;
+import com.zacx.serivce.dal.entity.LPlanExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LPlanMapper {
+    int countByExample(LPlanExample example);
+
+    int deleteByExample(LPlanExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LPlan record);
+
+    int insertSelective(LPlan record);
+
+    List<LPlan> selectByExample(LPlanExample example);
+
+    LPlan selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LPlan record, @Param("example") LPlanExample example);
+
+    int updateByExample(@Param("record") LPlan record, @Param("example") LPlanExample example);
+
+    int updateByPrimaryKeySelective(LPlan record);
+
+    int updateByPrimaryKey(LPlan record);
+}

@@ -1,0 +1,185 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class UUserBankWaterBills {
+    private Integer id;
+
+    private String code;
+
+    private String describe;
+
+    private Integer userId;
+
+    private Integer userType;
+
+    private Integer bankAccountId;
+
+    private String bankAccountCode;
+
+    private Long money;
+
+    private Long accountBalance;
+
+    private Integer exitEntryType;
+
+    private Integer businessType;
+
+    private Integer relationId;
+
+    private Integer status;
+
+    private String remark;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public Integer getBankAccountId() {
+        return bankAccountId;
+    }
+
+    public void setBankAccountId(Integer bankAccountId) {
+        this.bankAccountId = bankAccountId;
+    }
+
+    public String getBankAccountCode() {
+        return bankAccountCode;
+    }
+
+    public void setBankAccountCode(String bankAccountCode) {
+        this.bankAccountCode = bankAccountCode;
+    }
+
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    public Long getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(Long accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public Integer getExitEntryType() {
+        return exitEntryType;
+    }
+
+    public void setExitEntryType(Integer exitEntryType) {
+        this.exitEntryType = exitEntryType;
+    }
+
+    public Integer getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(Integer businessType) {
+        this.businessType = businessType;
+    }
+
+    public Integer getRelationId() {
+        return relationId;
+    }
+
+    public void setRelationId(Integer relationId) {
+        this.relationId = relationId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

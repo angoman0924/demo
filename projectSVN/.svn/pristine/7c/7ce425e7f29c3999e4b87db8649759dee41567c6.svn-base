@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UUserBankWaterBills;
+import com.zacx.serivce.dal.entity.UUserBankWaterBillsExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UUserBankWaterBillsMapper {
+    int countByExample(UUserBankWaterBillsExample example);
+
+    int deleteByExample(UUserBankWaterBillsExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UUserBankWaterBills record);
+
+    int insertSelective(UUserBankWaterBills record);
+
+    List<UUserBankWaterBills> selectByExample(UUserBankWaterBillsExample example);
+
+    UUserBankWaterBills selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UUserBankWaterBills record, @Param("example") UUserBankWaterBillsExample example);
+
+    int updateByExample(@Param("record") UUserBankWaterBills record, @Param("example") UUserBankWaterBillsExample example);
+
+    int updateByPrimaryKeySelective(UUserBankWaterBills record);
+
+    int updateByPrimaryKey(UUserBankWaterBills record);
+}

@@ -1,0 +1,80 @@
+/*
+*
+* OOrder2InsuranceMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OOrder2Insurance;
+import com.zacx.serivce.dal.entity.OOrder2InsuranceExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OOrder2InsuranceMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(OOrder2InsuranceExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(OOrder2InsuranceExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(OOrder2Insurance record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(OOrder2Insurance record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<OOrder2Insurance> selectByExample(OOrder2InsuranceExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    OOrder2Insurance selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") OOrder2Insurance record, @Param("example") OOrder2InsuranceExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") OOrder2Insurance record, @Param("example") OOrder2InsuranceExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(OOrder2Insurance record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(OOrder2Insurance record);
+}

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.OEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.OEvaluate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="type1_name" property="type1Name" jdbcType="VARCHAR" />
+    <result column="type1_score" property="type1Score" jdbcType="INTEGER" />
+    <result column="type2_name" property="type2Name" jdbcType="VARCHAR" />
+    <result column="type2_score" property="type2Score" jdbcType="INTEGER" />
+    <result column="type3_name" property="type3Name" jdbcType="VARCHAR" />
+    <result column="type3_score" property="type3Score" jdbcType="INTEGER" />
+    <result column="labe_llist" property="labeLlist" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, nick, order_id, description, type1_name, type1_score, type2_name, type2_score, 
+    type3_name, type3_score, labe_llist, create_at
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.OEvaluateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from o_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from o_evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from o_evaluate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.OEvaluateExample" >
+    delete from o_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.OEvaluate" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into o_evaluate (user_id, nick, order_id, 
+      description, type1_name, type1_score, 
+      type2_name, type2_score, type3_name, 
+      type3_score, labe_llist, create_at
+      )
+    values (#{userId,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{type1Name,jdbcType=VARCHAR}, #{type1Score,jdbcType=INTEGER}, 
+      #{type2Name,jdbcType=VARCHAR}, #{type2Score,jdbcType=INTEGER}, #{type3Name,jdbcType=VARCHAR}, 
+      #{type3Score,jdbcType=INTEGER}, #{labeLlist,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.OEvaluate" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into o_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="type1Name != null" >
+        type1_name,
+      </if>
+      <if test="type1Score != null" >
+        type1_score,
+      </if>
+      <if test="type2Name != null" >
+        type2_name,
+      </if>
+      <if test="type2Score != null" >
+        type2_score,
+      </if>
+      <if test="type3Name != null" >
+        type3_name,
+      </if>
+      <if test="type3Score != null" >
+        type3_score,
+      </if>
+      <if test="labeLlist != null" >
+        labe_llist,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Name != null" >
+        #{type1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Score != null" >
+        #{type1Score,jdbcType=INTEGER},
+      </if>
+      <if test="type2Name != null" >
+        #{type2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type2Score != null" >
+        #{type2Score,jdbcType=INTEGER},
+      </if>
+      <if test="type3Name != null" >
+        #{type3Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type3Score != null" >
+        #{type3Score,jdbcType=INTEGER},
+      </if>
+      <if test="labeLlist != null" >
+        #{labeLlist,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.OEvaluateExample" resultType="java.lang.Integer" >
+    select count(*) from o_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update o_evaluate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nick != null" >
+        nick = #{record.nick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type1Name != null" >
+        type1_name = #{record.type1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type1Score != null" >
+        type1_score = #{record.type1Score,jdbcType=INTEGER},
+      </if>
+      <if test="record.type2Name != null" >
+        type2_name = #{record.type2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type2Score != null" >
+        type2_score = #{record.type2Score,jdbcType=INTEGER},
+      </if>
+      <if test="record.type3Name != null" >
+        type3_name = #{record.type3Name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type3Score != null" >
+        type3_score = #{record.type3Score,jdbcType=INTEGER},
+      </if>
+      <if test="record.labeLlist != null" >
+        labe_llist = #{record.labeLlist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update o_evaluate
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      nick = #{record.nick,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      type1_name = #{record.type1Name,jdbcType=VARCHAR},
+      type1_score = #{record.type1Score,jdbcType=INTEGER},
+      type2_name = #{record.type2Name,jdbcType=VARCHAR},
+      type2_score = #{record.type2Score,jdbcType=INTEGER},
+      type3_name = #{record.type3Name,jdbcType=VARCHAR},
+      type3_score = #{record.type3Score,jdbcType=INTEGER},
+      labe_llist = #{record.labeLlist,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.OEvaluate" >
+    update o_evaluate
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Name != null" >
+        type1_name = #{type1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type1Score != null" >
+        type1_score = #{type1Score,jdbcType=INTEGER},
+      </if>
+      <if test="type2Name != null" >
+        type2_name = #{type2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type2Score != null" >
+        type2_score = #{type2Score,jdbcType=INTEGER},
+      </if>
+      <if test="type3Name != null" >
+        type3_name = #{type3Name,jdbcType=VARCHAR},
+      </if>
+      <if test="type3Score != null" >
+        type3_score = #{type3Score,jdbcType=INTEGER},
+      </if>
+      <if test="labeLlist != null" >
+        labe_llist = #{labeLlist,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.OEvaluate" >
+    update o_evaluate
+    set user_id = #{userId,jdbcType=INTEGER},
+      nick = #{nick,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      type1_name = #{type1Name,jdbcType=VARCHAR},
+      type1_score = #{type1Score,jdbcType=INTEGER},
+      type2_name = #{type2Name,jdbcType=VARCHAR},
+      type2_score = #{type2Score,jdbcType=INTEGER},
+      type3_name = #{type3Name,jdbcType=VARCHAR},
+      type3_score = #{type3Score,jdbcType=INTEGER},
+      labe_llist = #{labeLlist,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

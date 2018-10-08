@@ -1,0 +1,22 @@
+package com.zacx.serivce.line.api;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.line.api.dto.LineDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+
+import java.util.List;
+
+/**
+ * 线路服务api
+ */
+public interface LineServiceApi {
+    //添加
+    int insert(LineDTO dto) throws LineServiceException;
+    //修改
+    int update(LineDTO dto) throws LineServiceException;
+    //删除
+    int removeListByIds(List<Integer> ids) throws LineServiceException;
+
+    //分页查询
+    PageInfo<LineDTO> getLinePageInfo(LineDTO dto);
+}

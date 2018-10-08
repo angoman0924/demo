@@ -1,0 +1,7 @@
+package com.zacx.serivce.basic.api;
+
+import com.zacx.serivce.basic.api.dto.Demo;
+
+public interface BasicDemoServiceApi {
+    boolean test(Demo demo);
+}

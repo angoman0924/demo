@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LScheduling;
+import com.zacx.serivce.dal.entity.LSchedulingExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LSchedulingMapper {
+    int countByExample(LSchedulingExample example);
+
+    int deleteByExample(LSchedulingExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LScheduling record);
+
+    int insertSelective(LScheduling record);
+
+    List<LScheduling> selectByExample(LSchedulingExample example);
+
+    LScheduling selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LScheduling record, @Param("example") LSchedulingExample example);
+
+    int updateByExample(@Param("record") LScheduling record, @Param("example") LSchedulingExample example);
+
+    int updateByPrimaryKeySelective(LScheduling record);
+
+    int updateByPrimaryKey(LScheduling record);
+}

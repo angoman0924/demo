@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.UUserCashWithdrawApplyMapperExt" >
+    <resultMap id="BaseResultMapExt" type="com.zacx.serivce.dal.entity.ext.UUserCashWithdrawApplyExt"
+               extends="com.zacx.serivce.dal.mapper.UUserCashWithdrawApplyMapper.BaseResultMap">
+    </resultMap>
+    <select id="selectExtList" parameterType="com.zacx.serivce.dal.entity.ext.UUserCashWithdrawApplyExt" resultMap="BaseResultMapExt">
+        SELECT
+            t1.*,
+            t2.`code` AS toBankAccountCode,
+            t2.bank_name AS toBankAccountName
+        FROM
+            u_user_cash_withdraw_apply t1
+            LEFT JOIN u_user_bank_account t2 ON t2.id = t1.to_bank_account_id
+        <where>
+            <if test="status != null">
+                AND t1.`status` = #{status}
+            </if>
+            <if test="userId != null">
+                AND t1.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+</mapper>

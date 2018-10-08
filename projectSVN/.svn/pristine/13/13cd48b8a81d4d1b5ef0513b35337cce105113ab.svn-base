@@ -1,0 +1,161 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.MoneyUtils;
+import com.zacx.core.util.StringUtils;
+import com.zacx.serivce.dal.entity.OOrder;
+import com.zacx.serivce.dal.entity.OOrderExample;
+import com.zacx.serivce.dal.entity.OTicket;
+import com.zacx.serivce.dal.entity.OTicketExample;
+import com.zacx.serivce.dal.enums.CardTypeEnum;
+import com.zacx.serivce.dal.mapper.OOrderMapper;
+import com.zacx.serivce.dal.mapper.OTicketMapper;
+import com.zacx.serivce.line.api.CarServiceApi;
+import com.zacx.serivce.line.api.dto.CarDTO;
+import com.zacx.serivce.order.api.dto.*;
+import com.zacx.serivce.order.api.enums.OrderStatusEnum;
+import com.zacx.serivce.order.service.OrderQueryLocService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+public class OrderQueryLocServiceImpl extends BaseOrderLocServiceImpl implements OrderQueryLocService {
+    @Autowired
+    private CarServiceApi carServiceApi;
+
+    @Autowired
+    OOrderMapper oOrderMapper;
+    @Autowired
+    OTicketMapper oTicketMapper;
+
+    @Override
+    public PageInfo<OrderMainDTO> queryOrderList(OrderQueryDTO orderQueryDTO) {
+        //前台客户查询必须传递有效的用户ID
+        if(orderQueryDTO.getUserId() == null || orderQueryDTO.getUserId() <= 0){
+            return new PageInfo<>();
+        }
+
+        OOrderExample qExample = new OOrderExample();
+        OOrderExample.Criteria qCriteria = qExample.createCriteria();
+        qCriteria.andIdEqualTo(orderQueryDTO.getUserId());
+        List<Integer> qStatusList = transOrderStatusList(orderQueryDTO.getStatusGroup());
+        if(!qStatusList.isEmpty()){
+            qCriteria.andStatusIn(qStatusList);
+        }
+        if(orderQueryDTO.getStartCreateAt() != null){
+            qCriteria.andCreateAtGreaterThanOrEqualTo(orderQueryDTO.getStartCreateAt());
+        }
+        if(orderQueryDTO.getEndCreateAt() != null){
+            qCriteria.andCreateAtLessThanOrEqualTo(orderQueryDTO.getEndCreateAt());
+        }
+        if(orderQueryDTO.getStartTravelAt() != null){
+            qCriteria.andStartTimeGreaterThanOrEqualTo(orderQueryDTO.getStartTravelAt());
+        }
+        if(orderQueryDTO.getEndTravelAt() != null){
+            qCriteria.andStartTimeLessThanOrEqualTo(orderQueryDTO.getEndTravelAt());
+        }
+
+        PageHelper.startPage(orderQueryDTO.getPageIndex(),orderQueryDTO.getPageSize());
+        List<OOrder> qList = oOrderMapper.selectByExample(qExample);
+        List<OrderMainDTO> mainList = new ArrayList<>();
+        for (OOrder order: qList) {
+            mainList.add(transFromOrder(order, orderQueryDTO));
+        }
+
+        PageInfo<OrderMainDTO> pageList=new PageInfo<>(mainList);
+        return pageList;
+    }
+
+    private OrderMainDTO transFromOrder(OOrder orderEntity, OrderQueryDTO orderQueryDTO){
+        OrderMainDTO mainOrder = new OrderMainDTO();
+        orderEntityToBaseDTO(orderEntity, mainOrder);
+
+        if(orderQueryDTO != null){
+            if(orderQueryDTO.getQIsCar() != null && orderQueryDTO.getQIsCar() > 0){
+                CarDTO carDTO = carServiceApi.findByPrimaryKey(orderEntity.getCarId());
+                OrderCarDTO orderCarDTO = new OrderCarDTO();
+                BeanUtils.copyProperties(carDTO, orderCarDTO);
+                orderCarDTO.setCarId(carDTO.getId());
+                mainOrder.setCarInfo(orderCarDTO);
+            }
+
+            if(orderQueryDTO.getQIsDriver() != null && orderQueryDTO.getQIsDriver() > 0){
+                //TODO ... 查询司机信息
+            }
+
+            if(orderQueryDTO.getQIsGps() != null && orderQueryDTO.getQIsGps() > 0){
+                //TODO ... 查询GPS信息
+            }
+        }
+
+        return mainOrder;
+    }
+
+    //所有：ALL（默认），准备：READY，运行：RUNNING，完成：FINISH，取消：CANCEL
+    private List<Integer> transOrderStatusList(String statusGroupName){
+        List<Integer> statusList = new ArrayList<>();
+        if(!StringUtils.isBlank(statusGroupName)){
+            if("READY".equals(statusGroupName)){
+                statusList = Arrays.asList(OrderStatusEnum.NEW.getCode());
+            } else if("RUNNING".equals(statusGroupName)){
+                statusList = Arrays.asList(OrderStatusEnum.PAID.getCode(),
+                        OrderStatusEnum.SETTLEMENT.getCode(),
+                        OrderStatusEnum.REFUND.getCode());
+            } else if("FINISH".equals(statusGroupName)){
+                statusList = Arrays.asList(OrderStatusEnum.FINISH.getCode(),
+                        OrderStatusEnum.OVERDUE.getCode());
+            } else if("CANCEL".equals(statusGroupName)){
+                statusList = Arrays.asList(OrderStatusEnum.CANCEL.getCode(),
+                        OrderStatusEnum.VOID.getCode());
+            } else {
+                //不提供数据
+                statusList = Arrays.asList(0);
+            }
+        }
+        return statusList;
+    }
+
+    @Override
+    public OrderDetailDTO queryOrderDetail(Integer orderId) {
+        if(orderId == null || orderId <= 0){
+            return null;
+        }
+
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(orderId);
+        if(orderEntity == null){
+            return null;
+        }
+
+        OrderDetailDTO detailOrder = new OrderDetailDTO();
+        orderEntityToBaseDTO(orderEntity, detailOrder);
+
+        detailOrder.setBaseCost(MoneyUtils.getStrMoney(orderEntity.getTicketCost()));
+        detailOrder.setServiceCost(MoneyUtils.getStrMoney(orderEntity.getTakeCost().add(orderEntity.getGiveCost())));
+        detailOrder.setInsuranceCost(MoneyUtils.getStrMoney(orderEntity.getInsuranceCost()));
+        //TODO ... 积分未对接
+        detailOrder.setGiveIntegralPoint(0);
+        detailOrder.setBaseCost(MoneyUtils.getStrMoney(orderEntity.getTicketCost()));
+
+        OTicketExample ticketExample = new OTicketExample();
+        ticketExample.createCriteria().andOrderIdEqualTo(orderEntity.getId());
+        List<OTicket> ticketList = oTicketMapper.selectByExample(ticketExample);
+        List<PassengerInfo> passengerList = new ArrayList<>();
+        for (OTicket ticket : ticketList) {
+            PassengerInfo passenger = new PassengerInfo();
+            passenger.setName(ticket.getPassengerName());
+            passenger.setPhone(ticket.getPassengerPhone());
+            passenger.setCardNo(ticket.getPassengerCardno());
+            passenger.setCardType(CardTypeEnum.ID.getName());
+        }
+        detailOrder.setPassengerList(passengerList);
+
+        return detailOrder;
+    }
+
+}

@@ -1,0 +1,91 @@
+package com.zacx.gateway.passenger.controller;
+
+import com.zacx.core.annotation.MethodFlag;
+import com.zacx.core.enums.Code;
+import com.zacx.core.model.api.ClientInfo;
+import com.zacx.core.model.base.Result;
+import com.zacx.gateway.passenger.constants.PassengerApiUrl;
+import com.zacx.gateway.passenger.dto.LoginEnter;
+import com.zacx.serivce.cache.service.ICacheService;
+import com.zacx.serivce.dal.entity.UUser;
+import com.zacx.serivce.user.api.PassengerServiceApi;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * 用户相关接口
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-17 20:31
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Api(description = "用户")
+@RestController
+@RequestMapping(PassengerApiUrl.USER)
+public class UserController {
+
+    @Autowired
+    private UserServiceApi userServiceApi;
+    @Autowired
+    private ICacheService cacheService;
+    @Autowired
+    private PassengerServiceApi passengerServiceApi;
+
+    @MethodFlag
+    @ApiOperation(value = "用户登陆/注册")
+    @PostMapping(PassengerApiUrl.LOGIN)
+    public Result<UserInfo> login(@RequestBody LoginEnter enter){
+        LoginInfo loginInfo = new LoginInfo();
+        BeanUtils.copyProperties(enter, loginInfo);
+        UserInfo result = userServiceApi.login(loginInfo);
+        return Result.success(result);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "根据手机号码查询用户")
+    @GetMapping(PassengerApiUrl.MOBILE)
+    public Result<UserDTO> selectUserByMobile(@ApiParam("用户手机号码") @PathVariable("mobile") String mobile){
+        UserDTO result = userServiceApi.selectUserByMobile(mobile);
+        return Result.success(result);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "根据用户编号查询用户详细信息")
+    @PostMapping(PassengerApiUrl.ID)
+    public Result<UserDetailDTO> selectUserBykey(@ApiParam("用户编号") @PathVariable("id") Long id){
+        if(id == 0 || id == null){
+            return Result.error(Code.ERROR_ARGUMENT,"用户编号不能为空");
+        }
+        UserDetailDTO userDetailDTO = userServiceApi.selectUserById(id);
+        if(userDetailDTO == null){
+            return Result.error(Code.ERROR_DATA_NOT_FOUND,"没有找到相关信息");
+        }
+        return Result.success(userDetailDTO);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "参数测试")
+    @GetMapping("parameter")
+    public Result<ClientInfo> parameter(ClientInfo clientInfo){
+        return Result.success(clientInfo);
+    }
+
+    @MethodFlag
+    @ApiOperation(value = "参数测试1")
+    @GetMapping("parameter1")
+    public Result<String> parameter1(ClientInfo clientInfo,@RequestParam("id") int id){
+
+        return Result.success(clientInfo+"id="+id);
+    }
+
+
+}

@@ -1,0 +1,49 @@
+package com.zacx.serivce.line.api.dto;
+
+import com.zacx.core.model.api.BaseDTO;
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * 班次DTO
+ * Created by song on 2018/10/3.
+ */
+@Data
+public class PlanDTO extends BaseDTO {
+    private static final long serialVersionUID = -685651324943942775L;
+
+    private Integer id;
+
+    private String code;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private Integer lineId;
+
+    private Boolean isRelay;
+
+    private Long ticketPrice;
+
+    private Integer saleNumber;
+
+    private Integer shiftType;
+
+    private Integer carTypeId;
+
+    private Integer schedulingStatus;
+
+    private Integer saleStatus;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    private LineDTO lineDTO;
+}

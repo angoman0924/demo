@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.SymFunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.SymFunction" >
+    <id column="FunctionId" property="functionid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="ParentId" property="parentid" jdbcType="VARCHAR" />
+    <result column="Category" property="category" jdbcType="INTEGER" />
+    <result column="SiteMapId" property="sitemapid" jdbcType="INTEGER" />
+    <result column="Sort" property="sort" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FunctionId, `Name`, ParentId, Category, SiteMapId, Sort
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.SymFunctionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sym_function
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sym_function
+    where FunctionId = #{functionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sym_function
+    where FunctionId = #{functionid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.SymFunctionExample" >
+    delete from sym_function
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.SymFunction" >
+    insert into sym_function (FunctionId, `Name`, ParentId, 
+      Category, SiteMapId, Sort
+      )
+    values (#{functionid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, 
+      #{category,jdbcType=INTEGER}, #{sitemapid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.SymFunction" >
+    insert into sym_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionid != null" >
+        FunctionId,
+      </if>
+      <if test="name != null" >
+        `Name`,
+      </if>
+      <if test="parentid != null" >
+        ParentId,
+      </if>
+      <if test="category != null" >
+        Category,
+      </if>
+      <if test="sitemapid != null" >
+        SiteMapId,
+      </if>
+      <if test="sort != null" >
+        Sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionid != null" >
+        #{functionid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="sitemapid != null" >
+        #{sitemapid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.SymFunctionExample" resultType="java.lang.Integer" >
+    select count(*) from sym_function
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sym_function
+    <set >
+      <if test="record.functionid != null" >
+        FunctionId = #{record.functionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        `Name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        ParentId = #{record.parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        Category = #{record.category,jdbcType=INTEGER},
+      </if>
+      <if test="record.sitemapid != null" >
+        SiteMapId = #{record.sitemapid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sort != null" >
+        Sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sym_function
+    set FunctionId = #{record.functionid,jdbcType=VARCHAR},
+      `Name` = #{record.name,jdbcType=VARCHAR},
+      ParentId = #{record.parentid,jdbcType=VARCHAR},
+      Category = #{record.category,jdbcType=INTEGER},
+      SiteMapId = #{record.sitemapid,jdbcType=INTEGER},
+      Sort = #{record.sort,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.SymFunction" >
+    update sym_function
+    <set >
+      <if test="name != null" >
+        `Name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        ParentId = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        Category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="sitemapid != null" >
+        SiteMapId = #{sitemapid,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        Sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where FunctionId = #{functionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.SymFunction" >
+    update sym_function
+    set `Name` = #{name,jdbcType=VARCHAR},
+      ParentId = #{parentid,jdbcType=VARCHAR},
+      Category = #{category,jdbcType=INTEGER},
+      SiteMapId = #{sitemapid,jdbcType=INTEGER},
+      Sort = #{sort,jdbcType=INTEGER}
+    where FunctionId = #{functionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

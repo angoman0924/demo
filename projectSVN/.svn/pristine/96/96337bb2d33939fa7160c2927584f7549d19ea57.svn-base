@@ -1,0 +1,359 @@
+package com.zacx.core.util;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+/**
+ * @classDesc: 功能描述:(时间工具类)
+ * @author: 顾理想
+ * @createTime: 2017年05月09日 19:14
+ * @version: v1.0
+ * @copyright:
+ */
+public class DateUtils {
+	/** 年-月-日 时：分：秒 毫秒 */
+	/** 精确到毫秒 2017-05-22 14:01:40 756 */
+	private static final String DATE_FORMAT_DEFAULT = "yyyy-MM-dd HH:mm:ss SSS";
+	/** 无格式化符号精确到毫秒 2017-05-22 14:01:40 756 */
+	private static final String DATE_FORMAT_DEFAULT_yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
+	/** 无格式化符号精确到秒 201705221400 */
+	private static final String DATE_FORMAT_DEFAULT_yyyyMMddHHmmss = "yyyyMMddHHmmss";
+	/** 日期 2017-05-22 */
+	private static final String DATE_FORMAT_Y_M_D = "yyyy-MM-dd";
+
+	/** 日期 2017-05 */
+	private static final String DATE_FORMAT_Y_M = "yyyy-MM";
+
+	/** 日期精确到秒 2017-05-22 14:20 */
+	private static final String DATE_FORMAT_Y_M_D_H_m_s = "yyyy-MM-dd HH:mm:ss";
+	/** 当前时间无日期 14:20:40 */
+	private static final String DATE_FORMAT_H_m_s = "HH:mm:ss";
+
+	private DateUtils() {
+	};
+
+	/**
+	 * @methodDesc: 功能描述:(获取当前时间 格式（mm:ss SSS） 例如：14:20:40)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:24
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getCurrentDefaultTime() {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_H_m_s);
+		return mFormat.format(new Date());
+	}
+
+	/**
+	 * @methodDesc: 功能描述:(无格式化符号获取当前时间 格式（mmssSSS） 例如：142040)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:24
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getCurrentTime() {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_DEFAULT_yyyyMMddHHmmssSSS);
+		return mFormat.format(new Date());
+	}
+
+	/**
+	 * @methodDesc: 功能描述:(获取当前日期 无时间 格式（yyyy-MM-dd）例如：2017-05-22)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:28
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getCurrentDefaultDay() {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_Y_M_D);
+		return mFormat.format(new Date());
+	}
+
+	/**
+	 * @methodDesc: 功能描述:(获取当前年月 无时间 格式（yyyy-MM）例如：2017-05)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:28
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getCurrentDefaultMonth() {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_Y_M);
+		return mFormat.format(new Date());
+	}
+
+	/**
+	 * @methodDesc: 功能描述:(获取当前日期精确到秒 格式（yyyy-MM-dd HH:mm:ss） 例如：2017-05-22
+	 *              14:20)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:28
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getCurrentDefaultDate() {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_Y_M_D_H_m_s);
+		return mFormat.format(new Date());
+	}
+
+	public static String getFormatStrDate(Date date) {
+		if(date != null){
+			SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_Y_M_D_H_m_s);
+			return mFormat.format(date);
+		}
+		return "";
+	}
+
+	public static String getFormatStrDate(Date date, String format) {
+		if(date != null){
+			if(format == null || format.trim().length() == 0){
+				format = DATE_FORMAT_Y_M_D_H_m_s;
+			}
+			SimpleDateFormat mFormat = new SimpleDateFormat(format);
+			return mFormat.format(date);
+		}
+		return "";
+	}
+
+	/**
+	 * @methodDesc: 功能描述:(获取当前日期精确到毫秒 格式（yyyy-MM-dd HH:mm:ss SSS） 例如：2017-05-22
+	 *              14:01:40 756)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:28
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getAccurateCurrentDefaultDate() {
+		return getAccurateCurrentDefaultDate(new Date());
+	}
+	/**
+	 * @methodDesc: 功能描述:(获取当前日期精确到毫秒 格式（yyyy-MM-dd HH:mm:ss SSS） 例如：2017-05-22
+	 *              14:01:40 756)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:28
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getAccurateCurrentDefaultDate(Date date) {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_DEFAULT);
+		return mFormat.format(date);
+	}
+
+	/**
+	 * @methodDesc: 功能描述:(无格式化符号精确到秒 格式（yyyyMMddHHmmss）例如：201705221400)
+	 * @author: 顾理想
+	 * @createTime 2017年05月22日 14:28
+	 * @returnType
+	 * @copyright:
+	 */
+	public static String getNoSymbolDefaultDate() {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_DEFAULT_yyyyMMddHHmmss);
+		return mFormat.format(new Date());
+	}
+
+	public static String getNoSymbolDefaultDate(Date date) {
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_DEFAULT_yyyyMMddHHmmss);
+		return mFormat.format(date);
+	}
+
+	/**
+	 * 获取Date格式时间
+	 */
+	public static Date getFormData() {		
+		Date data=null;
+		try {
+			data=StringUtils.isBlank(getCurrentDefaultDate()) ? null : new SimpleDateFormat(DATE_FORMAT_Y_M_D_H_m_s).parse(getCurrentDefaultDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	/**
+	 * @methodDesc: 14位日期（无格式化符号）格式时间转换为时间戳
+	 * @author: 姚磊  
+	 * @param time
+	 * @return  String
+	 * @createTime:2018年1月17日 下午4:24:34
+	 * @copyright:
+	 */
+	public static String getTimestamp(String time) throws ParseException{
+		SimpleDateFormat format =  new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = format.parse(time);
+		return date.getTime()+"";
+	}
+	
+	/**
+	 * @methodDesc: 14位日期（无格式化符号）转换为（yyyy-MM-dd HH:mm:ss） 格式
+	 * @author: 姚磊  
+	 * @param time
+	 * @return
+	 * @throws ParseException  String
+	 * @createTime:2018年2月13日 上午9:44:07
+	 * @copyright:
+	 */
+	public static String getDateByNoSymbolDate(String time) throws ParseException{
+		SimpleDateFormat format =  new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = format.parse(time);
+		SimpleDateFormat mFormat = new SimpleDateFormat(DATE_FORMAT_Y_M_D_H_m_s);
+		return mFormat.format(date);
+	}
+	
+	/**
+	*@methodDesc: 功能描述:(获取mongodb的当前时间,就是把当前时间+8小时)
+	*@author: 顾理想
+	*@createTime 2018年02月06日 16:18
+	*@returnType
+	*@copyright:
+	*/
+	public static Date getMongoCurrentDate(){
+		String current = DateUtils.getAccurateCurrentDefaultDate();
+
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_DEFAULT);
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date date = null;
+		try {
+			date = sdf.parse(current);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return date;
+	}
+
+
+	/**
+	 *@methodDesc: 功能描述:(把时间转换成mongodb的时间,就是把当前时间+8小时)
+	 *@author: 顾理想
+	 *@createTime 2018年02月06日 16:18
+	 *@returnType
+	 *@copyright:
+	 */
+	public static Date getMongoDate(Date date){
+		String current = DateUtils.getAccurateCurrentDefaultDate(date);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_DEFAULT);
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date result = null;
+		try {
+			result = sdf.parse(current);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	/**
+	* @author gulx
+	* @Description 把LocalDate转换成 Date
+	* @Date  2018/9/14 10:07
+	* @Param [localDate]
+	* @copyright 上海拜米网络科技有限公司
+	* @return java.util.Date
+	**/
+	public static Date  localDateToDate(LocalDate localDate){
+		ZoneId zone = ZoneId.systemDefault();
+		Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
+		return Date.from(instant);
+	}
+
+	/**
+	 * @author gulx
+	 * @Description 把LocalDateTime 转换成 Date
+	 * @Date  2018/9/14 10:07
+	 * @Param [localDate]
+	 * @copyright 上海拜米网络科技有限公司
+	 * @return java.util.Date
+	 **/
+	public static Date localDateTimeToDate(LocalDateTime localDateTime){
+		ZoneId zone = ZoneId.systemDefault();
+		Instant instant = localDateTime.atZone(zone).toInstant();
+		return  Date.from(instant);
+	}
+	/**
+	* @author gulx
+	* @Description 根据月份获取当月的时间范围
+	* @Date  2018/9/14 10:31
+	* @Param [year, month]
+	* @copyright 上海拜米网络科技有限公司
+	* @return com.zacx.core.util.DateUtils.RangeTime
+	**/
+	public static RangeTime getRangeTimeByMonth(int year,int month){
+		LocalDate startTime = LocalDate.of(year, month, 1);
+		LocalTime endTime = LocalTime.of(23,59,59);
+		LocalDateTime dateTime= LocalDateTime.of(startTime.plusMonths(1).minusDays(1), endTime);
+		Date d1 = DateUtils.localDateToDate(startTime);
+		Date d2 = DateUtils.localDateTimeToDate(dateTime);
+		RangeTime r = new RangeTime();
+		r.setStartTime(d1);
+		r.setEndTime(d2);
+		return r;
+	}
+	//范围
+	public static class RangeTime{
+		private Date startTime;
+		private Date endTime;
+
+		public Date getStartTime() {
+			return startTime;
+		}
+
+		public void setStartTime(Date startTime) {
+			this.startTime = startTime;
+		}
+
+		public Date getEndTime() {
+			return endTime;
+		}
+
+		public void setEndTime(Date endTime) {
+			this.endTime = endTime;
+		}
+	}
+
+    /**
+     * 前台传入的时间格式化成  日期+00:00:00 或日期+23:59:59，根据传入的end来判断
+     * dateConvertToSqlParamDate((Date)parameter.get("collectionsDateStart"), "yyyy-MM-dd 00:00:00",false)
+     * dateConvertToSqlParamDate((Date)parameter.get("collectionsDateEnd"), "yyyy-MM-dd 23:59:59",true)
+     * end sql里要写小于，别写等于
+     * @param date
+     * @param pattern
+     * @param end
+     * @return
+     */
+    public static Date dateConvertToSqlParamDate(Date date, String pattern, boolean end) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        if (end) {
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            //日期延迟一天
+            calendar.add(calendar.DATE, 1);
+            date = calendar.getTime();
+        }
+        String dateString = format.format(date);
+        Date d = new Date();
+        try {
+            d = format.parse(dateString);
+        } catch (Exception e) {
+        }
+        return d;
+    }
+
+    /**
+     * 计算两个时间差的秒数
+     * @param start
+     * @param end
+     * @return
+     */
+    public static long getSeconds(Date start,Date end){
+        long time = end.getTime()-start.getTime();
+        return time/1000;
+    }
+
+    public static long getMinutes(Date start,Date end){
+        return getSeconds(start,end)/60;
+    }
+}

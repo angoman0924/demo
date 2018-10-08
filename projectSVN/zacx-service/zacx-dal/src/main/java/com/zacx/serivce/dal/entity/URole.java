@@ -1,0 +1,137 @@
+/*
+*
+* URole.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class URole {
+    /**
+     * 
+     */
+    private Integer id;
+
+    /**
+     * 操作
+     */
+    private String code;
+
+    /**
+     * 
+     */
+    private String name;
+
+    /**
+     * 平台 乘客端，司机端，运营端
+     */
+    private String platform;
+
+    /**
+     * 
+     */
+    private Date createAt;
+
+    /**
+     * 
+     */
+    private Date modifyAt;
+
+    /**
+     * 
+     * @return id 
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param id 
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * 操作
+     * @return code 操作
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * 操作
+     * @param code 操作
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
+     * 
+     * @return name 
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * 
+     * @param name 
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 平台 乘客端，司机端，运营端
+     * @return platform 平台 乘客端，司机端，运营端
+     */
+    public String getPlatform() {
+        return platform;
+    }
+
+    /**
+     * 平台 乘客端，司机端，运营端
+     * @param platform 平台 乘客端，司机端，运营端
+     */
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    /**
+     * 
+     * @return create_at 
+     */
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    /**
+     * 
+     * @param createAt 
+     */
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    /**
+     * 
+     * @return modify_at 
+     */
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    /**
+     * 
+     * @param modifyAt 
+     */
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+}

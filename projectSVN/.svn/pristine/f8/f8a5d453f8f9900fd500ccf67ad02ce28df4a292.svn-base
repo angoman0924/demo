@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LCarOwner;
+import com.zacx.serivce.dal.entity.LCarOwnerExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LCarOwnerMapper {
+    int countByExample(LCarOwnerExample example);
+
+    int deleteByExample(LCarOwnerExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LCarOwner record);
+
+    int insertSelective(LCarOwner record);
+
+    List<LCarOwner> selectByExample(LCarOwnerExample example);
+
+    LCarOwner selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LCarOwner record, @Param("example") LCarOwnerExample example);
+
+    int updateByExample(@Param("record") LCarOwner record, @Param("example") LCarOwnerExample example);
+
+    int updateByPrimaryKeySelective(LCarOwner record);
+
+    int updateByPrimaryKey(LCarOwner record);
+}

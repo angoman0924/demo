@@ -1,0 +1,93 @@
+package com.zacx.serivce.line.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.BeanUtils;
+import com.zacx.core.util.StringUtils;
+import com.zacx.serivce.dal.entity.LScheduling;
+import com.zacx.serivce.dal.entity.LSchedulingExample;
+import com.zacx.serivce.dal.mapper.LSchedulingMapper;
+import com.zacx.serivce.line.api.dto.SchedulingDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+import com.zacx.serivce.line.service.SchedulingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * 班次调度内部服务
+ * Created by song on 2018/10/3.
+ */
+@Service
+public class SchedulingServiceImpl implements SchedulingService {
+    @Autowired
+    private LSchedulingMapper schedulingMapper;
+    @Override
+    public int insert(LScheduling record) throws LineServiceException {
+        return schedulingMapper.insertSelective(record);
+    }
+
+    @Override
+    public int update(LScheduling record) throws LineServiceException {
+        return schedulingMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int removeListByIds(List<Integer> ids, String userCode) throws LineServiceException {
+        LSchedulingExample example=new LSchedulingExample();
+        example.createCriteria().andIdIn(ids);
+        return schedulingMapper.deleteByExample(example);
+    }
+
+    @Override
+    public PageInfo<LScheduling> getSchedulingPageInfo(SchedulingDTO dto) {
+        PageHelper.startPage(dto.getPageIndex(),dto.getPageSize());
+        List<LScheduling> list = schedulingMapper.selectByExample(this.params2example(dto));
+        PageInfo<LScheduling> page=new PageInfo<>(list);
+        return page;
+    }
+
+    //region params2example 部分入参
+    private LSchedulingExample params2example(SchedulingDTO record){
+        LSchedulingExample example=new LSchedulingExample();
+        LSchedulingExample.Criteria ca = example.createCriteria();
+
+        if(!BeanUtils.isNull(record.getIsSign())){
+            ca.andIsSignEqualTo(record.getIsSign());
+        }
+        if(!BeanUtils.isNull(record.getCarId())){
+            ca.andCarIdEqualTo(record.getCarId());
+        }
+        if(!BeanUtils.isNull(record.getCreateBy())&& StringUtils.isNotBlank(record.getCreateBy().trim())){
+            ca.andCreateByLike(record.getCreateBy().trim());
+        }
+        if(!BeanUtils.isNull(record.getDriverId())){
+            ca.andDriverIdEqualTo(record.getDriverId());
+        }
+        if(!BeanUtils.isNull(record.getIsWorkOvertime())){
+            ca.andIsWorkOvertimeEqualTo(record.getIsWorkOvertime());
+        }
+        if(!BeanUtils.isNull(record.getModifyBy())&&StringUtils.isNotBlank(record.getModifyBy().trim())){
+            ca.andModifyByLike(record.getModifyBy().trim());
+        }
+        if(!BeanUtils.isNull(record.getPassengerNumber())){
+            ca.andPassengerNumberEqualTo(record.getPassengerNumber());
+        }
+        if(!BeanUtils.isNull(record.getPlanId())){
+            ca.andPlanIdEqualTo(record.getPlanId());
+        }
+        if(!BeanUtils.isNull(record.getShiftType())){
+//            ca.andShiftTypeEqualTo(record.getShiftType());
+        }
+        if(!BeanUtils.isNull(record.getStatus())){
+            ca.andStatusEqualTo(record.getStatus());
+        }
+
+        if(StringUtils.isNotBlank(record.getSortCase())){
+            example.setOrderByClause(record.getSortCase());
+        }
+        return example;
+    }
+    //endregion
+}

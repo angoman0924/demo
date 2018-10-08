@@ -1,0 +1,94 @@
+package com.zacx.serivce.basic.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.serivce.basic.api.IntegralServiceApi;
+import com.zacx.serivce.basic.api.dto.IntegralDTO;
+import com.zacx.serivce.basic.api.dto.QueryIntegralConditionDTO;
+import com.zacx.serivce.basic.api.exceptions.BasicServiceException;
+import com.zacx.serivce.basic.service.IntegralService;
+import com.zacx.serivce.dal.entity.BIntegral;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by song on 2018/10/7.
+ */
+@Service
+public class IntegralServiceApiImpl implements IntegralServiceApi {
+    Logger logger= LoggerFactory.getLogger(IntegralServiceApiImpl.class);
+    @Autowired
+    private IntegralService integralService;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(IntegralDTO dto) throws BasicServiceException {
+        logger.info("IntegralServiceApi.insert,params:{}", JSON.toJSONString(dto));
+        BIntegral record=new BIntegral();
+        BeanUtils.copyProperties(dto,record);
+        int r = integralService.insert(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(IntegralDTO dto) throws BasicServiceException {
+        logger.info("IntegralServiceApi.update,params:{}", JSON.toJSONString(dto));
+        BIntegral record=new BIntegral();
+        BeanUtils.copyProperties(dto,record);
+        int r = integralService.update(record);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int removeListByIds(List<Integer> ids, String userCode) throws BasicServiceException {
+        logger.info("IntegralServiceApi.removeListByIds,params:{}", JSON.toJSONString(ids));
+        int r = integralService.removeListByIds(ids,userCode);
+        logger.info("r={}",r);
+        return r;
+    }
+
+    @Override
+    public IntegralDTO findByPrimaryKey(Integer id) {
+        logger.info("IntegralServiceApi.findByPrimaryKey,params:{}",id);
+        BIntegral byPrimaryKey = integralService.findByPrimaryKey(id);
+        if(null!=byPrimaryKey){
+            IntegralDTO bean=new IntegralDTO();
+            BeanUtils.copyProperties(byPrimaryKey,bean);
+            logger.info("bean:{}",JSON.toJSONString(bean));
+        }
+        return null;
+    }
+
+    @Override
+    public List<IntegralDTO> getIntegralList(QueryIntegralConditionDTO condition) {
+        logger.info("IntegralServiceApi.getIntegralList,params:{}",JSON.toJSONString(condition));
+        List<BIntegral> integralList = integralService.getIntegralList(condition);
+
+        List<IntegralDTO> integralDTOS = ObjectUtils.listEntityConvert2ListDTO(integralList, IntegralDTO.class);
+
+        logger.info("result_list:{}", JSON.toJSONString(integralDTOS));
+
+        return integralDTOS;
+    }
+
+    @Override
+    public PageInfo<IntegralDTO> getIntegralPageInfo(QueryIntegralConditionDTO condition) {
+        logger.info("IntegralServiceApi.getIntegralPageInfo,params:{}",JSON.toJSONString(condition));
+        PageInfo<BIntegral> pageInfo = integralService.getIntegralPageInfo(condition);
+        logger.info("pageInfo_result:{}",JSON.toJSONString(pageInfo));
+
+        PageInfo<IntegralDTO> page= ObjectUtils.pageEntityConvert2PageDTO(pageInfo,IntegralDTO.class);
+        logger.info("page_result:{}",JSON.toJSONString(page));
+        return page;
+    }
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UInvoiceApply;
+import com.zacx.serivce.dal.entity.UInvoiceApplyExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UInvoiceApplyMapper {
+    int countByExample(UInvoiceApplyExample example);
+
+    int deleteByExample(UInvoiceApplyExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UInvoiceApply record);
+
+    int insertSelective(UInvoiceApply record);
+
+    List<UInvoiceApply> selectByExample(UInvoiceApplyExample example);
+
+    UInvoiceApply selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UInvoiceApply record, @Param("example") UInvoiceApplyExample example);
+
+    int updateByExample(@Param("record") UInvoiceApply record, @Param("example") UInvoiceApplyExample example);
+
+    int updateByPrimaryKeySelective(UInvoiceApply record);
+
+    int updateByPrimaryKey(UInvoiceApply record);
+}

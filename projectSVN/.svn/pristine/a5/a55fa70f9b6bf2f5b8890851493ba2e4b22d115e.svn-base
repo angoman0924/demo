@@ -1,0 +1,99 @@
+package com.zacx.gateway.base.base;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * @classDesc: 功能描述:(公共分页返回类)
+ * @author: 顾理想
+ * @createTime: 2017年05月10日 15:42
+ * @version: v1.0
+ *
+ */
+@ApiModel(value = "PageResult", description = "列表数据公共响应类")
+public class PageResult<T> extends Page {
+    @ApiModelProperty(value = "总数据条数", dataType = "int", required = true, example = "100")
+    protected int count;//数据库总条数
+    @ApiModelProperty(value = "数据列表", dataType = "int", required = true)
+    private List<T> list;//结果
+
+    public PageResult() {
+    }
+
+    public PageResult(int count, int pageNumber, int pageSize, List<T> list) {
+
+        this.count = count;
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+
+        this.list = list;
+    }
+    /**
+    * @author gulx
+    * @Description 空的结果
+    * @Date  2018/9/4 17:18
+    * @Param [page]
+    * @copyright 上海拜米网络科技有限公司
+    * @return com.zacx.gateway.base.base.PageResult<R>
+    **/
+    public  static <R> PageResult<R> emptyResult(Page page){
+        return new PageResult(0,page.getPageNumber(),page.getPageSize(), Collections.emptyList());
+    }
+
+
+    public static <R> PageResult<R> emptyResult(){
+        return new PageResult(0,1,10,new ArrayList<R>());
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Override
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    @Override
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+    }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    @Override
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PageResult{");
+        sb.append("count=").append(count);
+        sb.append(", pageNumber=").append(pageNumber);
+        sb.append(", pageSize=").append(pageSize);
+        sb.append(", list=").append(list);
+        sb.append('}');
+        return sb.toString();
+    }
+}

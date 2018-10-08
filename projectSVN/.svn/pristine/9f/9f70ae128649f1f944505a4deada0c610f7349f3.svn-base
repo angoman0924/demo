@@ -1,0 +1,19 @@
+package com.zacx.serivce.line.api.impl;
+
+import com.zacx.serivce.line.api.LineDemoServiceApi;
+import com.zacx.serivce.line.api.dto.Demo;
+import com.zacx.serivce.line.service.LocLineDemoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LineDemoServiceApiImpl implements LineDemoServiceApi {
+    @Autowired
+    LocLineDemoService locLineDemoService;
+
+    @Override
+    public boolean test(Demo demo) {
+        return locLineDemoService.test(demo);
+    }
+
+}

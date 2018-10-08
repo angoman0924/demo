@@ -1,0 +1,50 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.zacx.serivce.order.api.dto.*;
+import com.zacx.serivce.order.service.OrderLocService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderLocServiceImpl implements OrderLocService {
+
+    @Override
+    public PayPriceDTO payDetail(Integer orderId) {
+        return null;
+    }
+
+    @Override
+    public Boolean doPay(PayConfirmDTO payConfirmDTO) {
+        return null;
+    }
+
+    @Override
+    public PayPriceDTO changePrice(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean doChange(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean scanBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public String smsBoardingCode(BoardingValiDTO boardingValiDTO) {
+        return null;
+    }
+
+    @Override
+    public EvaluateCategoryDTO evaluateCategory() {
+        return null;
+    }
+
+    @Override
+    public Boolean doEvaluate(EvaluateInfoDTO evaluateInfoDTO) {
+        return null;
+    }
+
+}

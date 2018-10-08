@@ -1,0 +1,7 @@
+package com.zacx.serivce.line.api;
+
+import com.zacx.serivce.line.api.dto.Demo;
+
+public interface LineDemoServiceApi {
+    boolean test(Demo demo);
+}

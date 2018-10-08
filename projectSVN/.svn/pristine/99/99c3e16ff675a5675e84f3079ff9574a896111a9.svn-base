@@ -1,0 +1,7 @@
+package com.zacx.serivce.line.api.exceptions;
+
+public class LineServiceException extends RuntimeException {
+    public LineServiceException(String msg){
+        super(msg);
+    }
+}

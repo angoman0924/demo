@@ -1,0 +1,135 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LCar {
+    private Integer id;
+
+    private Integer ownerId;
+
+    private String licenseplate;
+
+    private String brand;
+
+    private String model;
+
+    private Integer seatNumber;
+
+    private Integer operationType;
+
+    private Date creationDate;
+
+    private Date joinDate;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getLicenseplate() {
+        return licenseplate;
+    }
+
+    public void setLicenseplate(String licenseplate) {
+        this.licenseplate = licenseplate;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Integer getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(Integer seatNumber) {
+        this.seatNumber = seatNumber;
+    }
+
+    public Integer getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(Integer operationType) {
+        this.operationType = operationType;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

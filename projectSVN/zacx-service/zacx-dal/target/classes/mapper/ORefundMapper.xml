@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.ORefundMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.ORefund" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="uesr_id" property="uesrId" jdbcType="INTEGER" />
+    <result column="service_charge" property="serviceCharge" jdbcType="DECIMAL" />
+    <result column="refund_type" property="refundType" jdbcType="INTEGER" />
+    <result column="old_plan_id" property="oldPlanId" jdbcType="INTEGER" />
+    <result column="new_plan_id" property="newPlanId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, code, order_id, uesr_id, service_charge, refund_type, old_plan_id, new_plan_id, 
+    `status`, remark, create_at, create_by, modify_at, modify_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.ORefundExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from o_refund
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from o_refund
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from o_refund
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.ORefundExample" >
+    delete from o_refund
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.ORefund" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into o_refund (code, order_id, uesr_id, 
+      service_charge, refund_type, old_plan_id, 
+      new_plan_id, `status`, remark, 
+      create_at, create_by, modify_at, 
+      modify_by)
+    values (#{code,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, #{uesrId,jdbcType=INTEGER}, 
+      #{serviceCharge,jdbcType=DECIMAL}, #{refundType,jdbcType=INTEGER}, #{oldPlanId,jdbcType=INTEGER}, 
+      #{newPlanId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, 
+      #{modifyBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.ORefund" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into o_refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="uesrId != null" >
+        uesr_id,
+      </if>
+      <if test="serviceCharge != null" >
+        service_charge,
+      </if>
+      <if test="refundType != null" >
+        refund_type,
+      </if>
+      <if test="oldPlanId != null" >
+        old_plan_id,
+      </if>
+      <if test="newPlanId != null" >
+        new_plan_id,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="uesrId != null" >
+        #{uesrId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceCharge != null" >
+        #{serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=INTEGER},
+      </if>
+      <if test="oldPlanId != null" >
+        #{oldPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="newPlanId != null" >
+        #{newPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.ORefundExample" resultType="java.lang.Integer" >
+    select count(*) from o_refund
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update o_refund
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uesrId != null" >
+        uesr_id = #{record.uesrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceCharge != null" >
+        service_charge = #{record.serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundType != null" >
+        refund_type = #{record.refundType,jdbcType=INTEGER},
+      </if>
+      <if test="record.oldPlanId != null" >
+        old_plan_id = #{record.oldPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.newPlanId != null" >
+        new_plan_id = #{record.newPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAt != null" >
+        modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null" >
+        modify_by = #{record.modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update o_refund
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      uesr_id = #{record.uesrId,jdbcType=INTEGER},
+      service_charge = #{record.serviceCharge,jdbcType=DECIMAL},
+      refund_type = #{record.refundType,jdbcType=INTEGER},
+      old_plan_id = #{record.oldPlanId,jdbcType=INTEGER},
+      new_plan_id = #{record.newPlanId,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      modify_at = #{record.modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{record.modifyBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.ORefund" >
+    update o_refund
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="uesrId != null" >
+        uesr_id = #{uesrId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceCharge != null" >
+        service_charge = #{serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="refundType != null" >
+        refund_type = #{refundType,jdbcType=INTEGER},
+      </if>
+      <if test="oldPlanId != null" >
+        old_plan_id = #{oldPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="newPlanId != null" >
+        new_plan_id = #{newPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.ORefund" >
+    update o_refund
+    set code = #{code,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
+      uesr_id = #{uesrId,jdbcType=INTEGER},
+      service_charge = #{serviceCharge,jdbcType=DECIMAL},
+      refund_type = #{refundType,jdbcType=INTEGER},
+      old_plan_id = #{oldPlanId,jdbcType=INTEGER},
+      new_plan_id = #{newPlanId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

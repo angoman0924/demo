@@ -1,0 +1,17 @@
+package com.zacx.serivce.dal.enums;
+
+/**
+ * 人群
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-26人群 11:16
+ * @copyright 上海拜米网络科技有限公司
+ **/
+public enum CardTypeEnum {
+    ID("身份证"),
+    PASSPORT("护照");
+    private String name;
+     CardTypeEnum(String group){
+        this.name=group;
+    }
+}

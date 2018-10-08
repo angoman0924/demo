@@ -1,0 +1,135 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class OEvaluate {
+    private Integer id;
+
+    private Integer userId;
+
+    private Integer orderId;
+
+    private String nick;
+
+    private String description;
+
+    private String type1Name;
+
+    private Integer type1Score;
+
+    private String type2Name;
+
+    private Integer type2Score;
+
+    private String type3Name;
+
+    private Integer type3Score;
+
+    private String labeLlist;
+
+    private Date createAt;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getType1Name() {
+        return type1Name;
+    }
+
+    public void setType1Name(String type1Name) {
+        this.type1Name = type1Name;
+    }
+
+    public Integer getType1Score() {
+        return type1Score;
+    }
+
+    public void setType1Score(Integer type1Score) {
+        this.type1Score = type1Score;
+    }
+
+    public String getType2Name() {
+        return type2Name;
+    }
+
+    public void setType2Name(String type2Name) {
+        this.type2Name = type2Name;
+    }
+
+    public Integer getType2Score() {
+        return type2Score;
+    }
+
+    public void setType2Score(Integer type2Score) {
+        this.type2Score = type2Score;
+    }
+
+    public String getType3Name() {
+        return type3Name;
+    }
+
+    public void setType3Name(String type3Name) {
+        this.type3Name = type3Name;
+    }
+
+    public Integer getType3Score() {
+        return type3Score;
+    }
+
+    public void setType3Score(Integer type3Score) {
+        this.type3Score = type3Score;
+    }
+
+    public String getLabeLlist() {
+        return labeLlist;
+    }
+
+    public void setLabeLlist(String labeLlist) {
+        this.labeLlist = labeLlist;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+}

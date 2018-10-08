@@ -1,0 +1,33 @@
+package com.zacx.serivce.dal.entity;
+
+public class LHotzoneGroupDetail {
+    private Integer id;
+
+    private Integer groupId;
+
+    private Integer hotzoneId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public Integer getHotzoneId() {
+        return hotzoneId;
+    }
+
+    public void setHotzoneId(Integer hotzoneId) {
+        this.hotzoneId = hotzoneId;
+    }
+}

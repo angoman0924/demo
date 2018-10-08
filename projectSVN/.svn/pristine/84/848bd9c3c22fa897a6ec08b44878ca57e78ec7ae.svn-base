@@ -1,0 +1,37 @@
+package com.zacx.gateway.passenger;
+
+import com.zacx.serivce.line.api.LineServiceApi;
+import com.zacx.serivce.line.api.dto.LineDTO;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ZacxPassengerApplicationTests {
+
+    @Autowired
+    private LineServiceApi lineService;
+	@Test
+	public void contextLoads() {
+	}
+
+	@Test
+	public void testOperateDB(){
+        LineDTO dto=new LineDTO();
+//        dto.setDistance(1131.00);
+//        dto.setName("北京到上334海");
+//        dto.setSiteEndId(3);
+//        dto.setSiteStartId(4);
+//        dto.setStatus(1);
+//	    int i=lineService.insert(dto);
+//        Assert.assertEquals(1,i);
+        dto.setPageIndex(1);
+        dto.setPageSize(1);
+        lineService.getLinePageInfo(dto);
+    }
+
+}

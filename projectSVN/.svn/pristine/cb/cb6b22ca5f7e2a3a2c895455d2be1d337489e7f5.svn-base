@@ -1,0 +1,31 @@
+package com.zacx.serivce.order.api.dto;
+
+import com.zacx.core.enums.PayTypeEnum;
+
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+/**
+ * @description: 支付订单信息
+ *
+ * @author: kiting
+ * @date: 2018年10月3日 19:25
+ * @version: 1.0
+ * @copyright: 上海拜米网络科技有限公司
+ **/
+@Data
+public class PayConfirmEnter {
+
+    //订单ID", dataType = "Integer", required = true)
+    private Integer orderId;
+
+    //支持混合支付
+    //支付类型", dataType = "PayTypeEnum", required = true)
+    private PayTypeEnum payType;
+
+    //支付金额", dataType = "BigDecimal", required = true)
+    private BigDecimal couponCost;
+
+}

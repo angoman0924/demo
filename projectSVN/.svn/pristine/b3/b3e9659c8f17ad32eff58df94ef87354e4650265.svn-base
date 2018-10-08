@@ -1,0 +1,238 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.enums.Code;
+import com.zacx.serivce.dal.entity.*;
+import com.zacx.serivce.dal.mapper.OEvaluateCategoryMapper;
+import com.zacx.serivce.dal.mapper.OEvaluateMapper;
+import com.zacx.serivce.dal.mapper.OOrderMapper;
+import com.zacx.serivce.dal.mapper.OTicketMapper;
+import com.zacx.serivce.line.api.CarServiceApi;
+import com.zacx.serivce.line.api.LineServiceApi;
+import com.zacx.serivce.line.api.SchedulingServiceApi;
+import com.zacx.serivce.line.api.SiteServiceApi;
+import com.zacx.serivce.line.api.dto.CarDTO;
+import com.zacx.serivce.line.api.dto.LineDTO;
+import com.zacx.serivce.line.api.dto.SchedulingDTO;
+import com.zacx.serivce.line.api.dto.SiteDTO;
+import com.zacx.serivce.order.api.dto.*;
+import com.zacx.serivce.order.api.enums.BusinessTypeEnum;
+import com.zacx.serivce.order.api.enums.OrderStatusEnum;
+import com.zacx.serivce.order.api.exceptions.OrderServiceException;
+import com.zacx.serivce.order.service.OrderLocService;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.UserDetailDTO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class OrderLocServiceImpl extends BaseOrderLocServiceImpl implements OrderLocService {
+    @Autowired
+    private UserServiceApi userServiceApi;
+    @Autowired
+    private CarServiceApi carServiceApi;
+    @Autowired
+    private SchedulingServiceApi schedulingServiceApi;
+
+    @Autowired
+    OOrderMapper oOrderMapper;
+    @Autowired
+    OTicketMapper oTicketMapper;
+    @Autowired
+    OEvaluateCategoryMapper oEvaluateCategoryMapper;
+    @Autowired
+    OEvaluateMapper oEvaluateMapper;
+
+    @Override
+    public PayPriceDTO payDetail(Integer orderId) {
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(orderId);
+        if(orderEntity != null){
+            PayPriceDTO priceDTO = new PayPriceDTO();
+            priceDTO.setOrderCode(orderEntity.getCode());
+            priceDTO.setPlanId(orderEntity.getPlanId());
+            priceDTO.setStartPlace(orderEntity.getSiteStartName());
+            priceDTO.setEndPlace(orderEntity.getSiteEndName());
+
+            //司机信息
+            if(orderEntity.getCarId() != null && orderEntity.getCarId() > 0){
+                CarDTO carDTO = carServiceApi.findByPrimaryKey(orderEntity.getCarId());
+                OrderCarDTO orderCarDTO = new OrderCarDTO();
+                BeanUtils.copyProperties(carDTO, orderCarDTO);
+                orderCarDTO.setCarId(carDTO.getId());
+            }
+            //TODO ... 关联获取车和司机信息
+            if(orderEntity.getSchedulingId() != null && orderEntity.getSchedulingId() > 0){
+                priceDTO.setDriverDesc("朕师傅");
+            }
+
+            priceDTO.setStartTime(orderEntity.getStartTime());
+            priceDTO.setCreateAt(orderEntity.getCreateAt());
+            //支付倒计时计算，待支付状态的订单需要
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(orderEntity.getCreateAt());
+            calendar.add(java.util.Calendar.HOUR_OF_DAY,1);
+            long difference=calendar.getTime().getTime() - System.currentTimeMillis();
+            priceDTO.setExpiryTime(difference > 0?calendar.getTime():null);
+
+            priceDTO.setTotalCost(orderEntity.getTotalCost());
+            priceDTO.setUnpaidCost(orderEntity.getUnpaidCost());
+            //已付公式：paidCost = totalCost - unpaidCost
+            priceDTO.setPaidCost(orderEntity.getTotalCost().subtract(orderEntity.getUnpaidCost()));
+            //服务手续费用：接和送总费用
+            priceDTO.setServiceCost(orderEntity.getTakeCost().add(orderEntity.getGiveCost()));
+            priceDTO.setInsuranceCost(orderEntity.getInsuranceCost());
+            //TODO ... 积分点数：系统配置进行计算
+            priceDTO.setGiveIntegralPoint(0);
+            priceDTO.setBreakCost(BigDecimal.ZERO);
+
+            if(orderEntity.getUnpaidCost().compareTo(BigDecimal.ZERO) > 0){
+                UserDetailDTO userDetailDTO = userServiceApi.selectUserDetailById(orderEntity.getUserId());
+                priceDTO.setMyWallet(new BigDecimal(userDetailDTO.getWallet() + ""));
+                priceDTO.setMyIntegral(userDetailDTO.getIntegral());
+            }
+            return priceDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public PayPriceDTO changeDetail(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean doPay(PayConfirmDTO payConfirmDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean doChange(ChangeOrderDTO changeOrderDTO) {
+        return null;
+    }
+
+    @Override
+    public Boolean scanBoardingCode(BoardingValiDTO boardingValiDTO) {
+        if(boardingValiDTO.getCarId() == null || boardingValiDTO.getCarId() <= 0){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请提供车辆信息");
+        }
+        if(boardingValiDTO.getTicketId() == null || boardingValiDTO.getTicketId() <= 0){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请选择票据");
+        }
+        if(boardingValiDTO.getOrderId() == null || boardingValiDTO.getOrderId() <= 0){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请提供票所在订单信息");
+        }
+        OTicket tickInfo = oTicketMapper.selectByPrimaryKey(boardingValiDTO.getTicketId());
+        if(tickInfo == null || !boardingValiDTO.getOrderId().equals(tickInfo.getOrderId())){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "非法票信息");
+        }
+        SchedulingDTO schedulingInfo = schedulingServiceApi.findByPrimaryKey(tickInfo.getSchedulingId());
+        if(schedulingInfo == null){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "车次还未安排，请等待通知");
+        }
+        if(!boardingValiDTO.getCarId().equals(schedulingInfo.getCarId())){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请确认是否上错车");
+        }
+        return true;
+    }
+
+    @Override
+    public String smsBoardingCode(BoardingValiDTO boardingValiDTO) {
+        if(boardingValiDTO.getTicketId() == null || boardingValiDTO.getTicketId() <= 0){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请选择票据");
+        }
+        if(boardingValiDTO.getOrderId() == null || boardingValiDTO.getOrderId() <= 0){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请提供票所在订单信息");
+        }
+
+        //TODO ... 发送短信码
+        String valiCode = String.valueOf(System.currentTimeMillis());
+        valiCode = valiCode.substring(valiCode.length() - 6);
+
+        OTicket record = new OTicket();
+        record.setId(boardingValiDTO.getTicketId());
+        record.setVerificationCode(valiCode);
+        record.setModifyAt(new Date());
+        record.setModifyBy(boardingValiDTO.getUserCode());
+        oTicketMapper.updateByPrimaryKeySelective(record);
+
+        return valiCode;
+    }
+
+    @Override
+    public EvaluateCategoryDTO evaluateCategory() {
+        List<OEvaluateCategory> catgList = oEvaluateCategoryMapper.selectByExample(new OEvaluateCategoryExample());
+        if(catgList != null && !catgList.isEmpty()){
+            EvaluateCategoryDTO catgDTO = new EvaluateCategoryDTO();
+            catgDTO.setCatgList(catgList.stream().filter(o->o.getType() != null && o.getType().equals(1)).map(x->x.getCategoryName()).collect(Collectors.toList()));
+            catgDTO.setLabeLList(catgList.stream().filter(o->o.getType() != null && o.getType().equals(2)).map(x->x.getCategoryName()).collect(Collectors.toList()));
+            return catgDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean doEvaluate(EvaluateInfoDTO evaluateInfoDTO) {
+        if(evaluateInfoDTO.getOrderId() == null || evaluateInfoDTO.getOrderId() <= 0){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请选择要评价的订单");
+        }
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(evaluateInfoDTO.getOrderId());
+        if(orderEntity == null){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "要评价的订单不存在");
+        }
+        if(!OrderStatusEnum.FINISH.getCode().equals(orderEntity.getStatus())){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "正常乘坐结束的订单才能评价");
+        }
+        if(orderEntity.getIsEvaluated()){
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "改订单已评价");
+        }
+
+        OEvaluate evaluate = new OEvaluate();
+        evaluate.setUserId(evaluateInfoDTO.getUserId());
+
+        //TODO ... 随机生成昵称
+        String nickName = String.valueOf(System.currentTimeMillis());
+        nickName = nickName.substring(nickName.length() - 10);
+        evaluate.setNick(nickName);
+        evaluate.setOrderId(evaluateInfoDTO.getOrderId());
+        evaluate.setDescription(evaluateInfoDTO.getDescription());
+        evaluate.setCreateAt(new Date());
+
+        if(evaluateInfoDTO.getCatgList() != null && !evaluateInfoDTO.getCatgList().isEmpty()){
+            if(evaluateInfoDTO.getCatgList().size() >= 1){
+                //控制器中使用BeanUtils.copyProperties时“catgList”的类型不同，会导致此处“.get(0)”取值异常
+                evaluate.setType1Name(evaluateInfoDTO.getCatgList().get(0).getTypeName());
+                evaluate.setType1Score(evaluateInfoDTO.getCatgList().get(0).getTypeScore());
+            }
+            if(evaluateInfoDTO.getCatgList().size() >= 2){
+                evaluate.setType2Name(evaluateInfoDTO.getCatgList().get(1).getTypeName());
+                evaluate.setType2Score(evaluateInfoDTO.getCatgList().get(1).getTypeScore());
+            }
+            if(evaluateInfoDTO.getCatgList().size() >= 3){
+                evaluate.setType3Name(evaluateInfoDTO.getCatgList().get(2).getTypeName());
+                evaluate.setType3Score(evaluateInfoDTO.getCatgList().get(2).getTypeScore());
+            }
+        }
+        if(evaluateInfoDTO.getLabeLList() != null && !evaluateInfoDTO.getLabeLList().isEmpty()){
+            evaluate.setLabeLlist(String.join(",", evaluateInfoDTO.getLabeLList()));
+        }
+        oEvaluateMapper.insert(evaluate);
+
+        //修改订单评论标志
+        OOrder uptOrder = new OOrder();
+        uptOrder.setId(evaluateInfoDTO.getOrderId());
+        uptOrder.setIsEvaluated(true);
+        uptOrder.setModifyAt(new Date());
+        oOrderMapper.updateByPrimaryKeySelective(uptOrder);
+
+        return true;
+    }
+
+}

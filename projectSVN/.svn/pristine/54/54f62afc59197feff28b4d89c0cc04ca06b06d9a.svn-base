@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UHotCity;
+import com.zacx.serivce.dal.entity.UHotCityExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UHotCityMapper {
+    int countByExample(UHotCityExample example);
+
+    int deleteByExample(UHotCityExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UHotCity record);
+
+    int insertSelective(UHotCity record);
+
+    List<UHotCity> selectByExample(UHotCityExample example);
+
+    UHotCity selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UHotCity record, @Param("example") UHotCityExample example);
+
+    int updateByExample(@Param("record") UHotCity record, @Param("example") UHotCityExample example);
+
+    int updateByPrimaryKeySelective(UHotCity record);
+
+    int updateByPrimaryKey(UHotCity record);
+}

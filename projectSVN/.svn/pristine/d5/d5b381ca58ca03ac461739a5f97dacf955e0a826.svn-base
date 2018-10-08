@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LHotzoneGroupDetail;
+import com.zacx.serivce.dal.entity.LHotzoneGroupDetailExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LHotzoneGroupDetailMapper {
+    int countByExample(LHotzoneGroupDetailExample example);
+
+    int deleteByExample(LHotzoneGroupDetailExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LHotzoneGroupDetail record);
+
+    int insertSelective(LHotzoneGroupDetail record);
+
+    List<LHotzoneGroupDetail> selectByExample(LHotzoneGroupDetailExample example);
+
+    LHotzoneGroupDetail selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LHotzoneGroupDetail record, @Param("example") LHotzoneGroupDetailExample example);
+
+    int updateByExample(@Param("record") LHotzoneGroupDetail record, @Param("example") LHotzoneGroupDetailExample example);
+
+    int updateByPrimaryKeySelective(LHotzoneGroupDetail record);
+
+    int updateByPrimaryKey(LHotzoneGroupDetail record);
+}

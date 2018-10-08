@@ -1,0 +1,34 @@
+package com.zacx.serivce.user.api.dto;
+
+import com.zacx.core.model.api.ClientInfo;
+import lombok.Data;
+
+/**
+ * 用户详情表
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-27 14:28
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Data
+public class UserInfo {
+    //令牌
+    private String token;
+
+    //邮箱
+    private String email;
+
+    //手机号码
+    private String mobile;
+
+    //验证码
+    private String verificationCode;
+
+    //平台账号
+    private String platform;
+
+    //通用参数
+    private ClientInfo clientInfo;
+
+}

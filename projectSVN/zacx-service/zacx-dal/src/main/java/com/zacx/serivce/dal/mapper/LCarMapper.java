@@ -1,0 +1,80 @@
+/*
+*
+* LCarMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LCar;
+import com.zacx.serivce.dal.entity.LCarExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LCarMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(LCarExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(LCarExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(LCar record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(LCar record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<LCar> selectByExample(LCarExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    LCar selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") LCar record, @Param("example") LCarExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") LCar record, @Param("example") LCarExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(LCar record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(LCar record);
+}

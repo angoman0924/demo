@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.SAppVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.SAppVersion" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="platform_type" property="platformType" jdbcType="INTEGER" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+    <result column="app_type" property="appType" jdbcType="INTEGER" />
+    <result column="app_url" property="appUrl" jdbcType="VARCHAR" />
+    <result column="is_force" property="isForce" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, platform_type, app_version, app_type, app_url, is_force, `status`, content, create_at, 
+    update_at, create_by, update_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.SAppVersionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from s_app_version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_app_version
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from s_app_version
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.SAppVersionExample" >
+    delete from s_app_version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.SAppVersion" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_app_version (platform_type, app_version, app_type, 
+      app_url, is_force, `status`, 
+      content, create_at, update_at, 
+      create_by, update_by)
+    values (#{platformType,jdbcType=INTEGER}, #{appVersion,jdbcType=VARCHAR}, #{appType,jdbcType=INTEGER}, 
+      #{appUrl,jdbcType=VARCHAR}, #{isForce,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.SAppVersion" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_app_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="platformType != null" >
+        platform_type,
+      </if>
+      <if test="appVersion != null" >
+        app_version,
+      </if>
+      <if test="appType != null" >
+        app_type,
+      </if>
+      <if test="appUrl != null" >
+        app_url,
+      </if>
+      <if test="isForce != null" >
+        is_force,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="updateAt != null" >
+        update_at,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="platformType != null" >
+        #{platformType,jdbcType=INTEGER},
+      </if>
+      <if test="appVersion != null" >
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=INTEGER},
+      </if>
+      <if test="appUrl != null" >
+        #{appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isForce != null" >
+        #{isForce,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.SAppVersionExample" resultType="java.lang.Integer" >
+    select count(*) from s_app_version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update s_app_version
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.platformType != null" >
+        platform_type = #{record.platformType,jdbcType=INTEGER},
+      </if>
+      <if test="record.appVersion != null" >
+        app_version = #{record.appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appType != null" >
+        app_type = #{record.appType,jdbcType=INTEGER},
+      </if>
+      <if test="record.appUrl != null" >
+        app_url = #{record.appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isForce != null" >
+        is_force = #{record.isForce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateAt != null" >
+        update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null" >
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update s_app_version
+    set id = #{record.id,jdbcType=INTEGER},
+      platform_type = #{record.platformType,jdbcType=INTEGER},
+      app_version = #{record.appVersion,jdbcType=VARCHAR},
+      app_type = #{record.appType,jdbcType=INTEGER},
+      app_url = #{record.appUrl,jdbcType=VARCHAR},
+      is_force = #{record.isForce,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.SAppVersion" >
+    update s_app_version
+    <set >
+      <if test="platformType != null" >
+        platform_type = #{platformType,jdbcType=INTEGER},
+      </if>
+      <if test="appVersion != null" >
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        app_type = #{appType,jdbcType=INTEGER},
+      </if>
+      <if test="appUrl != null" >
+        app_url = #{appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isForce != null" >
+        is_force = #{isForce,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.SAppVersion" >
+    update s_app_version
+    set platform_type = #{platformType,jdbcType=INTEGER},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      app_type = #{appType,jdbcType=INTEGER},
+      app_url = #{appUrl,jdbcType=VARCHAR},
+      is_force = #{isForce,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

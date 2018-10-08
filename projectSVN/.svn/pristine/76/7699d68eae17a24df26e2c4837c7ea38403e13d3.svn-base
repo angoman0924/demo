@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OOrder2Insurance;
+import com.zacx.serivce.dal.entity.OOrder2InsuranceExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OOrder2InsuranceMapper {
+    int countByExample(OOrder2InsuranceExample example);
+
+    int deleteByExample(OOrder2InsuranceExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(OOrder2Insurance record);
+
+    int insertSelective(OOrder2Insurance record);
+
+    List<OOrder2Insurance> selectByExample(OOrder2InsuranceExample example);
+
+    OOrder2Insurance selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") OOrder2Insurance record, @Param("example") OOrder2InsuranceExample example);
+
+    int updateByExample(@Param("record") OOrder2Insurance record, @Param("example") OOrder2InsuranceExample example);
+
+    int updateByPrimaryKeySelective(OOrder2Insurance record);
+
+    int updateByPrimaryKey(OOrder2Insurance record);
+}

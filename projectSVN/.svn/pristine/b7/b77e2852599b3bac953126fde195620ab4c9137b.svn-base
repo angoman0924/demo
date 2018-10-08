@@ -1,0 +1,38 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.zacx.core.util.DateUtils;
+import com.zacx.core.util.MoneyUtils;
+import com.zacx.serivce.dal.entity.OOrder;
+import com.zacx.serivce.order.api.dto.OrderBaseDTO;
+import com.zacx.serivce.order.api.enums.BusinessTypeEnum;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BaseOrderLocServiceImpl {
+
+    protected void orderEntityToBaseDTO(OOrder orderEntity, OrderBaseDTO orderBaseDTO){
+        orderBaseDTO.setOrderId(orderEntity.getId());
+        orderBaseDTO.setOrderCode(orderEntity.getCode());
+
+        orderBaseDTO.setStartPlace(orderEntity.getSiteStartName());
+        orderBaseDTO.setEndPlace(orderEntity.getSiteEndName());
+        orderBaseDTO.setStartTime(DateUtils.getFormatStrDate(orderEntity.getStartTime()));
+        orderBaseDTO.setCreateAt(DateUtils.getFormatStrDate(orderEntity.getCreateAt()));
+        orderBaseDTO.setTotalCost(MoneyUtils.getStrMoney(orderEntity.getTotalCost()));
+        orderBaseDTO.setBusinessType(orderEntity.getBusinessType());
+        orderBaseDTO.setIsEvaluated(orderEntity.getIsEvaluated());
+
+        //服务描述
+        if(BusinessTypeEnum.CHARTERED.getCode().equals(orderEntity.getBusinessType())){
+            if(orderEntity.getIsSelf()){
+                orderBaseDTO.setServiceDesc("自营包车");
+            } else {
+                orderBaseDTO.setServiceDesc("包车服务");
+            }
+        } else if(orderEntity.getRelayType() > 0){
+            orderBaseDTO.setServiceDesc("上门接送");
+        }
+    }
+
+}

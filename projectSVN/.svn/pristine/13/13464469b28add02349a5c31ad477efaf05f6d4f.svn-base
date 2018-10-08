@@ -1,0 +1,11 @@
+package com.zacx.serivce.basic.api;
+
+
+/**
+* @desc    城市相关Service
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月03日 15:00:35
+**/
+public class CityService {
+}

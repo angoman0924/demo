@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LDriver;
+import com.zacx.serivce.dal.entity.LDriverExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LDriverMapper {
+    int countByExample(LDriverExample example);
+
+    int deleteByExample(LDriverExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LDriver record);
+
+    int insertSelective(LDriver record);
+
+    List<LDriver> selectByExample(LDriverExample example);
+
+    LDriver selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LDriver record, @Param("example") LDriverExample example);
+
+    int updateByExample(@Param("record") LDriver record, @Param("example") LDriverExample example);
+
+    int updateByPrimaryKeySelective(LDriver record);
+
+    int updateByPrimaryKey(LDriver record);
+}

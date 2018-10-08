@@ -1,0 +1,21 @@
+package com.zacx.gateway.passenger.dto.user;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * 用户详情表
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-27 14:28
+ * @copyright 上海拜米网络科技有限公司
+ **/
+@Data
+@ApiModel(value = "TokenInfo", description = "用户详情信息")
+public class UserInfoResult {
+    @ApiModelProperty("令牌")
+    private String token;
+
+}

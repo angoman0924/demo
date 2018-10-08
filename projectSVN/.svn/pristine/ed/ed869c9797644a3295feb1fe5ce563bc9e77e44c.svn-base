@@ -1,0 +1,5 @@
+package com.zacx.serivce.order.service;
+
+public interface OrderPayLocService {
+
+}

@@ -1,0 +1,116 @@
+/*
+*
+* SymManagerwithfunction.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class SymManagerwithfunction {
+    /**
+     * 用户权限关系Id
+     */
+    private String id;
+
+    /**
+     * 用户Id
+     */
+    private String managerid;
+
+    /**
+     * 权限Id
+     */
+    private String functionid;
+
+    /**
+     * 创建时间
+     */
+    private Date createdon;
+
+    /**
+     * 创建人
+     */
+    private String createdby;
+
+    /**
+     * 用户权限关系Id
+     * @return Id 用户权限关系Id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * 用户权限关系Id
+     * @param id 用户权限关系Id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * 用户Id
+     * @return ManagerId 用户Id
+     */
+    public String getManagerid() {
+        return managerid;
+    }
+
+    /**
+     * 用户Id
+     * @param managerid 用户Id
+     */
+    public void setManagerid(String managerid) {
+        this.managerid = managerid;
+    }
+
+    /**
+     * 权限Id
+     * @return FunctionId 权限Id
+     */
+    public String getFunctionid() {
+        return functionid;
+    }
+
+    /**
+     * 权限Id
+     * @param functionid 权限Id
+     */
+    public void setFunctionid(String functionid) {
+        this.functionid = functionid;
+    }
+
+    /**
+     * 创建时间
+     * @return CreatedOn 创建时间
+     */
+    public Date getCreatedon() {
+        return createdon;
+    }
+
+    /**
+     * 创建时间
+     * @param createdon 创建时间
+     */
+    public void setCreatedon(Date createdon) {
+        this.createdon = createdon;
+    }
+
+    /**
+     * 创建人
+     * @return CreatedBy 创建人
+     */
+    public String getCreatedby() {
+        return createdby;
+    }
+
+    /**
+     * 创建人
+     * @param createdby 创建人
+     */
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
+}

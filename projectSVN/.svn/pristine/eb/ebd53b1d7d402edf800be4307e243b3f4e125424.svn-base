@@ -1,0 +1,59 @@
+package com.zacx.gateway.driver.controller;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.core.annotation.MethodFlag;
+import com.zacx.core.enums.Code;
+import com.zacx.core.util.ObjectUtils;
+import com.zacx.gateway.base.base.PageResult;
+import com.zacx.gateway.base.base.Result;
+import com.zacx.gateway.base.util.WebUtils;
+import com.zacx.gateway.driver.constants.DriverApiUrl;
+import com.zacx.gateway.driver.dto.lines.QuerySchedulingByDriverIdCondition;
+import com.zacx.gateway.driver.dto.lines.SchedulingResult;
+import com.zacx.serivce.line.api.SchedulingServiceApi;
+import com.zacx.serivce.line.api.dto.SchedulingDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+
+/**
+ * Created by song on 2018/10/5.
+ */
+@Api(description = "路线模块")
+@RestController
+@RequestMapping
+public class LineController {
+    @Autowired
+    private SchedulingServiceApi schedulingServiceApi;
+
+    //region 192  查询我的排班
+    @MethodFlag
+    @ApiOperation(value = "查询我的排班")
+    @PostMapping(value = DriverApiUrl.LINE_GET_MY_SCHEDULING_INFO)
+    public Result<PageResult<SchedulingResult>> getMySchedulingInfo(@RequestBody QuerySchedulingByDriverIdCondition condition) {
+        if (ObjectUtils.isNull(condition)||ObjectUtils.isNull(condition.getDriverId())) {
+            return Result.error(Code.getByCode(Code.ERROR_ARGUMENT.getDescription()), Code.ERROR_ARGUMENT.getDescription());
+        }
+
+        SchedulingDTO dto=new SchedulingDTO();
+        dto.setDriverId(condition.getDriverId());
+
+        if(!ObjectUtils.isNull(condition.getStartTime())){
+            dto.setStartTimeStart(condition.getStartTime());
+        }
+        if(!ObjectUtils.isNull(condition.getEndTime())){
+            dto.setStartTimeEnd(condition.getEndTime());
+        }
+        if(!ObjectUtils.isNull(condition.getStatus())){
+            dto.setStatus(condition.getStatus());
+        }
+        PageInfo<SchedulingDTO> pageInfo = schedulingServiceApi.getSchedulingPageInfo(dto);
+
+        return WebUtils.pageDTOConvert2PageResult(pageInfo,SchedulingResult.class);
+    }
+    //endregion
+}

@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BCity;
+import com.zacx.serivce.dal.entity.BCityExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BCityMapper {
+    int countByExample(BCityExample example);
+
+    int deleteByExample(BCityExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(BCity record);
+
+    int insertSelective(BCity record);
+
+    List<BCity> selectByExample(BCityExample example);
+
+    BCity selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") BCity record, @Param("example") BCityExample example);
+
+    int updateByExample(@Param("record") BCity record, @Param("example") BCityExample example);
+
+    int updateByPrimaryKeySelective(BCity record);
+
+    int updateByPrimaryKey(BCity record);
+}

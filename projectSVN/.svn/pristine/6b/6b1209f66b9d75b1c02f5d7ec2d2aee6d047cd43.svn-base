@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LCar2User;
+import com.zacx.serivce.dal.entity.LCar2UserExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LCar2UserMapper {
+    int countByExample(LCar2UserExample example);
+
+    int deleteByExample(LCar2UserExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LCar2User record);
+
+    int insertSelective(LCar2User record);
+
+    List<LCar2User> selectByExample(LCar2UserExample example);
+
+    LCar2User selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LCar2User record, @Param("example") LCar2UserExample example);
+
+    int updateByExample(@Param("record") LCar2User record, @Param("example") LCar2UserExample example);
+
+    int updateByPrimaryKeySelective(LCar2User record);
+
+    int updateByPrimaryKey(LCar2User record);
+}

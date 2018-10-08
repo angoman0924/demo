@@ -1,0 +1,105 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class UUserCashWithdraw {
+    private Integer id;
+
+    private String code;
+
+    private Integer userId;
+
+    private Integer bankAccountId;
+
+    private Long money;
+
+    private Integer toBankAccountId;
+
+    private Date applyTime;
+
+    private Integer status;
+
+    private String remark;
+
+    private Date createAt;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getBankAccountId() {
+        return bankAccountId;
+    }
+
+    public void setBankAccountId(Integer bankAccountId) {
+        this.bankAccountId = bankAccountId;
+    }
+
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    public Integer getToBankAccountId() {
+        return toBankAccountId;
+    }
+
+    public void setToBankAccountId(Integer toBankAccountId) {
+        this.toBankAccountId = toBankAccountId;
+    }
+
+    public Date getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(Date applyTime) {
+        this.applyTime = applyTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+}

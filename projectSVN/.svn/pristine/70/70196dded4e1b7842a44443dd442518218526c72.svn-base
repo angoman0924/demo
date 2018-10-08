@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UPassenger;
+import com.zacx.serivce.dal.entity.UPassengerExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UPassengerMapper {
+    int countByExample(UPassengerExample example);
+
+    int deleteByExample(UPassengerExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UPassenger record);
+
+    int insertSelective(UPassenger record);
+
+    List<UPassenger> selectByExample(UPassengerExample example);
+
+    UPassenger selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UPassenger record, @Param("example") UPassengerExample example);
+
+    int updateByExample(@Param("record") UPassenger record, @Param("example") UPassengerExample example);
+
+    int updateByPrimaryKeySelective(UPassenger record);
+
+    int updateByPrimaryKey(UPassenger record);
+}

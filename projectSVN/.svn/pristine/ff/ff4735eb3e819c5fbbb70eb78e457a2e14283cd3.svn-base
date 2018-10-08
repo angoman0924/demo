@@ -1,0 +1,31 @@
+package com.zacx.serivce.line.service;
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.dal.entity.LLine;
+import com.zacx.serivce.line.api.dto.LineDTO;
+import com.zacx.serivce.line.api.exceptions.LineServiceException;
+
+import java.util.List;
+
+/**
+ * 线路内部服务逻辑
+ * Created by song on 2018/10/2.
+ */
+public interface LineService {
+    //写表
+    int insert(LLine record) throws LineServiceException;
+    //更新
+    int update(LLine record) throws LineServiceException;
+    //删除
+    int removeListByIds(List<Integer> ids) throws LineServiceException;
+
+    /**
+     * 分页查询
+     * @param record
+     * @param pageIndex
+     * @param pageSize
+     * @param orderCase 排序条件
+     * @return
+     */
+    PageInfo<LLine> getLinePageInfo(LLine record,int pageIndex,int pageSize,String orderCase);
+}

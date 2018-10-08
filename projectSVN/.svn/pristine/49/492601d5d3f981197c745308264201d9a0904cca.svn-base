@@ -1,0 +1,21 @@
+package com.zacx.serivce.user.api;
+
+import com.zacx.serivce.user.api.dto.BankAccountDTO;
+
+import java.util.List;
+
+/**
+ * 用户银行账号api 接口
+ * Created by liusi on 2018/10/7.
+ */
+public interface BankAccountServiceApi {
+
+    //新增个人银行卡
+    int insert(BankAccountDTO record);
+
+    //查询用户银行卡信息
+    List<BankAccountDTO> selectByExample(BankAccountDTO bankAccountDTO);
+
+    //删除银行卡
+    int deleteByPrimaryKey(Integer id);
+}

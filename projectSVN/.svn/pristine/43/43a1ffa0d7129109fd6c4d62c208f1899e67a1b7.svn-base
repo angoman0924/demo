@@ -1,0 +1,18 @@
+package com.zacx.serivce.basic.api;
+
+
+import com.github.pagehelper.PageInfo;
+import com.zacx.serivce.basic.api.dto.CityDTO;
+
+/**
+* @desc    城市相关Service
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月03日 15:00:35
+**/
+public interface CityServiceApi {
+    //城市查询
+    PageInfo<CityDTO> getCityPageInfo(CityDTO dto);
+    //热门城市查询
+    PageInfo<CityDTO> getHotCityPageInfo(CityDTO dto);
+}

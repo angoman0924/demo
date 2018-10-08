@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.SymRolewithfunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.SymRolewithfunction" >
+    <id column="RelationId" property="relationid" jdbcType="VARCHAR" />
+    <result column="RoleId" property="roleid" jdbcType="VARCHAR" />
+    <result column="FunctionId" property="functionid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RelationId, RoleId, FunctionId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunctionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sym_rolewithfunction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sym_rolewithfunction
+    where RelationId = #{relationid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sym_rolewithfunction
+    where RelationId = #{relationid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunctionExample" >
+    delete from sym_rolewithfunction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunction" >
+    insert into sym_rolewithfunction (RelationId, RoleId, FunctionId
+      )
+    values (#{relationid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{functionid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunction" >
+    insert into sym_rolewithfunction
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="relationid != null" >
+        RelationId,
+      </if>
+      <if test="roleid != null" >
+        RoleId,
+      </if>
+      <if test="functionid != null" >
+        FunctionId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="relationid != null" >
+        #{relationid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="functionid != null" >
+        #{functionid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunctionExample" resultType="java.lang.Integer" >
+    select count(*) from sym_rolewithfunction
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sym_rolewithfunction
+    <set >
+      <if test="record.relationid != null" >
+        RelationId = #{record.relationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleid != null" >
+        RoleId = #{record.roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.functionid != null" >
+        FunctionId = #{record.functionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sym_rolewithfunction
+    set RelationId = #{record.relationid,jdbcType=VARCHAR},
+      RoleId = #{record.roleid,jdbcType=VARCHAR},
+      FunctionId = #{record.functionid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunction" >
+    update sym_rolewithfunction
+    <set >
+      <if test="roleid != null" >
+        RoleId = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="functionid != null" >
+        FunctionId = #{functionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RelationId = #{relationid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.SymRolewithfunction" >
+    update sym_rolewithfunction
+    set RoleId = #{roleid,jdbcType=VARCHAR},
+      FunctionId = #{functionid,jdbcType=VARCHAR}
+    where RelationId = #{relationid,jdbcType=VARCHAR}
+  </update>
+</mapper>

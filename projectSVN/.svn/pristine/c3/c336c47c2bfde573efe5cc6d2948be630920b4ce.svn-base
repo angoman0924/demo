@@ -1,0 +1,80 @@
+/*
+*
+* BCouponMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BCoupon;
+import com.zacx.serivce.dal.entity.BCouponExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BCouponMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(BCouponExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(BCouponExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(BCoupon record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(BCoupon record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<BCoupon> selectByExample(BCouponExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    BCoupon selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") BCoupon record, @Param("example") BCouponExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") BCoupon record, @Param("example") BCouponExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(BCoupon record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(BCoupon record);
+}

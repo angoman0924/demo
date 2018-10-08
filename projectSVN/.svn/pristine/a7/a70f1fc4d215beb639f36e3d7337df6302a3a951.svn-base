@@ -1,0 +1,58 @@
+package com.zacx.serivce.user.api.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.zacx.serivce.user.api.BankAccountServiceApi;
+import com.zacx.serivce.user.api.dto.BankAccountDTO;
+import com.zacx.serivce.user.service.BankAccountService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * 用户银行卡api接口实现
+ * Created by liusi on 2018/10/7.
+ */
+@Slf4j
+@Service
+public class BankAccountServiceApiImpl implements BankAccountServiceApi{
+
+    @Resource
+    private BankAccountService bankAccountService;
+
+    /**
+     * 新增个人银行卡
+     * @param bankAccountDTO
+     * @return
+     */
+    @Override
+    public int insert(BankAccountDTO bankAccountDTO) {
+        log.info("新增个人银行卡请求参数", JSON.toJSONString(bankAccountDTO));
+        Integer result = bankAccountService.insert(bankAccountDTO);
+        log.info("新增个人银行卡结果",result);
+        return result;
+    }
+
+    /**
+     * 查询个人银行卡列表
+     * @param bankAccountDTO
+     * @return
+     */
+    @Override
+    public List<BankAccountDTO> selectByExample(BankAccountDTO bankAccountDTO) {
+        log.info("查询个人银行卡请求参数", JSON.toJSONString(bankAccountDTO));
+        List<BankAccountDTO> bankAccountDTOList = bankAccountService.selectByExample(bankAccountDTO);
+        log.info("查询个人银行卡结果",JSON.toJSONString(bankAccountDTOList));
+        return bankAccountDTOList;
+    }
+
+    //删除个人银行卡
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        log.info("删除个人银行卡请求参数", id);
+        Integer result = bankAccountService.deleteByPrimaryKey(id);
+        log.info("删除个人银行卡结果",result);
+        return result;
+    }
+}

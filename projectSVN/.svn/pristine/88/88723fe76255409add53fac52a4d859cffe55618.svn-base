@@ -1,0 +1,135 @@
+/*
+*
+* SymSitemap.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.entity;
+
+public class SymSitemap {
+    /**
+     * 站点地图Id
+     */
+    private Integer sitemapid;
+
+    /**
+     * 站点地图名称
+     */
+    private String name;
+
+    /**
+     * 父站点地图Id
+     */
+    private Integer parentid;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
+
+    /**
+     * 菜单类型，1菜单分组，2功能菜单
+     */
+    private Integer sitemaptype;
+
+    /**
+     * 
+     */
+    private String remark;
+
+    /**
+     * 站点地图Id
+     * @return SiteMapId 站点地图Id
+     */
+    public Integer getSitemapid() {
+        return sitemapid;
+    }
+
+    /**
+     * 站点地图Id
+     * @param sitemapid 站点地图Id
+     */
+    public void setSitemapid(Integer sitemapid) {
+        this.sitemapid = sitemapid;
+    }
+
+    /**
+     * 站点地图名称
+     * @return Name 站点地图名称
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * 站点地图名称
+     * @param name 站点地图名称
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 父站点地图Id
+     * @return ParentId 父站点地图Id
+     */
+    public Integer getParentid() {
+        return parentid;
+    }
+
+    /**
+     * 父站点地图Id
+     * @param parentid 父站点地图Id
+     */
+    public void setParentid(Integer parentid) {
+        this.parentid = parentid;
+    }
+
+    /**
+     * 排序
+     * @return Sort 排序
+     */
+    public Integer getSort() {
+        return sort;
+    }
+
+    /**
+     * 排序
+     * @param sort 排序
+     */
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    /**
+     * 菜单类型，1菜单分组，2功能菜单
+     * @return SiteMapType 菜单类型，1菜单分组，2功能菜单
+     */
+    public Integer getSitemaptype() {
+        return sitemaptype;
+    }
+
+    /**
+     * 菜单类型，1菜单分组，2功能菜单
+     * @param sitemaptype 菜单类型，1菜单分组，2功能菜单
+     */
+    public void setSitemaptype(Integer sitemaptype) {
+        this.sitemaptype = sitemaptype;
+    }
+
+    /**
+     * 
+     * @return Remark 
+     */
+    public String getRemark() {
+        return remark;
+    }
+
+    /**
+     * 
+     * @param remark 
+     */
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+}

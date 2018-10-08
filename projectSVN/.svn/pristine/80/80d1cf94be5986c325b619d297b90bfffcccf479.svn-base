@@ -1,0 +1,416 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class OOrder {
+    private Integer id;
+
+    private Integer userId;
+
+    private Integer planId;
+
+    private Integer lineId;
+
+    private Integer schedulingId;
+
+    private Date startTime;
+
+    private Integer ticketNumber;
+
+    private BigDecimal ticketCost;
+
+    private BigDecimal insuranceCost;
+
+    private BigDecimal couponCost;
+
+    private BigDecimal takeCost;
+
+    private String takeCoordinate;
+
+    private String takeAddress;
+
+    private BigDecimal giveCost;
+
+    private String giveCoordinate;
+
+    private String giveAddress;
+
+    private BigDecimal totalCost;
+
+    private BigDecimal unpaidCost;
+
+    private Integer payType;
+
+    private String userPhone;
+
+    private Integer travelTime;
+
+    private Long travelDistance;
+
+    private Integer status;
+
+    private Integer relayType;
+
+    private Boolean isSelf;
+
+    private Boolean isChanged;
+
+    private Boolean isEvaluated;
+
+    private Integer charteredCarBrand;
+
+    private String charteredCarModel;
+
+    private Integer businessType;
+
+    private String otherPlatformPlanCode;
+
+    private Integer otherPlatformId;
+
+    private String remark;
+
+    private Integer isInvoice;
+
+    private String taxVoucher;
+
+    private Date taxTime;
+
+    private Integer sourceType;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(Integer planId) {
+        this.planId = planId;
+    }
+
+    public Integer getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(Integer lineId) {
+        this.lineId = lineId;
+    }
+
+    public Integer getSchedulingId() {
+        return schedulingId;
+    }
+
+    public void setSchedulingId(Integer schedulingId) {
+        this.schedulingId = schedulingId;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Integer getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(Integer ticketNumber) {
+        this.ticketNumber = ticketNumber;
+    }
+
+    public BigDecimal getTicketCost() {
+        return ticketCost;
+    }
+
+    public void setTicketCost(BigDecimal ticketCost) {
+        this.ticketCost = ticketCost;
+    }
+
+    public BigDecimal getInsuranceCost() {
+        return insuranceCost;
+    }
+
+    public void setInsuranceCost(BigDecimal insuranceCost) {
+        this.insuranceCost = insuranceCost;
+    }
+
+    public BigDecimal getCouponCost() {
+        return couponCost;
+    }
+
+    public void setCouponCost(BigDecimal couponCost) {
+        this.couponCost = couponCost;
+    }
+
+    public BigDecimal getTakeCost() {
+        return takeCost;
+    }
+
+    public void setTakeCost(BigDecimal takeCost) {
+        this.takeCost = takeCost;
+    }
+
+    public String getTakeCoordinate() {
+        return takeCoordinate;
+    }
+
+    public void setTakeCoordinate(String takeCoordinate) {
+        this.takeCoordinate = takeCoordinate;
+    }
+
+    public String getTakeAddress() {
+        return takeAddress;
+    }
+
+    public void setTakeAddress(String takeAddress) {
+        this.takeAddress = takeAddress;
+    }
+
+    public BigDecimal getGiveCost() {
+        return giveCost;
+    }
+
+    public void setGiveCost(BigDecimal giveCost) {
+        this.giveCost = giveCost;
+    }
+
+    public String getGiveCoordinate() {
+        return giveCoordinate;
+    }
+
+    public void setGiveCoordinate(String giveCoordinate) {
+        this.giveCoordinate = giveCoordinate;
+    }
+
+    public String getGiveAddress() {
+        return giveAddress;
+    }
+
+    public void setGiveAddress(String giveAddress) {
+        this.giveAddress = giveAddress;
+    }
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public BigDecimal getUnpaidCost() {
+        return unpaidCost;
+    }
+
+    public void setUnpaidCost(BigDecimal unpaidCost) {
+        this.unpaidCost = unpaidCost;
+    }
+
+    public Integer getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public Integer getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(Integer travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public Long getTravelDistance() {
+        return travelDistance;
+    }
+
+    public void setTravelDistance(Long travelDistance) {
+        this.travelDistance = travelDistance;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getRelayType() {
+        return relayType;
+    }
+
+    public void setRelayType(Integer relayType) {
+        this.relayType = relayType;
+    }
+
+    public Boolean getIsSelf() {
+        return isSelf;
+    }
+
+    public void setIsSelf(Boolean isSelf) {
+        this.isSelf = isSelf;
+    }
+
+    public Boolean getIsChanged() {
+        return isChanged;
+    }
+
+    public void setIsChanged(Boolean isChanged) {
+        this.isChanged = isChanged;
+    }
+
+    public Boolean getIsEvaluated() {
+        return isEvaluated;
+    }
+
+    public void setIsEvaluated(Boolean isEvaluated) {
+        this.isEvaluated = isEvaluated;
+    }
+
+    public Integer getCharteredCarBrand() {
+        return charteredCarBrand;
+    }
+
+    public void setCharteredCarBrand(Integer charteredCarBrand) {
+        this.charteredCarBrand = charteredCarBrand;
+    }
+
+    public String getCharteredCarModel() {
+        return charteredCarModel;
+    }
+
+    public void setCharteredCarModel(String charteredCarModel) {
+        this.charteredCarModel = charteredCarModel;
+    }
+
+    public Integer getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(Integer businessType) {
+        this.businessType = businessType;
+    }
+
+    public String getOtherPlatformPlanCode() {
+        return otherPlatformPlanCode;
+    }
+
+    public void setOtherPlatformPlanCode(String otherPlatformPlanCode) {
+        this.otherPlatformPlanCode = otherPlatformPlanCode;
+    }
+
+    public Integer getOtherPlatformId() {
+        return otherPlatformId;
+    }
+
+    public void setOtherPlatformId(Integer otherPlatformId) {
+        this.otherPlatformId = otherPlatformId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getIsInvoice() {
+        return isInvoice;
+    }
+
+    public void setIsInvoice(Integer isInvoice) {
+        this.isInvoice = isInvoice;
+    }
+
+    public String getTaxVoucher() {
+        return taxVoucher;
+    }
+
+    public void setTaxVoucher(String taxVoucher) {
+        this.taxVoucher = taxVoucher;
+    }
+
+    public Date getTaxTime() {
+        return taxTime;
+    }
+
+    public void setTaxTime(Date taxTime) {
+        this.taxTime = taxTime;
+    }
+
+    public Integer getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(Integer sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

@@ -1,0 +1,32 @@
+package com.zacx.serivce.order.api.dto;
+
+import com.zacx.serivce.dal.enums.OperateModeEnum;
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class OrderCreateDTO {
+
+    private Integer userId;
+
+    //业务类型：1班线 2包车
+    private OperateModeEnum businessType;
+
+    private Date startTime;
+
+    private Integer ticketNumber;
+
+    //排班可已查到线路（包车排班是支付后自动生成，没有线路数据lineID关联；schedulingId是排班后统一更新）
+    private Integer planId;
+
+    private Integer charteredCarBrand;
+
+    //接送信息
+    private Integer relayType;
+    private String takeCoordinate;
+    private String takeAddress;
+    private String giveCoordinate;
+    private String giveAddress;
+
+}

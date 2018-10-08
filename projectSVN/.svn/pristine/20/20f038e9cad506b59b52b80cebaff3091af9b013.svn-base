@@ -1,0 +1,105 @@
+package com.zacx.serivce.user.service.impl;
+
+
+import com.github.pagehelper.PageHelper;
+import com.zacx.core.enums.Code;
+import com.zacx.serivce.dal.entity.UUser;
+import com.zacx.serivce.dal.entity.UUserDetail;
+import com.zacx.serivce.dal.entity.UUserDetailExample;
+import com.zacx.serivce.dal.entity.UUserExample;
+import com.zacx.serivce.dal.mapper.UUserDetailMapper;
+import com.zacx.serivce.dal.mapper.UUserMapper;
+import com.zacx.serivce.user.api.dto.UserDTO;
+import com.zacx.serivce.user.api.dto.UserDetailDTO;
+import com.zacx.serivce.user.api.exceptions.UserServiceException;
+import com.zacx.serivce.user.service.UserService;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+* @desc    用户相关
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月04日 15:04:19
+**/
+@Service
+public class UserServiceImpl implements UserService {
+    @Resource
+    private UUserMapper uUserMapper;
+
+    @Resource
+    private UUserDetailMapper uUserDetailMapper;
+
+    @Override
+    public List<UUser> geUserList(UserDTO dto) {
+        PageHelper.startPage(dto.getPageIndex(),dto. getPageSize());
+        List<UUser> uUsers = uUserMapper.selectByExample(this.params2example(dto));
+        return uUsers;
+    }
+
+    /**
+     * 新增用户主表
+     * @param uUser
+     * @return
+     */
+    @Override
+    public int insert(UUser uUser) {
+        return uUserMapper.insert(uUser);
+    }
+
+    /**
+     * 新增用户详情表
+     * @param uUserDetail
+     * @return
+     */
+    @Override
+    public int insertUserDetail(UUserDetail uUserDetail) {
+        return uUserDetailMapper.insert(uUserDetail);
+    }
+
+    /**
+     * 通过用户手机号码查询详细信息
+     * @param mobile
+     * @return
+     */
+    @Override
+    public UUser selectUserByMobile(String mobile) {
+        UUserExample uUserExample = new UUserExample();
+        uUserExample.createCriteria().andPhoneEqualTo(mobile);
+        List<UUser> uUserList = uUserMapper.selectByExample(uUserExample);
+        for(UUser uUser: uUserList){
+            return  uUser;
+        }
+        return null;
+    }
+
+    @Override
+    public UUserDetail selectUserById(Integer userId) {
+        UUserDetailExample userDetailExample = new UUserDetailExample();
+        userDetailExample.createCriteria().andUserIdEqualTo(userId);
+        List<UUserDetail> userDetailList = uUserDetailMapper.selectByExample(userDetailExample);
+        for (UUserDetail u: userDetailList){
+            return u;
+        }
+        return null;
+    }
+
+    private UUserExample params2example(UserDTO dto){
+        UUserExample example = new UUserExample();
+        UUserExample.Criteria criteria = example.createCriteria();
+
+        if (null != dto.getId()) {
+            criteria.andIdEqualTo(dto.getId());
+        }
+        if (dto.getCardNo() != null) {
+            criteria.andCardNoEqualTo(dto.getCardNo());
+        }
+        if (StringUtils.hasText(dto.getSortCase())) {
+            example.setOrderByClause(dto.getSortCase());
+        }
+        return example;
+    }
+}

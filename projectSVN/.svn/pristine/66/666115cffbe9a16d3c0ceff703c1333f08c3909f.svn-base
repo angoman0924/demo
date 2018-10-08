@@ -1,0 +1,85 @@
+package com.zacx.serivce.dal.entity;
+
+import java.math.BigDecimal;
+
+public class UInvoiceApplyDetail {
+    private Integer id;
+
+    private Integer invoiceApplyId;
+
+    private Integer orderId;
+
+    private BigDecimal unitPrice;
+
+    private Integer number;
+
+    private Long money;
+
+    private String invoiceNumber;
+
+    private Boolean isDelete;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getInvoiceApplyId() {
+        return invoiceApplyId;
+    }
+
+    public void setInvoiceApplyId(Integer invoiceApplyId) {
+        this.invoiceApplyId = invoiceApplyId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+}

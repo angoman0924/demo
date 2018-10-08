@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.URolePermission;
+import com.zacx.serivce.dal.entity.URolePermissionExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface URolePermissionMapper {
+    int countByExample(URolePermissionExample example);
+
+    int deleteByExample(URolePermissionExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(URolePermission record);
+
+    int insertSelective(URolePermission record);
+
+    List<URolePermission> selectByExample(URolePermissionExample example);
+
+    URolePermission selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") URolePermission record, @Param("example") URolePermissionExample example);
+
+    int updateByExample(@Param("record") URolePermission record, @Param("example") URolePermissionExample example);
+
+    int updateByPrimaryKeySelective(URolePermission record);
+
+    int updateByPrimaryKey(URolePermission record);
+}

@@ -1,0 +1,33 @@
+package com.zacx.gateway.passenger.dto;
+
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+/**
+* @desc    
+* @version 1.0
+* @author  Liang Jun
+* @date    2018年10月04日 19:31:39
+**/
+@ApiModel(value = "InsuranceResult", description = "保险信息")
+@Data
+public class InsuranceResult {
+    @ApiModelProperty(value = "保险ID")
+    private Integer id;
+    @ApiModelProperty(value = "保险名称")
+    private String name;
+    @ApiModelProperty(value = "保险公司")
+    private String insuranceCompany;
+    @ApiModelProperty(value = "保险价格")
+    private BigDecimal premium;
+    @ApiModelProperty(value = "保险类型")
+    private Integer type;
+    @ApiModelProperty(value = "描述信息")
+    private String describe;
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+}

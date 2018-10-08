@@ -1,0 +1,45 @@
+package com.zacx.gateway.driver.dto.lines;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+/**
+ * 站点信息
+ * Created by song on 2018/10/4.
+ */
+@Data
+@ApiModel(value = "SiteResult", description = "站点信息")
+public class SiteResult {
+    @ApiModelProperty("站点ID")
+    private Integer id;
+
+    @ApiModelProperty("站点名称")
+    private String name;
+
+    @ApiModelProperty("省")
+    private String provinceCode;
+
+    @ApiModelProperty("市")
+    private String cityCode;
+
+    @ApiModelProperty("县、区")
+    private String countyCode;
+
+    @ApiModelProperty("乡镇")
+    private String placeCode;
+
+    @ApiModelProperty("纬度")
+    private BigDecimal latitude;
+
+    @ApiModelProperty("经度")
+    private BigDecimal longitude;
+
+    @ApiModelProperty("详细地址")
+    private String address;
+
+    @ApiModelProperty("删除标记")
+    private Boolean isDelete;
+}

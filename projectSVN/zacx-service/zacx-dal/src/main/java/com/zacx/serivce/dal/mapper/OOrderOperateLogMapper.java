@@ -1,0 +1,80 @@
+/*
+*
+* OOrderOperateLogMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-07
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OOrderOperateLog;
+import com.zacx.serivce.dal.entity.OOrderOperateLogExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OOrderOperateLogMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(OOrderOperateLogExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(OOrderOperateLogExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(OOrderOperateLog record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(OOrderOperateLog record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<OOrderOperateLog> selectByExample(OOrderOperateLogExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    OOrderOperateLog selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") OOrderOperateLog record, @Param("example") OOrderOperateLogExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") OOrderOperateLog record, @Param("example") OOrderOperateLogExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(OOrderOperateLog record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(OOrderOperateLog record);
+}

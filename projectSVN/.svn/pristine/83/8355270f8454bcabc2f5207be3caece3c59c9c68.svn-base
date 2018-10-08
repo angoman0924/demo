@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.OOrder;
+import com.zacx.serivce.dal.entity.OOrderExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface OOrderMapper {
+    int countByExample(OOrderExample example);
+
+    int deleteByExample(OOrderExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(OOrder record);
+
+    int insertSelective(OOrder record);
+
+    List<OOrder> selectByExample(OOrderExample example);
+
+    OOrder selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") OOrder record, @Param("example") OOrderExample example);
+
+    int updateByExample(@Param("record") OOrder record, @Param("example") OOrderExample example);
+
+    int updateByPrimaryKeySelective(OOrder record);
+
+    int updateByPrimaryKey(OOrder record);
+}

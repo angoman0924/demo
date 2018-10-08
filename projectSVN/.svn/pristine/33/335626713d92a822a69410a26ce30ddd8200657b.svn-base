@@ -1,0 +1,75 @@
+package com.zacx.serivce.user.api.dto;
+
+import java.util.Date;
+
+public class UserDTO {
+    private Long id;
+
+    private String account;
+
+    private String mobile;
+
+    private String email;
+
+    private String pwd;
+
+    private Date createdat;
+
+    private Date updatedat;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public Date getCreatedat() {
+        return createdat;
+    }
+
+    public void setCreatedat(Date createdat) {
+        this.createdat = createdat;
+    }
+
+    public Date getUpdatedat() {
+        return updatedat;
+    }
+
+    public void setUpdatedat(Date updatedat) {
+        this.updatedat = updatedat;
+    }
+}

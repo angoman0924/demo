@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.MGoodOrderMapperExt" >
+  <resultMap id="BaseResultMapExt" type="com.zacx.serivce.dal.entity.ext.MGoodOrderDetailExt">
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="INTEGER" />
+    <result column="number" property="orderNumber" jdbcType="INTEGER" />
+    <result column="price_integral" property="priceIntegral" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="name" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="body_images" property="bodyImages" jdbcType="VARCHAR" />
+    <result column="image1" property="image1" jdbcType="VARCHAR" />
+    <result column="image2" property="image2" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <select id="getMGoodOrderDetailExtList" resultMap="BaseResultMapExt" parameterType="com.zacx.serivce.dal.model.QueryGoodsOrderCondition">
+    SELECT d.id as order_detail_id,d.order_id,g.id as goods_id,g.`name`as goods_name
+    ,g.category,g.body_images,g.image1,g.image2,g.description,d.number,d.price_integral from m_good_order_detail d LEFT JOIN  m_goods g
+    on d.good_id=g.id
+    where 1=1 and d.order_id=#{orderId}
+
+    <if test="goodsName != null">
+        and g.`name` LIKE CONCAT('%',#{goodsName},'%')
+    </if>
+    </select>
+</mapper>

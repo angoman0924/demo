@@ -1,0 +1,75 @@
+package com.zacx.gateway.passenger.constants;
+
+/**
+ * URL地址
+ *
+ * @author gulx
+ * @version 1.0
+ * @create 2018-09-18 14:16
+ * @copyright 上海拜米网络科技有限公司
+ **/
+public interface PassengerApiUrl {
+    /*****公共URL*****/
+    //空的
+    String EMPTY="";
+    //ID路径ID查询
+    String ID="{id}";
+    //版本V1
+    String V1="v1";
+
+    /*****公共URL*****/
+
+    String USER="v1/users";
+    String DEMO="/demo";
+    //登陆
+    String LOGIN="login";
+
+
+    //根据用户编号查询关联乘客信息
+    String USER_PASSENGER = "/{userId}";
+
+
+    //乘客
+    String PASSENGER = "v1/passenger";
+    //修改乘客联系方式
+    String UPDATE_MOBILE = "update/Passenger/Mobile";
+    //新增乘客
+    String INSERT_PASSENGER = "insert_passener";
+    //软删除乘客信息
+    String DEL_PASSENGER = "del_passener/{passengerId}";
+
+    //根据手机号码查询乘客信息
+    String MOBILE="/mobile/{mobile}";
+
+
+    //公共请求
+    String COMMON = "v1/common";
+    //获取验证码
+    String VERIFICATION_CODE="verification_code";
+    //取退票规则
+    String TICKET_RULE="ticket_rule";
+
+    //获取版本号
+    String VERSION="version";
+
+    //城市
+    String CITY="v1/cities";
+    //获取所有城市  模糊查询
+    String SEARCHCITY = "searchCity";
+    //根据坐标获取城市
+    String COORDINATE="coordinate";
+    //热门城市
+    String POPULARITY="popularity";
+    //搜索路线
+    String LINE_SEARCH="cities/lines/search";
+    //获取相关城市的站点信息
+    String LINE_SITE_INFO_BY_CITY_CODE="lines/getSiteInfosByCityCode";
+    String LINE_PLAN_INFO_BY_LINE="lines/getPlanInfoByLineId";
+    String LINE_GET_HOTZONE_INFO_BY_SITEID="lines/getHotzoneInfoBySiteId";
+
+    //获取商品列表
+    String MALL_GET_GOOGS_PAGE_INFO="mall/getGoodsPageInfo";
+
+    //订单模块
+    String ORDERS="orders";
+}

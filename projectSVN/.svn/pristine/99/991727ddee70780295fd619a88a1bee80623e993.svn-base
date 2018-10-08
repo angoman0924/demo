@@ -1,0 +1,80 @@
+/*
+*
+* BCharteredCarModelMapper.java
+* Copyright(C) 2018-2020 上海拜米网络科技有限公司
+* @date 2018-10-06
+*/
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.BCharteredCarModel;
+import com.zacx.serivce.dal.entity.BCharteredCarModelExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface BCharteredCarModelMapper {
+    /**
+     *
+     * @mbggenerated
+     */
+    int countByExample(BCharteredCarModelExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByExample(BCharteredCarModelExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insert(BCharteredCarModel record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int insertSelective(BCharteredCarModel record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    List<BCharteredCarModel> selectByExample(BCharteredCarModelExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    BCharteredCarModel selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExampleSelective(@Param("record") BCharteredCarModel record, @Param("example") BCharteredCarModelExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByExample(@Param("record") BCharteredCarModel record, @Param("example") BCharteredCarModelExample example);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKeySelective(BCharteredCarModel record);
+
+    /**
+     *
+     * @mbggenerated
+     */
+    int updateByPrimaryKey(BCharteredCarModel record);
+}

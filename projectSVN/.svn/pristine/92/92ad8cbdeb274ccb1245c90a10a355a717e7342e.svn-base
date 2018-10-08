@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.LCar;
+import com.zacx.serivce.dal.entity.LCarExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface LCarMapper {
+    int countByExample(LCarExample example);
+
+    int deleteByExample(LCarExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(LCar record);
+
+    int insertSelective(LCar record);
+
+    List<LCar> selectByExample(LCarExample example);
+
+    LCar selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") LCar record, @Param("example") LCarExample example);
+
+    int updateByExample(@Param("record") LCar record, @Param("example") LCarExample example);
+
+    int updateByPrimaryKeySelective(LCar record);
+
+    int updateByPrimaryKey(LCar record);
+}

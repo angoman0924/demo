@@ -1,0 +1,54 @@
+package com.zacx.gateway.passenger.dto.lines;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * Created by song on 2018/10/4.
+ */
+@Data
+@ApiModel(value = "PlanResult", description = "班次")
+public class PlanResult {
+    @ApiModelProperty("班次ID")
+    private Integer id;
+
+    @ApiModelProperty("流水号: LBC18010100001(L班次+年<2位>月日+5位流水号)")
+    private String code;
+
+    @ApiModelProperty("预计发车时间")
+    private Date startTime;
+
+    @ApiModelProperty("预计到站时间")
+    private Date endTime;
+
+    @ApiModelProperty("线路Id")
+    private Integer lineId;
+
+    @ApiModelProperty("是否支持接送：1支持 0不支持")
+    private Boolean isRelay;
+
+    @ApiModelProperty("票价")
+    private BigDecimal ticketPrice;
+
+    @ApiModelProperty("已售票数")
+    private Integer saleNumber;
+
+    @ApiModelProperty("班次类型：1正常 2加班")
+    private Integer shiftType;
+
+    @ApiModelProperty("车辆类型Id")
+    private Integer carTypeId;
+
+    @ApiModelProperty("排班状态：0未排班 1部分排班 2已排班")
+    private Integer schedulingStatus;
+
+    @ApiModelProperty("销售状态")
+    private Integer saleStatus;
+
+    @ApiModelProperty("包车类型")
+    private Integer charteredCarModelId;
+}

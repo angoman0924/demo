@@ -1,0 +1,30 @@
+package com.zacx.serivce.dal.mapper;
+
+import com.zacx.serivce.dal.entity.UPlatformAccount;
+import com.zacx.serivce.dal.entity.UPlatformAccountExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UPlatformAccountMapper {
+    int countByExample(UPlatformAccountExample example);
+
+    int deleteByExample(UPlatformAccountExample example);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UPlatformAccount record);
+
+    int insertSelective(UPlatformAccount record);
+
+    List<UPlatformAccount> selectByExample(UPlatformAccountExample example);
+
+    UPlatformAccount selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") UPlatformAccount record, @Param("example") UPlatformAccountExample example);
+
+    int updateByExample(@Param("record") UPlatformAccount record, @Param("example") UPlatformAccountExample example);
+
+    int updateByPrimaryKeySelective(UPlatformAccount record);
+
+    int updateByPrimaryKey(UPlatformAccount record);
+}

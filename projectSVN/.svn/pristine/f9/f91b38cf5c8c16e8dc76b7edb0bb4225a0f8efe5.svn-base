@@ -1,0 +1,7 @@
+package com.zacx.serivce.order.api;
+
+import com.zacx.serivce.order.api.dto.Demo;
+
+public interface OrderDemoServiceApi {
+    boolean test(Demo demo);
+}

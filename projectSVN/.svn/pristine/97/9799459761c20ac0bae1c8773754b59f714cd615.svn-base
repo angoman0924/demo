@@ -1,0 +1,9 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.zacx.serivce.order.service.OrderPayLocService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderPayLocServiceImpl implements OrderPayLocService {
+
+}

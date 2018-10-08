@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zacx.serivce.dal.mapper.SymManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.zacx.serivce.dal.entity.SymManager" >
+    <id column="ManagerId" property="managerid" jdbcType="VARCHAR" />
+    <result column="ManagerNo" property="managerno" jdbcType="VARCHAR" />
+    <result column="LoginName" property="loginname" jdbcType="VARCHAR" />
+    <result column="Password" property="password" jdbcType="VARCHAR" />
+    <result column="PasswordFormat" property="passwordformat" jdbcType="INTEGER" />
+    <result column="PasswordSalt" property="passwordsalt" jdbcType="VARCHAR" />
+    <result column="IsLockedOut" property="islockedout" jdbcType="TINYINT" />
+    <result column="LastLoginDate" property="lastlogindate" jdbcType="TIMESTAMP" />
+    <result column="LastPasswordChangedDate" property="lastpasswordchangeddate" jdbcType="TIMESTAMP" />
+    <result column="LastLockoutDate" property="lastlockoutdate" jdbcType="TIMESTAMP" />
+    <result column="CreatedOn" property="createdon" jdbcType="TIMESTAMP" />
+    <result column="CreatedBy" property="createdby" jdbcType="VARCHAR" />
+    <result column="IsDeleted" property="isdeleted" jdbcType="TINYINT" />
+    <result column="IsApproved" property="isapproved" jdbcType="TINYINT" />
+    <result column="MnemonicName" property="mnemonicname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ManagerId, ManagerNo, LoginName, `Password`, PasswordFormat, PasswordSalt, IsLockedOut, 
+    LastLoginDate, LastPasswordChangedDate, LastLockoutDate, CreatedOn, CreatedBy, IsDeleted, 
+    IsApproved, MnemonicName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zacx.serivce.dal.entity.SymManagerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sym_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sym_manager
+    where ManagerId = #{managerid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sym_manager
+    where ManagerId = #{managerid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zacx.serivce.dal.entity.SymManagerExample" >
+    delete from sym_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zacx.serivce.dal.entity.SymManager" >
+    insert into sym_manager (ManagerId, ManagerNo, LoginName, 
+      `Password`, PasswordFormat, PasswordSalt, 
+      IsLockedOut, LastLoginDate, LastPasswordChangedDate, 
+      LastLockoutDate, CreatedOn, CreatedBy, 
+      IsDeleted, IsApproved, MnemonicName
+      )
+    values (#{managerid,jdbcType=VARCHAR}, #{managerno,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{passwordformat,jdbcType=INTEGER}, #{passwordsalt,jdbcType=VARCHAR}, 
+      #{islockedout,jdbcType=TINYINT}, #{lastlogindate,jdbcType=TIMESTAMP}, #{lastpasswordchangeddate,jdbcType=TIMESTAMP}, 
+      #{lastlockoutdate,jdbcType=TIMESTAMP}, #{createdon,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR}, 
+      #{isdeleted,jdbcType=TINYINT}, #{isapproved,jdbcType=TINYINT}, #{mnemonicname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zacx.serivce.dal.entity.SymManager" >
+    insert into sym_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerid != null" >
+        ManagerId,
+      </if>
+      <if test="managerno != null" >
+        ManagerNo,
+      </if>
+      <if test="loginname != null" >
+        LoginName,
+      </if>
+      <if test="password != null" >
+        `Password`,
+      </if>
+      <if test="passwordformat != null" >
+        PasswordFormat,
+      </if>
+      <if test="passwordsalt != null" >
+        PasswordSalt,
+      </if>
+      <if test="islockedout != null" >
+        IsLockedOut,
+      </if>
+      <if test="lastlogindate != null" >
+        LastLoginDate,
+      </if>
+      <if test="lastpasswordchangeddate != null" >
+        LastPasswordChangedDate,
+      </if>
+      <if test="lastlockoutdate != null" >
+        LastLockoutDate,
+      </if>
+      <if test="createdon != null" >
+        CreatedOn,
+      </if>
+      <if test="createdby != null" >
+        CreatedBy,
+      </if>
+      <if test="isdeleted != null" >
+        IsDeleted,
+      </if>
+      <if test="isapproved != null" >
+        IsApproved,
+      </if>
+      <if test="mnemonicname != null" >
+        MnemonicName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerid != null" >
+        #{managerid,jdbcType=VARCHAR},
+      </if>
+      <if test="managerno != null" >
+        #{managerno,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordformat != null" >
+        #{passwordformat,jdbcType=INTEGER},
+      </if>
+      <if test="passwordsalt != null" >
+        #{passwordsalt,jdbcType=VARCHAR},
+      </if>
+      <if test="islockedout != null" >
+        #{islockedout,jdbcType=TINYINT},
+      </if>
+      <if test="lastlogindate != null" >
+        #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastpasswordchangeddate != null" >
+        #{lastpasswordchangeddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlockoutdate != null" >
+        #{lastlockoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdon != null" >
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=TINYINT},
+      </if>
+      <if test="isapproved != null" >
+        #{isapproved,jdbcType=TINYINT},
+      </if>
+      <if test="mnemonicname != null" >
+        #{mnemonicname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zacx.serivce.dal.entity.SymManagerExample" resultType="java.lang.Integer" >
+    select count(*) from sym_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sym_manager
+    <set >
+      <if test="record.managerid != null" >
+        ManagerId = #{record.managerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerno != null" >
+        ManagerNo = #{record.managerno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginname != null" >
+        LoginName = #{record.loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        `Password` = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwordformat != null" >
+        PasswordFormat = #{record.passwordformat,jdbcType=INTEGER},
+      </if>
+      <if test="record.passwordsalt != null" >
+        PasswordSalt = #{record.passwordsalt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.islockedout != null" >
+        IsLockedOut = #{record.islockedout,jdbcType=TINYINT},
+      </if>
+      <if test="record.lastlogindate != null" >
+        LastLoginDate = #{record.lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastpasswordchangeddate != null" >
+        LastPasswordChangedDate = #{record.lastpasswordchangeddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastlockoutdate != null" >
+        LastLockoutDate = #{record.lastlockoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdon != null" >
+        CreatedOn = #{record.createdon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdby != null" >
+        CreatedBy = #{record.createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdeleted != null" >
+        IsDeleted = #{record.isdeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.isapproved != null" >
+        IsApproved = #{record.isapproved,jdbcType=TINYINT},
+      </if>
+      <if test="record.mnemonicname != null" >
+        MnemonicName = #{record.mnemonicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sym_manager
+    set ManagerId = #{record.managerid,jdbcType=VARCHAR},
+      ManagerNo = #{record.managerno,jdbcType=VARCHAR},
+      LoginName = #{record.loginname,jdbcType=VARCHAR},
+      `Password` = #{record.password,jdbcType=VARCHAR},
+      PasswordFormat = #{record.passwordformat,jdbcType=INTEGER},
+      PasswordSalt = #{record.passwordsalt,jdbcType=VARCHAR},
+      IsLockedOut = #{record.islockedout,jdbcType=TINYINT},
+      LastLoginDate = #{record.lastlogindate,jdbcType=TIMESTAMP},
+      LastPasswordChangedDate = #{record.lastpasswordchangeddate,jdbcType=TIMESTAMP},
+      LastLockoutDate = #{record.lastlockoutdate,jdbcType=TIMESTAMP},
+      CreatedOn = #{record.createdon,jdbcType=TIMESTAMP},
+      CreatedBy = #{record.createdby,jdbcType=VARCHAR},
+      IsDeleted = #{record.isdeleted,jdbcType=TINYINT},
+      IsApproved = #{record.isapproved,jdbcType=TINYINT},
+      MnemonicName = #{record.mnemonicname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zacx.serivce.dal.entity.SymManager" >
+    update sym_manager
+    <set >
+      <if test="managerno != null" >
+        ManagerNo = #{managerno,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        LoginName = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        `Password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordformat != null" >
+        PasswordFormat = #{passwordformat,jdbcType=INTEGER},
+      </if>
+      <if test="passwordsalt != null" >
+        PasswordSalt = #{passwordsalt,jdbcType=VARCHAR},
+      </if>
+      <if test="islockedout != null" >
+        IsLockedOut = #{islockedout,jdbcType=TINYINT},
+      </if>
+      <if test="lastlogindate != null" >
+        LastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastpasswordchangeddate != null" >
+        LastPasswordChangedDate = #{lastpasswordchangeddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlockoutdate != null" >
+        LastLockoutDate = #{lastlockoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdon != null" >
+        CreatedOn = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        CreatedBy = #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeleted != null" >
+        IsDeleted = #{isdeleted,jdbcType=TINYINT},
+      </if>
+      <if test="isapproved != null" >
+        IsApproved = #{isapproved,jdbcType=TINYINT},
+      </if>
+      <if test="mnemonicname != null" >
+        MnemonicName = #{mnemonicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ManagerId = #{managerid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zacx.serivce.dal.entity.SymManager" >
+    update sym_manager
+    set ManagerNo = #{managerno,jdbcType=VARCHAR},
+      LoginName = #{loginname,jdbcType=VARCHAR},
+      `Password` = #{password,jdbcType=VARCHAR},
+      PasswordFormat = #{passwordformat,jdbcType=INTEGER},
+      PasswordSalt = #{passwordsalt,jdbcType=VARCHAR},
+      IsLockedOut = #{islockedout,jdbcType=TINYINT},
+      LastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      LastPasswordChangedDate = #{lastpasswordchangeddate,jdbcType=TIMESTAMP},
+      LastLockoutDate = #{lastlockoutdate,jdbcType=TIMESTAMP},
+      CreatedOn = #{createdon,jdbcType=TIMESTAMP},
+      CreatedBy = #{createdby,jdbcType=VARCHAR},
+      IsDeleted = #{isdeleted,jdbcType=TINYINT},
+      IsApproved = #{isapproved,jdbcType=TINYINT},
+      MnemonicName = #{mnemonicname,jdbcType=VARCHAR}
+    where ManagerId = #{managerid,jdbcType=VARCHAR}
+  </update>
+</mapper>

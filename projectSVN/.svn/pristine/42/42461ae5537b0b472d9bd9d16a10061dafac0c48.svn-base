@@ -1,0 +1,165 @@
+package com.zacx.serivce.dal.entity;
+
+import java.util.Date;
+
+public class LSchedulingMoveApply {
+    private Integer id;
+
+    private String code;
+
+    private Integer userId;
+
+    private Integer driverId;
+
+    private Integer schedulingId;
+
+    private Integer type;
+
+    private String describe;
+
+    private String approverBy;
+
+    private Date approverTime;
+
+    private String approverResult;
+
+    private Integer status;
+
+    private String remark;
+
+    private Date createAt;
+
+    private String createBy;
+
+    private Date modifyAt;
+
+    private String modifyBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
+
+    public Integer getSchedulingId() {
+        return schedulingId;
+    }
+
+    public void setSchedulingId(Integer schedulingId) {
+        this.schedulingId = schedulingId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public String getApproverBy() {
+        return approverBy;
+    }
+
+    public void setApproverBy(String approverBy) {
+        this.approverBy = approverBy;
+    }
+
+    public Date getApproverTime() {
+        return approverTime;
+    }
+
+    public void setApproverTime(Date approverTime) {
+        this.approverTime = approverTime;
+    }
+
+    public String getApproverResult() {
+        return approverResult;
+    }
+
+    public void setApproverResult(String approverResult) {
+        this.approverResult = approverResult;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    public String getModifyBy() {
+        return modifyBy;
+    }
+
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+}

@@ -1,0 +1,289 @@
+package com.zacx.serivce.order.service.impl;
+
+import com.zacx.core.enums.Code;
+import com.zacx.serivce.dal.entity.OOrder;
+import com.zacx.serivce.dal.entity.OTicket;
+import com.zacx.serivce.dal.entity.OTicketExample;
+import com.zacx.serivce.dal.mapper.OOrderMapper;
+import com.zacx.serivce.dal.mapper.OTicketMapper;
+import com.zacx.serivce.line.api.CarServiceApi;
+import com.zacx.serivce.line.api.PlanServiceApi;
+import com.zacx.serivce.line.api.dto.CarDTO;
+import com.zacx.serivce.line.api.dto.PlanDTO;
+import com.zacx.serivce.order.api.dto.ChangeOrderDTO;
+import com.zacx.serivce.order.api.dto.OrderCarDTO;
+import com.zacx.serivce.order.api.dto.PayConfirmDTO;
+import com.zacx.serivce.order.api.dto.PayPriceDTO;
+import com.zacx.serivce.order.api.enums.OrderOperateTypeEnum;
+import com.zacx.serivce.order.api.enums.OrderStatusEnum;
+import com.zacx.serivce.order.api.enums.TicketStatusEnum;
+import com.zacx.serivce.order.api.exceptions.OrderServiceException;
+import com.zacx.serivce.order.service.OrderChangeLocService;
+import com.zacx.serivce.user.api.UserServiceApi;
+import com.zacx.serivce.user.api.dto.UserDetailDTO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class OrderChangeLocServiceImpl extends BaseOrderLocServiceImpl implements OrderChangeLocService {
+    @Autowired
+    private UserServiceApi userServiceApi;
+    @Autowired
+    private PlanServiceApi planServiceApi;
+    @Autowired
+    private CarServiceApi carServiceApi;
+
+    @Autowired
+    OOrderMapper oOrderMapper;
+    @Autowired
+    OTicketMapper oTicketMapper;
+
+    @Override
+    public PayPriceDTO payDetail(Integer orderId) {
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(orderId);
+        if (orderEntity != null) {
+            return getPriceDetail(orderEntity);
+        }
+        return null;
+    }
+
+    private PayPriceDTO getPriceDetail(OOrder orderEntity) {
+        PayPriceDTO priceDTO = new PayPriceDTO();
+        priceDTO.setOrderCode(orderEntity.getCode());
+        priceDTO.setPlanId(orderEntity.getPlanId());
+        priceDTO.setStartPlace(orderEntity.getSiteStartName());
+        priceDTO.setEndPlace(orderEntity.getSiteEndName());
+
+        //司机信息
+        if (orderEntity.getCarId() != null && orderEntity.getCarId() > 0) {
+            CarDTO carDTO = carServiceApi.findByPrimaryKey(orderEntity.getCarId());
+            OrderCarDTO orderCarDTO = new OrderCarDTO();
+            BeanUtils.copyProperties(carDTO, orderCarDTO);
+            orderCarDTO.setCarId(carDTO.getId());
+        }
+        //TODO ... 关联获取车和司机信息
+        if (orderEntity.getSchedulingId() != null && orderEntity.getSchedulingId() > 0) {
+            priceDTO.setDriverDesc("朕师傅");
+        }
+
+        priceDTO.setStartTime(orderEntity.getStartTime());
+        priceDTO.setCreateAt(orderEntity.getCreateAt());
+        //支付倒计时计算，待支付状态的订单需要
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTime(orderEntity.getCreateAt());
+        calendar.add(java.util.Calendar.HOUR_OF_DAY, 1);
+        long difference = calendar.getTime().getTime() - System.currentTimeMillis();
+        priceDTO.setExpiryTime(difference > 0 ? calendar.getTime() : null);
+
+        priceDTO.setTotalCost(orderEntity.getTotalCost());
+        priceDTO.setUnpaidCost(orderEntity.getUnpaidCost());
+        //已付公式：paidCost = totalCost - unpaidCost
+        priceDTO.setPaidCost(orderEntity.getTotalCost().subtract(orderEntity.getUnpaidCost()));
+        //服务手续费用：接和送总费用
+        priceDTO.setServiceCost(orderEntity.getTakeCost().add(orderEntity.getGiveCost()));
+        priceDTO.setInsuranceCost(orderEntity.getInsuranceCost());
+        //TODO ... 积分点数：系统配置进行计算
+        priceDTO.setGiveIntegralPoint(0);
+        priceDTO.setReturnCost(BigDecimal.ZERO);
+        priceDTO.setBreakCost(BigDecimal.ZERO);
+
+        if (orderEntity.getUnpaidCost().compareTo(BigDecimal.ZERO) > 0) {
+            UserDetailDTO userDetailDTO = userServiceApi.selectUserDetailById(orderEntity.getUserId());
+            priceDTO.setMyWallet(new BigDecimal(userDetailDTO.getWallet() + ""));
+            priceDTO.setMyIntegral(userDetailDTO.getIntegral());
+        }
+        return priceDTO;
+    }
+
+    @Override
+    public PayPriceDTO changeDetail(ChangeOrderDTO changeOrderDTO) {
+        OOrder orderEntity = valiChangeOrder(changeOrderDTO);
+        PayPriceDTO payPrice = null;
+        if (OrderOperateTypeEnum.CANCEL.equals(changeOrderDTO.getOperateType())) {
+            payPrice = getPriceDetail(orderEntity);
+        } else if (OrderOperateTypeEnum.REFUND.equals(changeOrderDTO.getOperateType())) {
+            payPrice = getPriceDetail(orderEntity);
+            //TODO ... 违约金需要配置逻辑
+            payPrice.setBreakCost(new BigDecimal(20));
+            payPrice.setReturnCost(payPrice.getTotalCost());
+        }
+
+        return payPrice;
+    }
+
+    @Override
+    public Boolean doPay(PayConfirmDTO payConfirmDTO) {
+        OOrder orderEntity = valiPayOrder(payConfirmDTO);
+
+        //TODO ... 需要改到回调后处理
+        applyCharteredPlan(orderEntity);
+
+        return true;
+    }
+
+    private OOrder valiPayOrder(PayConfirmDTO payConfirmDTO) {
+        if (payConfirmDTO.getOrderPayScene() == null) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "付款环境异常");
+        }
+        if (payConfirmDTO.getOrderId() == null || payConfirmDTO.getOrderId() <= 0) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请选择订单进行付款");
+        }
+        if (payConfirmDTO.getCouponCost() == null || payConfirmDTO.getCouponCost().compareTo(BigDecimal.ZERO) < 0) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "付款金额错误");
+        }
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(payConfirmDTO.getOrderId());
+        if (orderEntity == null) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "订单未找到");
+        }
+        if (orderEntity.getUserId().equals(payConfirmDTO.getUserId())) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "操作订单权限不足");
+        }
+
+        return orderEntity;
+    }
+
+    @Override
+    public Boolean doChange(ChangeOrderDTO changeOrderDTO) {
+        OOrder orderEntity = valiChangeOrder(changeOrderDTO);
+        Optional<OrderStatusEnum> oldStatus = OrderStatusEnum.get(orderEntity.getStatus());
+        if (OrderOperateTypeEnum.CANCEL.equals(changeOrderDTO.getOperateType())) {
+            cancelOrder(orderEntity);
+            saveOrderOperateLog(orderEntity, oldStatus.get(), "取消订单");
+        } else if (OrderOperateTypeEnum.REFUND.equals(changeOrderDTO.getOperateType())) {
+            refundOrder(orderEntity);
+            saveOrderOperateLog(orderEntity, oldStatus.get(), "申请退款");
+        }
+
+        return true;
+    }
+
+    private OOrder valiChangeOrder(ChangeOrderDTO changeOrderDTO) {
+        if (changeOrderDTO.getOrderId() == null || changeOrderDTO.getOrderId() <= 0) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "请选择订单进行操作");
+        }
+        OOrder orderEntity = oOrderMapper.selectByPrimaryKey(changeOrderDTO.getOrderId());
+        if (orderEntity == null) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "订单未找到");
+        }
+        if (orderEntity.getUserId().equals(changeOrderDTO.getUserId())) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "操作订单权限不足");
+        }
+
+        return orderEntity;
+    }
+
+
+    /**
+     * 取消未付款的新建订单
+     *
+     * @param orderEntity
+     */
+    private void cancelOrder(OOrder orderEntity) {
+        if (OrderStatusEnum.CANCEL.getCode().equals(orderEntity.getStatus())
+                || OrderStatusEnum.VOID.getCode().equals(orderEntity.getStatus())) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "订单已取消");
+        }
+        if (!OrderStatusEnum.NEW.getCode().equals(orderEntity.getStatus())) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "已付款订单无法取消，可申请退款");
+        }
+
+        OOrder uptOrder = new OOrder();
+        uptOrder.setId(orderEntity.getId());
+        uptOrder.setStatus(OrderStatusEnum.CANCEL.getCode());
+        uptOrder.setModifyAt(new Date());
+        uptOrder.setModifyBy(orderEntity.getCreateBy());
+        oOrderMapper.updateByPrimaryKeySelective(uptOrder);
+        //TODO ... 此时票的状态不需要改
+
+        //同步修改的属性
+        BeanUtils.copyProperties(uptOrder, orderEntity);
+    }
+
+
+    /**
+     * 已付款订单申请退款
+     *
+     * @param orderEntity
+     */
+    private void refundOrder(OOrder orderEntity) {
+        if (OrderStatusEnum.CANCEL.getCode().equals(orderEntity.getStatus())
+                || OrderStatusEnum.VOID.getCode().equals(orderEntity.getStatus())) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "订单已取消");
+        }
+        if (!OrderStatusEnum.PAID.getCode().equals(orderEntity.getStatus())) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "订单已完成或过期，不能申请退款");
+        }
+
+        //判断票的状态
+        OTicketExample ticketExample = new OTicketExample();
+        ticketExample.createCriteria().andOrderIdEqualTo(orderEntity.getId());
+        List<OTicket> ticketList = oTicketMapper.selectByExample(ticketExample);
+        Integer pickUpCount = 0;
+        for (OTicket ticket : ticketList) {
+            if (ticket.getIsPickUp()) {
+                pickUpCount++;
+            }
+        }
+        if (pickUpCount > 0) {
+            throw new OrderServiceException(Code.ERROR_ARGUMENT, "订单已取票，不能申请退款");
+        }
+
+        OOrder uptOrder = new OOrder();
+        uptOrder.setId(orderEntity.getId());
+        uptOrder.setStatus(OrderStatusEnum.REFUND.getCode());
+        uptOrder.setModifyAt(new Date());
+        uptOrder.setModifyBy(orderEntity.getCreateBy());
+        oOrderMapper.updateByPrimaryKeySelective(uptOrder);
+
+        //同步修改的属性
+        BeanUtils.copyProperties(uptOrder, orderEntity);
+
+        //待修改值
+        OTicket uptTicket = new OTicket();
+        uptTicket.setStatus(TicketStatusEnum.REFUND.getCode());
+        uptTicket.setModifyAt(new Date());
+        uptTicket.setModifyBy(orderEntity.getCreateBy());
+        //修改条件
+        OTicketExample uptTicketExample = new OTicketExample();
+        uptTicketExample.createCriteria().andOrderIdEqualTo(orderEntity.getId());
+        oTicketMapper.updateByExampleSelective(uptTicket, uptTicketExample);
+    }
+
+
+    /**
+     * 包车下单申请排班计划（为运营排班）
+     *
+     * @param orderEntity
+     * @return
+     */
+    private PlanDTO applyCharteredPlan(OOrder orderEntity) {
+        PlanDTO planEntity = new PlanDTO();
+        planEntity.setStartTime(orderEntity.getStartTime());
+        planEntity.setEndTime(null);
+        planEntity.setLineId(0);
+        planEntity.setIsRelay(true);
+        //包车业务（总价）
+        planEntity.setTicketPrice(orderEntity.getTotalCost());
+        planEntity.setCarTypeId(orderEntity.getCarTypeId());
+        planEntity.setCharteredCarModelId(orderEntity.getCharteredCarModelId());
+        planEntity.setSaleNumber(orderEntity.getTicketNumber());
+        planEntity.setBusinessType(orderEntity.getBusinessType());
+        planEntity.setCreateBy(orderEntity.getCreateBy());
+        planEntity.setModifyBy(orderEntity.getCreateBy());
+
+        Integer planId = planServiceApi.insert(planEntity);
+        if (planId == null || planId <= 0) {
+            throw new OrderServiceException(Code.ERROR_UNKNOWN, "包车申请排班失败");
+        }
+        planEntity.setId(planId);
+
+        return planEntity;
+    }
+
+}
